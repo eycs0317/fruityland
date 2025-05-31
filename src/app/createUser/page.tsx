@@ -13,7 +13,7 @@ export default async function MainPage() {
   return (
     <main role="main">
       <h1>User Created</h1>
-      <p>{user.name}</p>
+      <p>{user.name} ({user.id})</p>
     </main>
   );
 }
