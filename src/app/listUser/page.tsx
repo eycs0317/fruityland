@@ -14,7 +14,7 @@ export default async function MainPage() {
     <main role="main">
       <h1>User List</h1>
       <ul>
-        {users.map((user) => (
+        {users.map((user: {id:string; name:string;}) => (
           <li key={user.id}>{user.name} ({user.id}) (<a href={'/deleteUser?id=' + user.id}>Delete</a>)</li>
         ))}
       </ul>
