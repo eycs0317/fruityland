@@ -3,12 +3,14 @@ export const metadata = {
   title: 'List User',
 };
 
-// utils
-import {listUser} from '@/utils/user';
-
 export default async function MainPage() {
-
-  const users = await listUser();
+  const users = await fetch(process.env.URL + '/api/listUser')
+    .then(res => res.json())
+    .then(data => {
+      console.log('Data: ', data);
+      return data;
+    })
+    .catch(err => console.error('Error: ', err));
 
   return (
     <main role="main">

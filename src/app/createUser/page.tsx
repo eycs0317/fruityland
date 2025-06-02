@@ -3,12 +3,14 @@ export const metadata = {
   title: 'Create User',
 };
 
-// utils
-import {createUser} from '@/utils/user';
-
 export default async function MainPage() {
-
-  const user = await createUser();
+  const user = await fetch(process.env.URL + '/api/createUser')
+    .then(res => res.json())
+    .then(data => {
+      console.log('Data: ', data);
+      return data;
+    })
+    .catch(err => console.error('Error: ', err));
 
   return (
     <main role="main">
@@ -17,4 +19,3 @@ export default async function MainPage() {
     </main>
   );
 }
-
