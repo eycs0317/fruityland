@@ -14,7 +14,9 @@ export default function ListUserClient() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('/api/listUser');
+        const res = await fetch('/api/listUser', {
+          cache: 'no-store',
+        });
         if (!res.ok) {
           const text = await res.text();
           throw new Error(`API error: ${res.status} - ${text}`);
