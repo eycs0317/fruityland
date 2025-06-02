@@ -3,7 +3,9 @@ export const metadata = {
   title: 'Delete User',
 };
 
+// react
 import { Suspense } from 'react';
+
 import DeleteUserClient from './deleteUserClient';
 
 export default function MainPage() {

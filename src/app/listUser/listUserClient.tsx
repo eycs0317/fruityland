@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+// react
+import {useEffect, useState} from 'react';
 
 type User = {
   id: string;
@@ -12,33 +13,45 @@ export default function ListUserClient() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const listUsers = async () => {
       try {
         const res = await fetch('/api/listUser', {
           cache: 'no-store',
         });
+
+        // error - api
         if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`API error: ${res.status} - ${text}`);
+          throw new Error('API error: ${res.status}');
         }
+
+        // set user - success
         const data = await res.json();
         setUsers(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          console.error('Error:', err.message);
+          // set error
           setError(err.message);
         } else {
-          console.error('Unknown error:', err);
-          setError('An unknown error occurred');
+          // set error - unknown
+          setError('An unknown error occurred.');
         }
       }
     };
 
-    fetchUsers();
+    listUsers();
   }, []);
 
-  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
-  if (!users.length) return <p>Loading users...</p>;
+  if (error) {
+    return (
+      <p>Error: {error}</p>
+    );
+  }
+
+  if (!users.length) {
+    return (
+      <p>Loading user...</p>
+    );
+  }
 
   return (
     <ul>

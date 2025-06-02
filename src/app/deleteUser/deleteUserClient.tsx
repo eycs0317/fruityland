@@ -1,7 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+// react
+import {useEffect, useState} from 'react';
+
+// next
+import {useSearchParams} from 'next/navigation';
 
 type User = {
   id: string;
@@ -11,31 +14,36 @@ type User = {
 export default function DeleteUserClient() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const deleteUser = async () => {
+      // set error - missing GET param "id"
       if (!id) {
-        setError('No user ID provided');
+        setError('Missing User ID.');
         return;
       }
 
       try {
         const res = await fetch(`/api/deleteUser?id=${id}`);
+
+        // error - api
         if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`API error: ${res.status} - ${text}`);
+          throw new Error('API error: ${res.status}');
         }
+
+        // set user - success
         const data = await res.json();
         setUser(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          console.error('Error:', err.message);
+          // set error
           setError(err.message);
         } else {
-          console.error('Unknown error:', err);
-          setError('An unknown error occurred');
+          // set error - unknown
+          setError('An unknown error occurred.');
         }
       }
     };
@@ -43,8 +51,19 @@ export default function DeleteUserClient() {
     deleteUser();
   }, [id]);
 
-  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
-  if (!user) return <p>Deleting user...</p>;
+  if (error) {
+    return (
+      <p>Error: {error}</p>
+    );
+  }
 
-  return <p>{user.name} deleted!</p>;
+  if (!user) {
+    return (
+      <p>Deleting user...</p>
+    );
+  }
+
+  return (
+    <p>{user.name} deleted!</p>
+  );
 }

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+// react
+import {useEffect, useState} from 'react';
 
 export default function CreateUserClient() {
   const [user, setUser] = useState<{ id: number; name: string } | null>(null);
@@ -10,19 +11,22 @@ export default function CreateUserClient() {
     const createUser = async () => {
       try {
         const res = await fetch('/api/createUser');
+
+        // error - api
         if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`API error: ${res.status} - ${text}`);
+          throw new Error('API error: ${res.status}');
         }
+
+        // set user - success
         const data = await res.json();
         setUser(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          console.error('Error:', err.message);
+          // set error
           setError(err.message);
         } else {
-          console.error('Unknown error:', err);
-          setError('An unknown error occurred');
+          // set error - unknown
+          setError('An unknown error occurred.');
         }
       }
     };
@@ -30,8 +34,19 @@ export default function CreateUserClient() {
     createUser();
   }, []);
 
-  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
-  if (!user) return <p>Creating user...</p>;
+  if (error) {
+    return (
+      <p>Error: {error}</p>
+    );
+  }
 
-  return <p>{user.name} ({user.id})</p>;
+  if (!user) {
+    return (
+      <p>Creating user...</p>
+    );
+  }
+
+  return (
+    <p>{user.name} ({user.id})</p>
+  );
 }
