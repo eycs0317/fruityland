@@ -3,40 +3,30 @@
 // react
 import {useEffect, useState} from 'react';
 
-// next
-import {useSearchParams} from 'next/navigation';
-
 type User = {
   id: string;
   name: string;
 };
 
-export default function DeleteUserClient() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get('id');
-
-  const [user, setUser] = useState<User | null>(null);
+export default function ListUserClient() {
+  const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const deleteUser = async () => {
-      // set error - missing GET param "id"
-      if (!id) {
-        setError('Missing User ID.');
-        return;
-      }
-
+    const listUsers = async () => {
       try {
-        const res = await fetch(`/api/deleteUser?id=${id}`);
+        const res = await fetch('/api/test/listUser', {
+          cache: 'no-store',
+        });
 
         // error - api
         if (!res.ok) {
-          throw new Error('API error: ${res.status}');
+          throw new Error('API error: ' + res.status);
         }
 
         // set user - success
         const data = await res.json();
-        setUser(data);
+        setUsers(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           // set error
@@ -48,8 +38,8 @@ export default function DeleteUserClient() {
       }
     };
 
-    deleteUser();
-  }, [id]);
+    listUsers();
+  }, []);
 
   if (error) {
     return (
@@ -57,13 +47,20 @@ export default function DeleteUserClient() {
     );
   }
 
-  if (!user) {
+  if (!users.length) {
     return (
-      <p>Deleting user...</p>
+      <p>Loading user...</p>
     );
   }
 
   return (
-    <p>{user.name} deleted!</p>
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>
+          {user.name} ({user.id}){' '}
+          <a href={'/test/deleteUser?id=' + user.id}>Delete</a>
+        </li>
+      ))}
+    </ul>
   );
 }

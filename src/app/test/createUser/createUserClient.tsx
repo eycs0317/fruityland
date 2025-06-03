@@ -10,11 +10,11 @@ export default function CreateUserClient() {
   useEffect(() => {
     const createUser = async () => {
       try {
-        const res = await fetch('/api/createUser');
+        const res = await fetch('/api/test/createUser');
 
         // error - api
         if (!res.ok) {
-          throw new Error('API error: ${res.status}');
+          throw new Error('API error: ' + res.status);
         }
 
         // set user - success
