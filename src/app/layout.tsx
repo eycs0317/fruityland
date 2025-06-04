@@ -1,5 +1,5 @@
 // styles
-// import '@/app/globals.css';
+import '@/app/globals.css';
 
 // metadata
 export const metadata = {

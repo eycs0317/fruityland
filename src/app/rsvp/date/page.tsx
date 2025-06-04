@@ -8,20 +8,38 @@ import React from 'react';
 
 // nextjs
 import Image from 'next/image';
-import Link from 'next/link';
+import {redirect} from 'next/navigation';
+
+// ui
+import FormField from '@/ui/foundations/formField';
+import Heading from '@/ui/foundations/heading';
 
 export default async function MainPage() {
+  async function handleSubmit(formData: FormData) {
+    'use server'
+    const data = Object.fromEntries(formData.entries());
+
+    if (data.btNext) {
+      redirect('/rsvp/time');
+    } else if (data.btBack) {
+      redirect('/');
+    }
+  }
   return (
-    <main role="main">
-      <h1>Placeholder for User RSVP (Date) Page</h1>
-      <section>
-        <Image src="/assets/i/wireframe/user-rsvp-date.png" width="290" height="380" alt="wireframe" />
+    <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <section className="w-full p-8 text-center">
+        <Heading level={1} content="RSVP Step 1" className="text-4xl pb-8" />
       </section>
-      <section>
-        <h2>Pseudocode</h2>
-        <p>[Calendar Picker]</p>
-        <p>[<Link href="/rsvp/time">Next Button</Link>]<br/>
-        [<Link href="/">Back Button</Link>]</p>
+      <section className="relative w-full pb-8 px-8">
+        <Image src="/assets/i/placeholder/calendar.svg" alt="Calendar" layout="responsive" width="300" height="300" />
+      </section>
+      <section className="w-full p-8">
+        <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
+          <div className="flex flex-col gap-4">
+            <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:'Next'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:'Back'}} />
+          </div>
+        </form>
       </section>
     </main>
   );

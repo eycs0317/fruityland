@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 import React from 'react';
-import Text from '@/components/Test';
+import Text from '@/ui/test/Test';
 
 export default async function MainPage() {
   return (
