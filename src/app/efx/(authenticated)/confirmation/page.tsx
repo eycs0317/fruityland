@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 // metadata
 export const metadata = {
   title: 'EFX Portal [Confirmation]',

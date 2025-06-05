@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 // metadata
 export const metadata = {
   title: 'EFX Portal [Dashboard]',
@@ -13,7 +15,15 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
+// lib
+import {getSession} from '@/lib/session';
+
 export default async function MainPage() {
+  const session = await getSession();
+  if (!session.auth) {
+    redirect('/efx');
+  }
+
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());

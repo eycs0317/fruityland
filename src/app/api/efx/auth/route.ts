@@ -1,37 +1,33 @@
+export const runtime = 'nodejs';
+
 // nextjs
 import {NextRequest, NextResponse} from 'next/server';
+
+// lib
+import {getSession} from '@/lib/session';
 
 export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
-      const data = await req.json();
+      const data = await req.formData();
 
-      if (data.userId === 'efxadmin' && data.password === '!@#$%^&*()' && data.btLogin) {
-        return NextResponse.json({
-          message: 'Data received successfully',
-          redirect: '/efx/dashboard',
-        }, {
-          status: 200
-        });
+      if (data.get('userId') === 'efxadmin' && data.get('password') === '!@#$%^&*()' && data.get('btLogin')) {
+        const session = await getSession();
+        session.auth = true;
+        session.authType = 'efxAdmin';
+        
+        await session.save();
+        return NextResponse.redirect(new URL('/efx/dashboard', req.url));
       } else {
-        return NextResponse.json({
-          message: 'Incorrect credentials',
-        }, {
-          status: 400
-        });
+        const response = NextResponse.redirect(new URL('/efx', req.url));
+        return response;
       }
     } catch {
-       return NextResponse.json({
-        message: 'Invalid data format'
-      }, {
-        status: 400
-      });
+      const response = NextResponse.redirect(new URL('/efx', req.url));
+      return response;
     }
   } else {
-    return NextResponse.json({
-      message: `Method ${req.method} Not Allowed`
-    }, {
-      status: 405
-    });
+    const response = NextResponse.redirect(new URL('/efx', req.url));
+    return response;
   }
 }
