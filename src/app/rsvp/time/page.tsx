@@ -14,7 +14,23 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
-export default async function MainPage() {
+export default async function MainPage({ searchParams }: { searchParams: { date?: string } }) {
+
+  const selectedDateParam = await searchParams.date || '';
+  console.log('selectedDate Date:', selectedDateParam);
+  let displayDate = 'Date not selected';
+  if (selectedDateParam) {
+    const [year, month, day] = selectedDateParam.split('-').map(Number);
+    const dateObj = new Date(year, month - 1, day);
+
+    displayDate = dateObj.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+      // No need for 'timeZone' here if the dateObj was constructed to be local time
+    });
+  }
+  console.log('displayDate Date:', displayDate);
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
@@ -36,7 +52,7 @@ export default async function MainPage() {
       <section className="w-full p-8">
         <dl className="flex flex-row pb-4">
           <dt className="font-bold flex-1">Date:</dt>
-          <dd className="flex-5">July 27, 2025</dd>
+          <dd className="flex-5">{displayDate}</dd>
         </dl>
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <div className="flex flex-row gap-4">
