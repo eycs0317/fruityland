@@ -25,7 +25,7 @@ export default function Calendar({ initialDate }: CalendarProps) {
   const minAllowedDate = new Date(2025, 6, 10);
   const maxAllowedDate = new Date(2025, 8, 3);
 
-  const handleDayClick = (clickedValue: ValuePiece, event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDayClick = (clickedValue: ValuePiece) => {
     if (clickedValue instanceof Date) {
       const formattedDate = clickedValue.toISOString().split('T')[0]; // YYYY-MM-DD
       setUserClickedDay(formattedDate);
