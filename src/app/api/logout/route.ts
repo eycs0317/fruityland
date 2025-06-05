@@ -8,7 +8,13 @@ import {getSession} from '@/lib/session';
 
 export async function GET(req: NextRequest) {
   const session = await getSession();
-  await session.destroy();
-  const response = NextResponse.redirect(new URL('/efx', req.url));
-  return response;
+  if (session.authType == 'efxAdmin') {
+    await session.destroy();
+    const response = NextResponse.redirect(new URL('/efx', req.url));
+    return response;
+  } else {
+    await session.destroy();
+    const response = NextResponse.redirect(new URL('/admin', req.url));
+    return response;
+  }
 }

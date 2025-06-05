@@ -3,6 +3,9 @@
 // next
 import {useSearchParams} from 'next/navigation';
 
+// ui
+import Heading from '@/ui/foundations/heading';
+
 export default function ConfirmationClient() {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
@@ -11,16 +14,22 @@ export default function ConfirmationClient() {
   switch (type) {
     case 'calendar':
       return (
-        <section className="w-full p-8">
-          <p>Calendar</p>
-          <p>Total session created: {count}</p>
+        <section className="w-full px-8">
+          <Heading level={2} content="Calendar Record" className="text-2xl pb-4" />
+          <dl className="flex flex-row">
+            <dt className="font-bold flex-1">Total calendar record created:</dt>
+            <dd> {count}</dd>
+          </dl>
         </section>
       );
     case 'couponCode':
       return (
-        <section className="w-full p-8">
-          <p>Coupon Code</p>
-          <p>Total coupon code created: {count}</p>
+        <section className="w-full px-8">
+          <Heading level={2} content="Coupon Code Record" className="text-2xl pb-4" />
+          <dl className="flex flex-row">
+            <dt className="font-bold flex-1">Total coupon code record created:</dt>
+            <dd> {count}</dd>
+          </dl>
         </section>
       );
     default:
