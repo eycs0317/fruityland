@@ -1,0 +1,27 @@
+
+/* Style for individual day tiles on hover */
+
+/* .react-calendar__tile:enabled:hover:active  for cellphone?????? */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6; /* A light gray background on hover */
+  color: black;
+  border-radius: 6px; /* Match your active/selected state styling */
+  cursor: pointer; /* Indicates it's interactive */
+}
+
+/* Style for active (selected) day tile on hover - if you want a different hover for selected */
+/* .react-calendar__tile:enabled:hover:active  for cellphone?????? */
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background-color: #0056b3; /* A slightly darker blue for selected on hover */
+  color: white;
+}
+
+/* Style for navigation buttons (arrows, month/year display) on hover */
+/* .react-calendar__tile:enabled:hover:active  for cellphone?????? */
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #f0f0f0; /* Light background on hover */
+}
+

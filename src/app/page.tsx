@@ -13,7 +13,6 @@ export default async function MainPage() {
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
-
     if (data.couponCode != '' && data.btSearch) {
       redirect('/rsvp');
     }
