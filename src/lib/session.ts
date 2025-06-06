@@ -11,6 +11,7 @@ export const sessionOptions: SessionOptions = {
   cookieName: 'myapp_session',
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
   },
 };
 

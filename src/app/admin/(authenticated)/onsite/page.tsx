@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 // metadata
 export const metadata = {
   title: 'Onsite Support [Dashboard]',
@@ -7,25 +9,39 @@ export const metadata = {
 import React from 'react';
 
 // nextjs
+import Link from 'next/link';
 import {redirect} from 'next/navigation';
 
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
+// lib
+import {getSession} from '@/lib/session';
+
 export default async function MainPage() {
+  const session = await getSession();
+  if (!session.auth || session.authType != 'onsiteAdmin') {
+    redirect('/admin');
+  }
+
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
 
     if (data.btSearch) {
-      redirect('/admin/auth/onsite/search');
+      redirect('/admin/onsite/search');
     } else if (data.btList) {
-      redirect('/admin/auth/onsite/reservation');
+      redirect('/admin/onsite/reservation');
     }
   }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <nav className="flex flex-row w-full px-8">
+        <div className="flex-1 text-right">
+          <Link href="/logout">Logout</Link>
+        </div>
+      </nav>
       <section className="w-full p-8">
         <Heading level={1} content="Onsite Support Dashboard" className="text-4xl pb-8" />
       </section>

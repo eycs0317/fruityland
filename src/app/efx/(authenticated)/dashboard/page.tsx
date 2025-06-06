@@ -9,6 +9,7 @@ export const metadata = {
 import React from 'react';
 
 // nextjs
+import Link from 'next/link';
 import {redirect} from 'next/navigation';
 
 // ui
@@ -20,7 +21,7 @@ import {getSession} from '@/lib/session';
 
 export default async function MainPage() {
   const session = await getSession();
-  if (!session.auth) {
+  if (!session.auth || session.authType != 'efxAdmin') {
     redirect('/efx');
   }
 
@@ -58,8 +59,13 @@ export default async function MainPage() {
   }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <nav className="flex flex-row w-full px-8">
+        <div className="flex-1 text-right">
+          <Link href="/logout">Logout</Link>
+        </div>
+      </nav>
       <section className="w-full p-8">
-        <Heading level={1} content="EFX Portal Dashboard" className="text-4xl pb-8" />
+        <Heading level={1} content="EFX Dashboard" className="text-4xl pb-8" />
       </section>
       <section className="w-full p-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>

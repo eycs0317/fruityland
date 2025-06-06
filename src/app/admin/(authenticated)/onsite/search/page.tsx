@@ -1,30 +1,49 @@
+export const runtime = 'nodejs';
+
 // metadata
 export const metadata = {
-  title: 'Customer Support [Coupon Code Search]',
+  title: 'Onsite Support [Coupon Code Search]',
 };
 
 // react
 import React from 'react';
 
 // nextjs
+import Link from 'next/link';
 import {redirect} from 'next/navigation';
 
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
+// lib
+import {getSession} from '@/lib/session';
+
 export default async function MainPage() {
+  const session = await getSession();
+  if (!session.auth || session.authType != 'onsiteAdmin') {
+    redirect('/admin');
+  }
+
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
 
     if (data.couponCode != '' && data.btSearch) {
-      redirect('/rsvp/confirmation');
+      redirect('/admin/onsite/confirmation');
     }
   }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
-      <section className="w-full p-8 text-center">
+      <nav className="flex flex-row w-full px-8">
+        <div className="flex-1">
+          <Link href="/admin/onsite">&lt; Back to Dashboard</Link>
+        </div>
+        <div className="flex-1 text-right">
+          <Link href="/logout">Logout</Link>
+        </div>
+      </nav>
+      <section className="w-full p-8">
         <Heading level={1} content="Coupon Code Search" className="text-4xl pb-8" />
       </section>
       <section className="w-full p-8">

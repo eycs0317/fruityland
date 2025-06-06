@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 // metadata
 export const metadata = {
   title: 'Onsite Support [RSVP Confirmation]',
@@ -14,21 +16,35 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
+// lib
+import {getSession} from '@/lib/session';
 
 export default async function MainPage() {
+  const session = await getSession();
+  if (!session.auth || session.authType != 'onsiteAdmin') {
+    redirect('/admin');
+  }
+
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
 
     if (data.btCheckIn) {
-      redirect('/admin/auth/onsite/reservation/list');
+      redirect('/admin/onsite/reservation/list');
     }
   }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <nav className="flex flex-row w-full px-8">
+        <div className="flex-1">
+          <Link href="/admin/onsite">&lt; Back to Dashboard</Link>
+        </div>
+        <div className="flex-1 text-right">
+          <Link href="/logout">Logout</Link>
+        </div>
+      </nav>
       <section className="w-full p-8">
         <Heading level={1} content="Reservation Details" className="text-4xl pb-8" />
-        <Link href="/admin/auth/onsite">Back to Dashboard</Link>
       </section>
       <section className="w-full p-8">
         <p className="pb-4">Reservation is confirmed for FruityLand.</p>

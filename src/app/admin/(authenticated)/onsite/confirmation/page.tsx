@@ -22,8 +22,8 @@ export default async function MainPage() {
         <Heading level={2} content="Onsite Support Flow" className="text-2xl pb-8" />
         <h2>Onsite Support Flow</h2>
         <ul className="list-disc">
-          <li>If RSVP is not associated with Coupon Code, then go to <Link href="/admin/auth/onsite/confirmation/rsvp">RSVP Confirmation</Link>.</li>
-          <li>Otherwise, go to <Link href="/admin/auth/onsite/confirmation/walkIn">Walk-in Confirmation</Link>.</li>
+          <li>If RSVP is not associated with Coupon Code, then go to <Link href="/admin/onsite/confirmation/rsvp">RSVP Confirmation</Link>.</li>
+          <li>Otherwise, go to <Link href="/admin/onsite/confirmation/walkIn">Walk-in Confirmation</Link>.</li>
         </ul>
       </section>
     </main>
