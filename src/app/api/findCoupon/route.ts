@@ -16,6 +16,10 @@ async function getCouponDetails(couponCode: string) {
 }
 
 export async function POST(req: NextRequest) {
+  const host = req.headers.get('host');
+  const protocol = req.headers.get('x-forwarded-proto') || 'https'; // 'http' fallback for local
+  const siteURL = protocol + '://' + host;
+
   if (req.method === 'POST') {
     try {
       const data = await req.formData();
@@ -25,25 +29,25 @@ export async function POST(req: NextRequest) {
 
         if (couponResult) {
           if (couponResult.scheduleUID) {
-            const response = NextResponse.redirect(new URL('/rsvp/confirmation?cc=' + data.get('couponCode'), req.nextUrl.origin));
+            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
             return response;
           } else {
-            const response = NextResponse.redirect(new URL('/rsvp/date', req.nextUrl.origin));
+            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
             return response;
           }
         } else {
-          const response = NextResponse.redirect(new URL('/', req.nextUrl.origin));
+          const response = NextResponse.redirect(new URL(siteURL + '/'));
           return response;
         }
       } else {
-        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+        return NextResponse.redirect(new URL(siteURL + '/'));
       }
     } catch {
-      const response = NextResponse.redirect(new URL('/', req.nextUrl.origin));
+      const response = NextResponse.redirect(new URL(siteURL + '/'));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL('/', req.nextUrl.origin));
+    const response = NextResponse.redirect(new URL(siteURL + '/'));
     return response;
   }
 }
