@@ -21,7 +21,7 @@ export default async function MainPage() {
     'use server'
 
     const data = Object.fromEntries(formData.entries());
-
+    console.log('--------> Form data in handleSubmit:', data);
     const selectedDate = data.selectedDate as string;
 
     if (data.btNext) {

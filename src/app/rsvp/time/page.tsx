@@ -14,23 +14,58 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
+// utils
+import {groupAndSortAppointments} from '@/utils/appointmentUtils';
+// Import the necessary utilities from your timezoneUtils.ts
+import { APP_DISPLAY_TIMEZONE, convertUTCToLocal } from '@/utils/timezoneUtils';
+// Import format from date-fns (NOT date-fns-tz for this specific use,
+// as convertUTCToLocal already makes the Date object "zoned-aware")
+import { format } from 'date-fns';
+
 export default async function MainPage({ searchParams }: { searchParams: { date?: string } }) {
-
-  const selectedDateParam = await searchParams.date || '';
-  console.log('selectedDate Date:', selectedDateParam);
+  const awaitedSearchParams = await searchParams;
+  const selectedDateParam = awaitedSearchParams.date || ''; // e.g., "2025-07-10" (representing the local HK date)
+  let appointments: any[] = [];
+  let groupedAppointmentData: { time: string; count: number; availableCount: number; isFullyBooked: boolean; uids: string[]; }[] = [];
   let displayDate = 'Date not selected';
-  if (selectedDateParam) {
-    const [year, month, day] = selectedDateParam.split('-').map(Number);
-    const dateObj = new Date(year, month - 1, day);
 
-    displayDate = dateObj.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-      // No need for 'timeZone' here if the dateObj was constructed to be local time
-    });
+  if (selectedDateParam) {
+    try {
+      const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByDay?date=${selectedDateParam}`;
+
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        cache: 'no-store'
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      appointments = await response.json();
+    // console.log('Fetched Appointments:', appointments);
+      groupedAppointmentData = groupAndSortAppointments(appointments);
+      console.log('Grouped Appointment Data:', groupedAppointmentData);
+
+    } catch (error) {
+        console.error('Failed to fetch appointments in MainPage:', error);
+        appointments = [];
+        groupedAppointmentData = [];
+    }
+
+    // --- REVISED displayDate LOGIC USING timezoneUtils ---
+    // 1. Parse the incoming selectedDateParam (e.g., "2025-07-10") as a UTC date.
+    //    We append 'T00:00:00.000Z' to ensure it's interpreted as midnight UTC.
+    const utcDateForDisplay = new Date(selectedDateParam + 'T00:00:00.000Z');
+
+    // 2. Convert this UTC Date object to a Date object "aware" of the APP_DISPLAY_TIMEZONE.
+    //    This handles the timezone offset correctly.
+    const zonedDisplayDate = convertUTCToLocal(utcDateForDisplay, APP_DISPLAY_TIMEZONE);
+
+    // 3. Format this zoned Date object into a human-readable string.
+    //    'PPPP' is a date-fns format string for a full date (e.g., "Thursday, July 10, 2025").
+    displayDate = format(zonedDisplayDate, 'PPPP');
+    // --- END REVISED displayDate LOGIC ---
   }
-  console.log('displayDate Date:', displayDate);
+
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
@@ -41,6 +76,7 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
       redirect('/rsvp/date');
     }
   }
+
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <section className="w-full p-8 text-center">
@@ -61,52 +97,27 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
                 groupLabel: 'Select a time',
                 groupName: 'rsvpTime',
                 groupClassName: 'flex flex-col',
-                radios: [{
-                  label: '11:00am',
-                  value: '11',
-                  id: 'id_11',
-                }, {
-                  label: '12:00pm',
-                  value: '12',
-                  id: 'id_12',
-                }, {
-                  label: '1:00pm',
-                  value: '13',
-                  id: 'id_13',
-                  isDisabled: true,
-                }, {
-                  label: '2:00pm',
-                  value: '14',
-                  id: 'id_14',
-                }, {
-                  label: '3:00pm',
-                  value: '15',
-                  id: 'id_15',
-                }, {
-                  label: '4:00pm',
-                  value: '16',
-                  id: 'id_16',
-                  isDisabled: true,
-                }, {
-                  label: '5:00pm',
-                  value: '17',
-                  id: 'id_17',
-                }, {
-                  label: '6:00pm',
-                  value: '18',
-                  id: 'id_18',
-                }]
+                radios: groupedAppointmentData.length > 0 ? groupedAppointmentData.map(group => ({
+                  label: group.time,
+                  value: group.uids[0],
+                  id: `slot_group_${group.time.replace(/[^a-zA-Z0-9]/g, '')}`,
+                  isDisabled: group.isFullyBooked,
+                })) : [
+                  { label: 'No slots available for this date', value: '', id: 'no_slots_available', isDisabled: true }
+                ]
               }} />
             </div>
             <div className="flex flex-col pt-8 flex-1 text-right">
-              <div className="flex flex-col">2 slots</div>
-              <div className="flex flex-col">2 slots</div>
-              <div className="flex flex-col text-neutral-500">Full</div>
-              <div className="flex flex-col">4 slots</div>
-              <div className="flex flex-col">2 slots</div>
-              <div className="flex flex-col text-neutral-500">Full</div>
-              <div className="flex flex-col">2 slots</div>
-              <div className="flex flex-col">2 slots</div>
+              {groupedAppointmentData.length > 0 ? (
+                groupedAppointmentData.map(group => (
+                  <div key={`count_${group.time.replace(/[^a-zA-Z0-9]/g, '')}`}
+                       className={`flex flex-col ${group.isFullyBooked ? 'text-neutral-500' : ''}`}>
+                    {group.isFullyBooked ? 'Full' : `${group.availableCount} slots`}
+                  </div>
+                ))
+              ) : (
+                <div className="flex flex-col">N/A</div>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-4">
