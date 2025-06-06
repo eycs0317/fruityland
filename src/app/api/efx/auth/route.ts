@@ -17,17 +17,17 @@ export async function POST(req: NextRequest) {
         session.authType = 'efxAdmin';
         
         await session.save();
-        return NextResponse.redirect(new URL('/efx/dashboard', req.url));
+        return NextResponse.redirect(new URL('/efx/dashboard', req.nextUrl.origin));
       } else {
-        const response = NextResponse.redirect(new URL('/efx', req.url));
+        const response = NextResponse.redirect(new URL('/efx', req.nextUrl.origin));
         return response;
       }
     } catch {
-      const response = NextResponse.redirect(new URL('/efx', req.url));
+      const response = NextResponse.redirect(new URL('/efx', req.nextUrl.origin));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL('/efx', req.url));
+    const response = NextResponse.redirect(new URL('/efx', req.nextUrl.origin));
     return response;
   }
 }

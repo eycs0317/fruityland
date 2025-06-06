@@ -25,25 +25,25 @@ export async function POST(req: NextRequest) {
 
         if (couponResult) {
           if (couponResult.scheduleUID) {
-            const response = NextResponse.redirect(new URL('/rsvp/confirmation?cc=' + data.get('couponCode'), req.url));
+            const response = NextResponse.redirect(new URL('/rsvp/confirmation?cc=' + data.get('couponCode'), req.nextUrl.origin));
             return response;
           } else {
-            const response = NextResponse.redirect(new URL('/rsvp/date', req.url));
+            const response = NextResponse.redirect(new URL('/rsvp/date', req.nextUrl.origin));
             return response;
           }
         } else {
-          const response = NextResponse.redirect(new URL('/', req.url));
+          const response = NextResponse.redirect(new URL('/', req.nextUrl.origin));
           return response;
         }
       } else {
-        return NextResponse.redirect(new URL('/', req.url));
+        return NextResponse.redirect(new URL('/', req.nextUrl.origin));
       }
     } catch {
-      const response = NextResponse.redirect(new URL('/', req.url));
+      const response = NextResponse.redirect(new URL('/', req.nextUrl.origin));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL('/', req.url));
+    const response = NextResponse.redirect(new URL('/', req.nextUrl.origin));
     return response;
   }
 }
