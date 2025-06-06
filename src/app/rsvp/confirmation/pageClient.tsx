@@ -8,9 +8,8 @@ import Image from 'next/image';
 import {useSearchParams} from 'next/navigation';
 
 // ui
-// import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
-
+import FormField from '@/ui/foundations/formField';
 
 export type CouponCodeType = {
   couponCode: string;
@@ -49,7 +48,7 @@ export default function ClientPage() {
   }
 
   return (
-    <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+    <>
       <section className="w-full p-8">
         <Heading level={1} content="Your reservation is confirmed for FruityLand." className="text-2xl pb-8" />
         <dl className="flex flex-row">
@@ -75,14 +74,15 @@ export default function ClientPage() {
         </div>
         <p>Present this confirmation at the entrance for event admission.</p>
       </section>
-       {/*<section className="w-full p-8">
-         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
-           <div className="flex flex-col gap-4">
-             <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
-             <FormField type='button' fieldData={{type: 'submit', id: 'btCancel', className: 'secondary', value:'Cancel Reservation'}} />
-           </div>
-         </form>
-       </section>*/}
-    </main>
+      <section className="w-full p-8">
+        <form className="flex flex-col gap-8 w-full" action="/">
+          <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCode}} />
+          <div className="flex flex-col gap-4">
+            <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btCancel', className: 'secondary', value:'Cancel Reservation'}} />
+          </div>
+        </form>
+      </section>
+    </>
   );
 }
