@@ -19,7 +19,7 @@ import Heading from '@/ui/foundations/heading';
 import {getSession} from '@/lib/session';
 
 // client
-import Type from './confirmationClient';
+import PageClient from './pageClient';
 
 export default async function MainPage() {
   const session = await getSession();
@@ -41,7 +41,7 @@ export default async function MainPage() {
         <Heading level={1} content="Confirmation" className="text-4xl" />
       </section>
       <Suspense fallback={<div>Loading...</div>}>
-        <Type />
+        <PageClient />
       </Suspense>
     </main>
   );

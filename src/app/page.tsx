@@ -28,7 +28,7 @@ export default async function MainPage() {
       <section className="w-full p-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <div className="flex flex-col gap-4">
-            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1111-2222-3333'}} />
+            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1111-2222-3333', value: 'CC619D1E333A'}} />
           </div>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />

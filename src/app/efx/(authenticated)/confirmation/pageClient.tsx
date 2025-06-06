@@ -6,7 +6,7 @@ import {useSearchParams} from 'next/navigation';
 // ui
 import Heading from '@/ui/foundations/heading';
 
-export default function ConfirmationClient() {
+export default function ClientPage() {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
   const count = searchParams.get('count');
