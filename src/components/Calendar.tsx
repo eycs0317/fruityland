@@ -1,7 +1,7 @@
 // src/components/Calendar.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css'; // Custom styles for the calendar
@@ -41,7 +41,9 @@ export default function Calendar({ initialDate }: CalendarProps) {
   );
 
   const minAllowedDate = convertUTCToLocal(new Date(Date.UTC(2025, 6, 10)), displayTimeZone);
-  const maxAllowedDate = convertUTCToLocal(new Date(Date.UTC(2025, 8, 3)), displayTimeZone);
+  const maxAllowedDate = convertUTCToLocal(new Date(Date.UTC(2025, 7, 31)), displayTimeZone);
+
+  const calendarRef = useRef<HTMLDivElement>(null);
 
 
   const handleDayClick = (clickedValue: ValuePiece) => {
@@ -51,34 +53,55 @@ export default function Calendar({ initialDate }: CalendarProps) {
       // directly to get the HKT date string.
       const formattedLocalDay = format(clickedValue, 'yyyy-MM-dd', { timeZone: displayTimeZone });
       setUserClickedDay(formattedLocalDay);
+      onChange(clickedValue)
 
       onChange(clickedValue); // Keep calendar showing local HK date
     } else {
       setUserClickedDay('');
+      onChange(null); // Reset the calendar value if clickedValue is null
     }
   };
 
   useEffect(() => {
+    // Existing logic for initialDate handling
     if (initialDate) {
       const hkDate = convertUTCToLocal(new Date(initialDate), displayTimeZone);
-      // FIX 3: Format the hkDate (which is interpreted in HKT)
-      // directly to get the HKT date string for comparison.
       const formattedInitialDate = format(hkDate, 'yyyy-MM-dd', { timeZone: displayTimeZone });
 
-      // Check if current calendar value needs updating based on initialDate
       if (!(value instanceof Date) || format(value, 'yyyy-MM-dd', { timeZone: displayTimeZone }) !== formattedInitialDate) {
         onChange(hkDate);
       }
-
       if (userClickedDay !== formattedInitialDate) {
         setUserClickedDay(formattedInitialDate);
       }
     }
-  }, [initialDate, value, userClickedDay]);
+
+    // 2. Add event listener to the document for clicks outside the calendar
+    const handleClickOutside = (event: MouseEvent) => {
+      // Check if the click target is NOT within the calendar component
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+        // If there's a selected date and the click was outside, clear the selection
+        if (value instanceof Date) { // Only clear if something is currently selected
+          onChange(null); // Set value to null to deselect the date visually
+          setUserClickedDay(''); // Clear the hidden input value too
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // 3. Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [initialDate, value, userClickedDay]); // Include `value` in dependencies to re-run effect when `value` changes
+
+
+
 
 
   return (
-    <div className='w-full max-w-md mx-auto p-4'>
+    <div ref={calendarRef} className='w-full max-w-md mx-auto p-4'>
       <ReactCalendar
         onChange={onChange}
         value={value}

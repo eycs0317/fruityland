@@ -24,9 +24,14 @@ export async function POST(req: NextRequest) {
     try {
       const data = await req.formData();
       const couponCode = data.get('couponCode');
+
       if (typeof couponCode === 'string') {
         const couponResult = await getCouponDetails(couponCode);
 
+  // 1.If coupon is found && coupon.isrsvp = true
+  // store the couponCode in session,
+  // redirect to confirmation or date page
+  // else redirect to home page
         if (couponResult) {
           if (couponResult.scheduleUID) {
             const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
