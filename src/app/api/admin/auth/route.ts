@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
     try {
       const data = await req.formData();
 
+
       if (data.get('userId') === 'customer' && data.get('password') === 'cccccccc' && data.get('btLogin')) {
         const session = await getSession();
         session.auth = true;
