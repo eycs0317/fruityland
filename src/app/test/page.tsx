@@ -7,12 +7,9 @@ import React from 'react';
 import Text from '@/ui/test/Test';
 
 export default async function MainPage() {
+
   return (
     <main role="main">
-      <ul>
-        <li><a href="/test/createUser">Create User</a></li>
-        <li><a href="/test/listUser">List User</a></li>
-      </ul>
       <div>
         <Text />
       </div>

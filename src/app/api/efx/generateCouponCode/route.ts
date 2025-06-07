@@ -5,59 +5,65 @@ import {NextRequest, NextResponse} from 'next/server';
 import {prisma} from '@/lib/prisma';
 
 function generateRandomHexCode(digits: number) {
-  return Math.floor(Math.random() * 0x10000)
+  return Math.floor(Math.random() * 0xFFFFFF)
     .toString(16)
     .padStart(digits, '0')
     .slice(-digits);
+}
+
+function generateWeekday(numberOfDays: number, groupNumber: number, weekNumber: number) {
+  const records = [];
+  const couponPerSession = 15;  // test 2
+  const sessionsPerDay = 10;  // test 2
+  const totalCoupon = couponPerSession * sessionsPerDay * numberOfDays;
+  for (let i = 0; i < totalCoupon; i++) {
+    const record = {
+      couponCode: generateRandomHexCode(6) + 'd' + String(groupNumber).padStart(2, '0') + weekNumber + generateRandomHexCode(2),
+      group: groupNumber,
+    };
+    records.push(record);
+  }
+  return records;
+}
+
+function generateWeekend(numberOfDays: number, groupNumber: number, weekNumber: number) {
+  const records = [];
+  const couponPerSession = 15;  // test 2
+  const sessionsPerDay = 14;  // test 4
+  const totalCoupon = couponPerSession * sessionsPerDay * numberOfDays;
+  for (let i = 0; i < totalCoupon; i++) {
+    const record = {
+      couponCode: generateRandomHexCode(6) + 'e' + String(groupNumber).padStart(2, '0') + weekNumber + generateRandomHexCode(2),
+      group: groupNumber,
+      isWeekend: true,
+    };
+    records.push(record);
+  }
+  return records;
 }
 
 async function generateCouponCode() {
   const recordCount = await prisma.coupon.count();
 
   if (recordCount === 0) {
-    // coupon code config
-    const slotsPerSession = 10;
-    const sessionsPerDay = 8;
-    const slotsPerDay = slotsPerSession * sessionsPerDay;
-    const daysPerWeek = 7;
-    const weeksPerGroup = 4;
-    const totalGroup = 2; 
-    const totalSlots = daysPerWeek * weeksPerGroup * totalGroup * slotsPerDay;
+    const totalWeek = 8;
 
-    // create coupon code array
-    const couponCodeRaw: string[] = [];
-    const couponWeekRaw: number[] = [];
-    for (let i = 0; i < totalSlots; i++) {
-      const week = Math.floor(i / (slotsPerDay * daysPerWeek)) + 1;
-
-      const section1 = 'cc';
-      const section2 = generateRandomHexCode(4);
-      let section3 = '';
-      switch (week) {
-        case 1: section3 = '1E33'; break;
-        case 2: section3 = '1E34'; break;
-        case 3: section3 = '1E35'; break;
-        case 4: section3 = '1E36'; break;
-        case 5: section3 = '1E37'; break;
-        case 6: section3 = '1E38'; break;
-        case 7: section3 = '1E39'; break;
-        case 8: section3 = '1E3A'; break;
+    const coupons = [];
+    for (let i = 0; i < totalWeek; i++) {
+      if (i==0) {
+        const couponWeekday = generateWeekday(2, ((i*2)+1), i);
+        coupons.push(...couponWeekday);
+      } else {
+        const couponWeekday = generateWeekday(5, ((i*2)+1), i);
+        coupons.push(...couponWeekday);
       }
-      const section4 = generateRandomHexCode(2);
-      const couponCode = section1 + section2 + section3 + section4;
-      couponCodeRaw.push(couponCode.toUpperCase());
-      couponWeekRaw.push(week);
+      const couponWeekend = generateWeekend(2, ((i*2)+2), i);
+      coupons.push(...couponWeekend);
     }
-
-    // convert array to object
-    const couponCodeData = couponCodeRaw.map((code, index) => ({
-      couponCode: code,
-      couponWeek: couponWeekRaw[index],
-    }));
 
     // create records in db
     const couponCodeCreate = await prisma.coupon.createMany({
-      data: couponCodeData,
+      data: coupons,
     });
     return couponCodeCreate;
   } else {
