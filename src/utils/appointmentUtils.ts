@@ -5,7 +5,7 @@ import { APP_DISPLAY_TIMEZONE, convertUTCToLocal } from './timezoneUtils';
 // Import format from date-fns for flexible formatting
 import { format } from 'date-fns-tz';
 
-interface Appointment {
+export interface Appointment {
   uid: string;
   sessionDateTime: string; // Assuming it comes as ISO string
   isBooked: boolean;

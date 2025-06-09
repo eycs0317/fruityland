@@ -116,7 +116,7 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
     // return () => {
     //   document.removeEventListener('mousedown', handleClickOutside);
     // };
-  }, [initialDate, value, userClickedDay]); // Include `value` in dependencies to re-run effect when `value` changes
+  }, [initialDate, value, userClickedDay, displayTimeZone]); // Include `value` in dependencies to re-run effect when `value` changes
 
 
 

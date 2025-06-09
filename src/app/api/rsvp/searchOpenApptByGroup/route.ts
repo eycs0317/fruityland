@@ -8,12 +8,10 @@ import {prisma} from '@/lib/prisma';
 import {NextResponse} from 'next/server'; // Keep this import
 import type { NextRequest } from 'next/server'; // Import NextRequest to access URL params
 
-// Change 'export default async function searchOpenApptByDay(date: string)'
-// to 'export async function GET(request: NextRequest)'
 export async function GET(request: NextRequest) {
   try {
     // Access query parameters from request.nextUrl.searchParams
-    const date = request.nextUrl.searchParams.get('date');
+    // const date = request.nextUrl.searchParams.get('date');
     const group = request.nextUrl.searchParams.get('group');
 
     // console.log('------------------Searching for open appointments on group:--------------', group);

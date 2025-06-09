@@ -17,17 +17,22 @@ import Heading from '@/ui/foundations/heading';
 // utils
 import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 import { createReservation } from '@/utils/createReservation';
-// Import the necessary utilities from your timezoneUtils.ts
-// import { APP_DISPLAY_TIMEZONE, convertUTCToLocal } from '@/utils/timezoneUtils';
-// Import format from date-fns (NOT date-fns-tz for this specific use,
-// as convertUTCToLocal already makes the Date object "zoned-aware")
-// import { format } from 'date-fns';
-// import searchOpenAppByGroup from '@/app/api/rsvp/searchOpenApptByGroup/route'
-export default async function MainPage({ searchParams }: { searchParams: { date?: string, group?: string, couponCode?: string } }) {
-  const { date, group, couponCode } = await searchParams;
-  console.log('----couponCode:----', couponCode);
+
+import { Appointment } from '@/utils/appointmentUtils';
+
+interface PageProps {
+  searchParams?: {
+    date?: string;
+    group?: string;
+    couponCode?: string;
+  };
+}
+export default async function MainPage({ searchParams }: PageProps ) {
+  const { date, group, couponCode } = searchParams;
+  console.log('----searchParams:----', searchParams);
+  console.log('----searchParams:----', date, group,couponCode);
   // const selectedDateParam = awaitedSearchParams.date || ''; // e.g., "2025-07-10" (representing the local HK date)
-  let appointments: any[] = [];
+  let appointments: Appointment[] = [];
   let groupedAppointmentData: { time: string; count: number; availableCount: number; isFullyBooked: boolean; uids: string[]; }[] = [];
   // let displayDate = 'Date not selected';
   // console.log('----selectedDateParam:----', awaitedSearchParams);
@@ -89,7 +94,7 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
           reservationSuccess = true;
           console.log('Reservation created successfully:', result.data);
         }
-      } catch (error: any) {
+      } catch (error: Error | unknown) {
         // Catch any unexpected errors from createReservation (e.g., network, DB connection issues)
         errorMessage = error.message || 'An unexpected error occurred during reservation creation.';
         console.error('Error during reservation submission (createReservation failed):', errorMessage);

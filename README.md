@@ -9,6 +9,10 @@ Now when input a wrong coupon code on the first page. it redirect to the home pa
 
 formfield not taking react props like onClick, onChange, etc
 
+found bud on /rsvp/time ex: couponcode(2fd55fd01019) date 7/11 after select the time and go to confirmation page. the Time show 7/10
+
+app/rsvp/time - form is calling action={funciton}. that is wrong. react use onSubmit instead of action. turn that function to route?? BUT everything is working??
+
 ## Live
 
 https://main.d1t1uzsb475px0.amplifyapp.com/
