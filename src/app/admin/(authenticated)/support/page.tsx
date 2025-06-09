@@ -33,26 +33,32 @@ export default async function MainPage() {
       redirect('/rsvp/confirmation');
     }
   }
-  return (
-    <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
-      <nav className="flex flex-row w-full px-8">
-        <div className="flex-1 text-right">
-          <Link href="/logout">Logout</Link>
-        </div>
-      </nav>
-      <section className="w-full p-8 text-center">
-        <Heading level={1} content="Coupon Code Search" className="text-4xl pb-8" />
-      </section>
-      <section className="w-full p-8">
-        <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
-          <div className="flex flex-col gap-4">
-            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1111-2222-3333'}} />
+  if (session.auth) {
+    return (
+      <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+        <nav className="flex flex-row w-full px-8">
+          <div className="flex-1 text-right">
+            <Link href="/logout">Logout</Link>
           </div>
-          <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
-          </div>
-        </form>
-      </section>
-    </main>
-  );
+        </nav>
+        <section className="w-full p-8 text-center">
+          <Heading level={1} content="Coupon Code Search" className="text-4xl pb-8" />
+        </section>
+        <section className="w-full p-8">
+          <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
+            <div className="flex flex-col gap-4">
+              <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1111-2222-3333'}} />
+            </div>
+            <div className="flex flex-col gap-4">
+              <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
+            </div>
+          </form>
+        </section>
+      </main>
+    );
+  } else {
+    return (
+      <p>test</p>
+    );
+  }
 }
