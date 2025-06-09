@@ -1,11 +1,4 @@
 export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-
-import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions, SessionData } from '@/lib/session';
-
-
 
 // metadata
 export const metadata = {
@@ -24,17 +17,11 @@ import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
 // lib
-// import {getSession} from '@/lib/session';
+import {getSession} from '@/lib/session';
 
 export default async function MainPage() {
-  // const session = await getSession();
-
-  const cookieStore = await cookies(); // 🍪 capture cookies first
-  console.log('EDDIE dashboard cookies:', JSON.stringify([...cookieStore]));
-  const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
+  const session = await getSession();
   if (!session.auth || session.authType != 'customerAdmin') {
-    console.log('redirecting out');
     redirect('/admin');
   }
 

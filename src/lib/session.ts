@@ -16,9 +16,8 @@ export const sessionOptions: SessionOptions = {
 };
 
 export async function getSession() {
-    console.log('EDDIE inside getSession()');
-    const cookieStore = await cookies(); // Await is required in Node.js runtime
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log('EDDIE after await cookies().  OUTPUT ' + cookieStore);
-    return getIronSession<SessionData>(cookieStore, sessionOptions);
+  console.log('EDDIE inside getSession()');
+  const cookieStore = await cookies();
+  console.log('EDDIE after await cookies().  OUTPUT ' + cookieStore);
+  return getIronSession<SessionData>(cookieStore, sessionOptions);
 }
