@@ -16,6 +16,7 @@ import Heading from '@/ui/foundations/heading';
 
 // utils
 import {groupAndSortAppointments} from '@/utils/appointmentUtils';
+import { createReservation } from '@/utils/createReservation';
 // Import the necessary utilities from your timezoneUtils.ts
 // import { APP_DISPLAY_TIMEZONE, convertUTCToLocal } from '@/utils/timezoneUtils';
 // Import format from date-fns (NOT date-fns-tz for this specific use,
@@ -55,37 +56,61 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
         groupedAppointmentData = [];
     }
 
-    // --- REVISED displayDate LOGIC USING timezoneUtils ---
-    // 1. Parse the incoming selectedDateParam (e.g., "2025-07-10") as a UTC date.
-    //    We append 'T00:00:00.000Z' to ensure it's interpreted as midnight UTC.
-    // const utcDateForDisplay = new Date(selectedDateParam + 'T00:00:00.000Z');
-
-    // 2. Convert this UTC Date object to a Date object "aware" of the APP_DISPLAY_TIMEZONE.
-    //    This handles the timezone offset correctly.
-    // const zonedDisplayDate = convertUTCToLocal(utcDateForDisplay, APP_DISPLAY_TIMEZONE);
-
-    // 3. Format this zoned Date object into a human-readable string.
-    //    'PPPP' is a date-fns format string for a full date (e.g., "Thursday, July 10, 2025").
-    // displayDate = format(zonedDisplayDate, 'PPPP');
-    // --- END REVISED displayDate LOGIC ---
   }
 
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
     console.log('------Form Data Submitted:--------', data);
-    if (data.rsvpTime && data.btSchedule) {
-      // before redireting, need to add the appointment to the database
 
+    const { rsvpTime, couponCode: submittedCouponCode, btBack, btSchedule } = data; // Renamed couponCode from form to avoid confusion
 
+    if (btSchedule) { // If the 'Schedule' button was clicked
+      if (!rsvpTime) {
+        // Handle case where rsvpTime is missing from the form
+        return 'Please select a time slot.'; // This message would be caught by useFormState if used
+      }
 
+      let reservationSuccess = false; // Flag to track reservation status
+      let errorMessage = '';
 
+      try {
+        const result = await createReservation({
+          couponCode: submittedCouponCode as string,
+          rsvpTime: rsvpTime as string,
+        });
 
+        if (!result.success) {
+          // If creation fails, set error message
+          errorMessage = result.message || 'Failed to create reservation.';
+          console.error('Reservation creation failed:', errorMessage);
+        } else {
+          // If creation succeeds, set success flag
+          reservationSuccess = true;
+          console.log('Reservation created successfully:', result.data);
+        }
+      } catch (error: any) {
+        // Catch any unexpected errors from createReservation (e.g., network, DB connection issues)
+        errorMessage = error.message || 'An unexpected error occurred during reservation creation.';
+        console.error('Error during reservation submission (createReservation failed):', errorMessage);
+      }
 
-      redirect(`/rsvp/confirmation?cc=${couponCode}&date=${date}&group=${group}&uid=${data.rsvpTime}`);
-    } else if (data.btBack) {
+      // --- IMPORTANT: Now, handle the redirect or error based on the flags ---
+      if (reservationSuccess) {
+        // This is where the redirect should happen, OUTSIDE the previous try-catch block.
+        // If createReservation was successful, Next.js handles the redirect signal here.
+        redirect(`/rsvp/confirmation?cc=${submittedCouponCode}&date=${date}&group=${group}&uid=${rsvpTime}`);
+      } else {
+        // If reservation was not successful, return the error message to the client
+        return errorMessage;
+      }
+
+    } else if (btBack) {
       redirect('/rsvp/date');
     }
+
+    // Fallback if neither button was clicked (shouldn't typically happen)
+    return 'Invalid form submission.';
   }
 
   return (

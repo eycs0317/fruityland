@@ -8,6 +8,7 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
     // 1. Find the selected schedule (appointment)
     const schedule = await prisma.schedule.findUnique({
       where: { uid: rsvpTime },
+      // include the group and isBooked field
       select: { group: true, isBooked: true },
     });
 
