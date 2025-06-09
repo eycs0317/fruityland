@@ -34,6 +34,7 @@ export default async function MainPage() {
   const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
 
   if (!session.auth || session.authType != 'customerAdmin') {
+    console.log('redirecting out');
     redirect('/admin');
   }
 
@@ -45,6 +46,7 @@ export default async function MainPage() {
       redirect('/rsvp/confirmation');
     }
   }
+  console.log('EDDIE dashboard 2 cookies:', JSON.stringify([...cookieStore]));
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <nav className="flex flex-row w-full px-8">
