@@ -1,3 +1,14 @@
+## Need to do
+
+feed data to rsvp/comfirmtation with date to display. Now only have dumby data
+
+create modifyReservation function @utils/
+create cancelReservation function @utils/
+
+Now when input a wrong coupon code on the first page. it redirect to the home page. create a client form that can check the coupon and display a error message on page. no redirect.
+
+formfield not taking react props like onClick, onChange, etc
+
 ## Live
 
 https://main.d1t1uzsb475px0.amplifyapp.com/
