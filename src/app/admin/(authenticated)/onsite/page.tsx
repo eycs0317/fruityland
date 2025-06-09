@@ -1,5 +1,3 @@
-export const runtime = 'nodejs';
-
 // metadata
 export const metadata = {
   title: 'Onsite Support [Dashboard]',
@@ -39,7 +37,7 @@ export default async function MainPage() {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <nav className="flex flex-row w-full px-8">
         <div className="flex-1 text-right">
-          <Link href="/logout">Logout</Link>
+          <Link href="/logout" prefetch={false}>Logout</Link>
         </div>
       </nav>
       <section className="w-full p-8">

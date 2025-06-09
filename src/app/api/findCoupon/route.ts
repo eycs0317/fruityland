@@ -1,5 +1,3 @@
-export const runtime = 'nodejs';  // for session
-
 // nextjs
 import {NextRequest, NextResponse} from 'next/server';
 

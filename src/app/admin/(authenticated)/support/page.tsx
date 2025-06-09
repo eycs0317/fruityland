@@ -1,5 +1,3 @@
-export const runtime = 'nodejs';
-
 // metadata
 export const metadata = {
   title: 'Customer Support [Coupon Code Search]',

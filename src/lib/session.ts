@@ -16,8 +16,6 @@ export const sessionOptions: SessionOptions = {
 };
 
 export async function getSession() {
-  console.log('EDDIE inside getSession()');
   const cookieStore = await cookies();
-  console.log('EDDIE after await cookies().  OUTPUT ' + cookieStore);
   return getIronSession<SessionData>(cookieStore, sessionOptions);
 }
