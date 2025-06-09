@@ -16,17 +16,44 @@ import Heading from '@/ui/foundations/heading';
 
 // Calendar
 import Calendar from '@/components/Calendar';
+
+// session
+import { getSession } from '@/lib/session';
+
+//helper functions
+import searchByCouponGroup from '@/utils/searchByCouponGroup';
+
+
 export default async function MainPage() {
+  const session = await getSession();
+  // const couponData = session.coupon;
+  // console.log('Session Coupon Data:----->', couponData);
+  // Session Coupon Data:-----> {
+  //   couponCode: '29506dd0109b',
+  //   group: 1,
+  //   isWeekend: false,
+  //   participantCount: 2,
+  //   scheduleUID: null,
+  //   isRSVP: false,
+  //   status: 0,
+  //   couponSchedule: null
+  // }
+  const couponGroup = session.coupon?.group ?? 0;
+  const couponCode = session.coupon?.couponCode;
+  const {startDate, endDate} = searchByCouponGroup(session.coupon?.group ?? 0)
+  // console.log('Coupon Group:', session.coupon?.group);
+  // console.log('Start Date:', startDate);
+  // console.log('End Date:', endDate);
   async function handleSubmit(formData: FormData) {
     'use server'
 
     const data = Object.fromEntries(formData.entries());
-    console.log('--------> Form data in handleSubmit:', data);
+
     const selectedDate = data.selectedDate as string;
 
     if (data.btNext) {
       if (selectedDate) {
-        redirect(`/rsvp/time?date=${selectedDate}`);
+        redirect(`/rsvp/time?date=${selectedDate}&group=${couponGroup}&couponCode=${couponCode}`);
       } else {
         redirect('/rsvp/time');
       }
@@ -43,7 +70,8 @@ export default async function MainPage() {
       </section>
       <section className="w-full p-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
-        <Calendar />
+
+        <Calendar allowedMinDate={startDate} allowedMaxDate={endDate}/>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:'Next'}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:'Back'}} />

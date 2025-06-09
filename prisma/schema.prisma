@@ -16,13 +16,13 @@ datasource db {
 }
 
 model Schedule {
-  uid       String   @id @default(cuid())
-  sessionDateTime      DateTime
-  group             Int
-  isWeekend          Boolean   @default(false)
-  isBooked  Boolean  @default(false)
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+  uid             String   @id @default(cuid())
+  sessionDateTime DateTime
+  group           Int
+  isWeekend       Boolean  @default(false)
+  isBooked        Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
 
   coupon Coupon?
 
@@ -31,8 +31,8 @@ model Schedule {
 
 model Coupon {
   couponCode       String    @id @unique
-  group             Int
-  isWeekend          Boolean   @default(false)
+  group            Int
+  isWeekend        Boolean   @default(false)
   participantCount Int       @default(2)
   scheduleUID      String?   @unique
   isRSVP           Boolean   @default(false)

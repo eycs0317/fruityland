@@ -17,21 +17,24 @@ import Heading from '@/ui/foundations/heading';
 // utils
 import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 // Import the necessary utilities from your timezoneUtils.ts
-import { APP_DISPLAY_TIMEZONE, convertUTCToLocal } from '@/utils/timezoneUtils';
+// import { APP_DISPLAY_TIMEZONE, convertUTCToLocal } from '@/utils/timezoneUtils';
 // Import format from date-fns (NOT date-fns-tz for this specific use,
 // as convertUTCToLocal already makes the Date object "zoned-aware")
-import { format } from 'date-fns';
-
-export default async function MainPage({ searchParams }: { searchParams: { date?: string } }) {
-  const awaitedSearchParams = await searchParams;
-  const selectedDateParam = awaitedSearchParams.date || ''; // e.g., "2025-07-10" (representing the local HK date)
+// import { format } from 'date-fns';
+// import searchOpenAppByGroup from '@/app/api/rsvp/searchOpenApptByGroup/route'
+export default async function MainPage({ searchParams }: { searchParams: { date?: string, group?: string, couponCode?: string } }) {
+  const { date, group, couponCode } = await searchParams;
+  console.log('----couponCode:----', couponCode);
+  // const selectedDateParam = awaitedSearchParams.date || ''; // e.g., "2025-07-10" (representing the local HK date)
   let appointments: any[] = [];
   let groupedAppointmentData: { time: string; count: number; availableCount: number; isFullyBooked: boolean; uids: string[]; }[] = [];
-  let displayDate = 'Date not selected';
+  // let displayDate = 'Date not selected';
+  // console.log('----selectedDateParam:----', awaitedSearchParams);
 
-  if (selectedDateParam) {
+  if (group) {
     try {
-      const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByDay?date=${selectedDateParam}`;
+      // console.log('----selectedDateParam.grouppppppppppp:', awaitedSearchParams.group);
+      const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByGroup?group=${group}`;
 
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -42,6 +45,7 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
       }
       appointments = await response.json();
     // console.log('Fetched Appointments:', appointments);
+    console.log('Fetched Appointments length:', appointments.length);
       groupedAppointmentData = groupAndSortAppointments(appointments);
       console.log('Grouped Appointment Data:', groupedAppointmentData);
 
@@ -54,24 +58,31 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
     // --- REVISED displayDate LOGIC USING timezoneUtils ---
     // 1. Parse the incoming selectedDateParam (e.g., "2025-07-10") as a UTC date.
     //    We append 'T00:00:00.000Z' to ensure it's interpreted as midnight UTC.
-    const utcDateForDisplay = new Date(selectedDateParam + 'T00:00:00.000Z');
+    // const utcDateForDisplay = new Date(selectedDateParam + 'T00:00:00.000Z');
 
     // 2. Convert this UTC Date object to a Date object "aware" of the APP_DISPLAY_TIMEZONE.
     //    This handles the timezone offset correctly.
-    const zonedDisplayDate = convertUTCToLocal(utcDateForDisplay, APP_DISPLAY_TIMEZONE);
+    // const zonedDisplayDate = convertUTCToLocal(utcDateForDisplay, APP_DISPLAY_TIMEZONE);
 
     // 3. Format this zoned Date object into a human-readable string.
     //    'PPPP' is a date-fns format string for a full date (e.g., "Thursday, July 10, 2025").
-    displayDate = format(zonedDisplayDate, 'PPPP');
+    // displayDate = format(zonedDisplayDate, 'PPPP');
     // --- END REVISED displayDate LOGIC ---
   }
 
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
-
+    console.log('------Form Data Submitted:--------', data);
     if (data.rsvpTime && data.btSchedule) {
-      redirect('/rsvp/confirmation');
+      // before redireting, need to add the appointment to the database
+
+
+
+
+
+
+      redirect(`/rsvp/confirmation?cc=${couponCode}&date=${date}&group=${group}&uid=${data.rsvpTime}`);
     } else if (data.btBack) {
       redirect('/rsvp/date');
     }
@@ -88,9 +99,10 @@ export default async function MainPage({ searchParams }: { searchParams: { date?
       <section className="w-full p-8">
         <dl className="flex flex-row pb-4">
           <dt className="font-bold flex-1">Date:</dt>
-          <dd className="flex-5">{displayDate}</dd>
+          <dd className="flex-5">{date}</dd>
         </dl>
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
+        {couponCode && <input type="hidden" name="couponCode" value={couponCode} />}
           <div className="flex flex-row gap-4">
             <div className="flex flex-col flex-1 gap-4">
               <FormField type='radio' fieldData={{

@@ -4,6 +4,7 @@ import {NextRequest, NextResponse} from 'next/server';
 // prisma
 import {prisma} from '@/lib/prisma';
 
+
 async function couponSearch(couponCode: string) {
   // find records in db
 

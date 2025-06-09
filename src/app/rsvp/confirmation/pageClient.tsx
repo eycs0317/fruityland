@@ -11,6 +11,8 @@ import {useSearchParams} from 'next/navigation';
 import Heading from '@/ui/foundations/heading';
 import FormField from '@/ui/foundations/formField';
 
+//session
+
 export type CouponCodeType = {
   couponCode: string;
   participantCount: number;
@@ -25,12 +27,30 @@ type RSVPResponse = {
   data: CouponCodeType | null;
 };
 
-export default function ClientPage() {  
+export default function ClientPage() {
   const searchParams = useSearchParams();
-  const couponCode = searchParams.get('cc');
+  const [confirmationData, setConfirmationData] = useState({
+    couponCode: '',
+    date: '',
+    group: '',
+    uid: '',
+  });
+
   const [rsvp, setRSVP] = useState<RSVPResponse | null>(null);
 
   useEffect(() => {
+    const couponCode = searchParams.get('cc');
+    const date = searchParams.get('date');
+    const group = searchParams.get('group');
+    const uid = searchParams.get('uid');
+
+    setConfirmationData({
+      couponCode: couponCode || 'N/A', // Provide a default if not found
+      date: date || 'N/A',
+      group: group || 'N/A',
+      uid: uid || 'N/A',
+    });
+    // add appt to database
     if (couponCode) {
       fetch('/api/rsvp/confirmation?couponCode=' + couponCode)
         .then(res => res.json())
@@ -38,7 +58,7 @@ export default function ClientPage() {
           setRSVP(json);
         })
     }
-  }, [couponCode]);
+  }, []);
 
   if (!rsvp) {
     return <p>Loading reservation</p>;
@@ -66,7 +86,7 @@ export default function ClientPage() {
         <div className="flex flex-row pb-4">
           <dl className="flex flex-col flex-2">
             <dt className="font-bold flex-1">Coupon Code:</dt>
-            <dd className="flex-5">{couponCode}</dd>
+            <dd className="flex-5">{confirmationData.couponCode}</dd>
           </dl>
           <div className="flex flex-row flex-1">
             <Image src="/assets/i/placeholder/qrCode.svg" alt="QR Code" width="300" height="300" />
@@ -76,7 +96,7 @@ export default function ClientPage() {
       </section>
       <section className="w-full p-8">
         <form className="flex flex-col gap-8 w-full" action="/">
-          <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCode}} />
+          <FormField type='hidden' fieldData={{id: 'couponCode', value: confirmationData.couponCode}} />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btCancel', className: 'secondary', value:'Cancel Reservation'}} />
