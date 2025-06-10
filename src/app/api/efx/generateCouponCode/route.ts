@@ -51,13 +51,13 @@ async function generateCouponCode() {
     const coupons = [];
     for (let i = 0; i < totalWeek; i++) {
       if (i==0) {
-        const couponWeekday = generateWeekday(2, ((i*2)+1), i);
+        const couponWeekday = generateWeekday(2, ((i*2)+1), (i+1));
         coupons.push(...couponWeekday);
       } else {
-        const couponWeekday = generateWeekday(5, ((i*2)+1), i);
+        const couponWeekday = generateWeekday(5, ((i*2)+1), (i+1));
         coupons.push(...couponWeekday);
       }
-      const couponWeekend = generateWeekend(2, ((i*2)+2), i);
+      const couponWeekend = generateWeekend(2, ((i*2)+2), (i+1));
       coupons.push(...couponWeekend);
     }
 
