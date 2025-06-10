@@ -1,5 +1,3 @@
-export const runtime = 'nodejs';
-
 // next
 import {NextRequest, NextResponse} from 'next/server';
 

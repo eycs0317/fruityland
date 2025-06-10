@@ -1,5 +1,3 @@
-export const runtime = 'nodejs';
-
 // metadata
 export const metadata = {
   title: 'EFX Portal [Confirmation]',
@@ -34,7 +32,7 @@ export default async function MainPage() {
           <Link href="/efx/dashboard">&lt; Back to EFX Dashboard</Link>
         </div>
         <div className="flex-1 text-right">
-          <Link href="/logout">Logout</Link>
+          <Link href="/logout" prefetch={false}>Logout</Link>
         </div>
       </nav>
       <section className="w-full p-8">

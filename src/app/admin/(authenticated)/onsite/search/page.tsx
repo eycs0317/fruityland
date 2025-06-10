@@ -1,5 +1,3 @@
-export const runtime = 'nodejs';
-
 // metadata
 export const metadata = {
   title: 'Onsite Support [Coupon Code Search]',
@@ -40,7 +38,7 @@ export default async function MainPage() {
           <Link href="/admin/onsite">&lt; Back to Dashboard</Link>
         </div>
         <div className="flex-1 text-right">
-          <Link href="/logout">Logout</Link>
+          <Link href="/logout" prefetch={false}>Logout</Link>
         </div>
       </nav>
       <section className="w-full p-8">

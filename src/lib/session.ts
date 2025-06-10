@@ -27,6 +27,6 @@ export const sessionOptions: SessionOptions = {
 };
 
 export async function getSession() {
-  const cookieStore = await cookies(); // Await is required in Node.js runtime
+  const cookieStore = await cookies();
   return getIronSession<SessionData>(cookieStore, sessionOptions);
 }
