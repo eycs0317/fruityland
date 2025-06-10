@@ -21,7 +21,10 @@ import Calendar from '@/components/Calendar';
 import { getSession } from '@/lib/session';
 
 //helper functions
-import searchByCouponGroup from '@/utils/searchByCouponGroup';
+// import searchByCouponGroup from '@/utils/searchByCouponGroup';
+
+//server side functions
+import { getMinMaxScheduleDatesByGroup } from '@/lib/getMinMaxScheduleDatesByGroup';
 
 
 export default async function MainPage() {
@@ -40,17 +43,18 @@ export default async function MainPage() {
   // }
   const couponGroup = session.coupon?.group ?? 0;
   const couponCode = session.coupon?.couponCode;
-  const {startDate, endDate} = searchByCouponGroup(session.coupon?.group ?? 0)
+  const {startDate, endDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
   // console.log('Coupon Group:', session.coupon?.group);
-  // console.log('Start Date:', startDate);
-  // console.log('End Date:', endDate);
+  console.log('Start Date:', startDate);
+  console.log('End Date:', endDate);
   async function handleSubmit(formData: FormData) {
     'use server'
 
     const data = Object.fromEntries(formData.entries());
 
     const selectedDate = data.selectedDate as string;
-
+    console.log('----data:----', data);
+    console.log('------>Selected Date:', selectedDate);
     if (data.btNext) {
       if (selectedDate) {
         redirect(`/rsvp/time?date=${selectedDate}&group=${couponGroup}&couponCode=${couponCode}`);
@@ -71,7 +75,7 @@ export default async function MainPage() {
       <section className="w-full p-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
 
-        <Calendar allowedMinDate={startDate} allowedMaxDate={endDate}/>
+        <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:'Next'}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:'Back'}} />

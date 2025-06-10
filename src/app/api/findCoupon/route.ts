@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
   console.log('=-------d----',data)
       if (typeof couponCode === 'string') {
         const couponResult = await getCouponDetails(couponCode);
+        console.log('--couponResult:----', couponResult);
         const session = await getSession();
         if (couponResult) {
           session.coupon = {

@@ -13,6 +13,10 @@ found bud on /rsvp/time ex: couponcode(2fd55fd01019) date 7/11 after select the 
 
 app/rsvp/time - form is calling action={funciton}. that is wrong. react use onSubmit instead of action. turn that function to route?? BUT everything is working??
 
+found bug in db. Schedule->uid with group16 it show 2025-09-02. suppost to be aug 30-31
+
+may be adding coupon# in DB like 1, 2, 3 ,4 ,5
+
 ## Live
 
 https://main.d1t1uzsb475px0.amplifyapp.com/
