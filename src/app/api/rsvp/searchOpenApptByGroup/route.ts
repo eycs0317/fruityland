@@ -28,7 +28,14 @@ export async function GET(request: NextRequest) {
 
 
       // Define the base Prisma where clause
-    const whereClause: any = {
+    const whereClause: {
+      group: number;
+      isBooked: boolean;
+      sessionDateTime?: {
+        gte: Date;
+        lte: Date;
+      };
+    } = {
       group: group,
       isBooked: false, // Only fetch appointments that are not yet booked
     };
