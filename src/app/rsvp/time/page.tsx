@@ -29,8 +29,8 @@ interface PageProps {
 }
 export default async function MainPage({ searchParams }: PageProps ) {
   const { date, group, couponCode } = searchParams;
-  console.log('----searchParams:----', searchParams);
-  console.log('----searchParams:----', date, group,couponCode);
+  // console.log('----searchParams:----', searchParams);
+  // console.log('----searchParams:----', date, group,couponCode);
   // const selectedDateParam = awaitedSearchParams.date || ''; // e.g., "2025-07-10" (representing the local HK date)
   let appointments: Appointment[] = [];
   let groupedAppointmentData: { time: string; count: number; availableCount: number; isFullyBooked: boolean; uids: string[]; }[] = [];
@@ -51,9 +51,9 @@ export default async function MainPage({ searchParams }: PageProps ) {
       }
       appointments = await response.json();
     // console.log('Fetched Appointments:', appointments);
-    console.log('Fetched Appointments length:', appointments.length);
+    // console.log('Fetched Appointments length:', appointments.length);
       groupedAppointmentData = groupAndSortAppointments(appointments);
-      console.log('Grouped Appointment Data:', groupedAppointmentData);
+      // console.log('Grouped Appointment Data:', groupedAppointmentData);
 
     } catch (error) {
         console.error('Failed to fetch appointments in MainPage:', error);

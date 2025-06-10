@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import { getScheduleDetailsByCouponCode } from '@/utils/getScheduleDetailsByCouponCode'; // Adjust path if necessary
 // Import formatInTimeZone from date-fns-tz
 import { formatInTimeZone } from 'date-fns-tz';
+import { formatUtcDateToMMDD} from'@/utils/formatUtcDateToMMDD'
 
 // Define the target timezone for display
 const HONG_KONG_TIMEZONE = 'Asia/Hong_Kong'; // Consistent IANA timezone identifier
@@ -23,13 +24,15 @@ export async function GET(request: Request) {
 
     if (result.success && result.data) {
       const scheduleData = result.data;
+      console.log('---------result.date ---------', scheduleData);
   console.log('---------scheduleData.sessionDateTime ---------', scheduleData.sessionDateTime);
       // Format the date and time explicitly in Hong Kong Time
-      const formattedDate = formatInTimeZone(
-        scheduleData.sessionDateTime, // Your UTC Date object from Prisma
-        HONG_KONG_TIMEZONE,           // Target timezone
-        'PPPP'                        // Date format string (e.g., "Monday, June 10, 2025")
-      );
+      // const formattedDate = formatInTimeZone(
+      //   scheduleData.sessionDateTime, // Your UTC Date object from Prisma
+      //   HONG_KONG_TIMEZONE,           // Target timezone
+      //   'PPPP'                        // Date format string (e.g., "Monday, June 10, 2025")
+      // );
+      const formattedDate = formatUtcDateToMMDD(scheduleData.sessionDateTime.toISOString());
   console.log('---------formattedDate ---------', formattedDate);
       const formattedTime = formatInTimeZone(
         scheduleData.sessionDateTime, // Your UTC Date object from Prisma

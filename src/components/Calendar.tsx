@@ -47,28 +47,13 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
   );
 
 
-  // const allowedMinDateConverted = allowedMinDate ? convertUTCToLocal(new Date(allowedMinDate), displayTimeZone) : undefined;
-  // const allowedMaxDateConverted = allowedMaxDate ? convertUTCToLocal(new Date(allowedMaxDate), displayTimeZone) : undefined;
-  // console.log('original allowedMinDate:', allowedMinDate);
-  // console.log('original allowedMaxDate:', allowedMaxDate);
-
-
-
-  // console.log('localMinDate:', localMinDate); //localMinDate: 2025-08-10T07:00:00.000Z
-//   const convertedAllowedMinDate = convertUTCToLocal(allowedMinDate, displayTimeZone);
-//   const convertedAllowedMaxDate = convertUTCToLocal(new Date(allowedMaxDate), displayTimeZone);
-// console.log('convert to HK UTC timeminAllowedDate:', convertedAllowedMinDate);
-//   console.log('convert to HK UTC time maxAllowedDate:', convertedAllowedMaxDate);
-
   const calendarRef = useRef<HTMLDivElement>(null);
 
 
   const handleDayClick = (clickedValue: ValuePiece) => {
 
     if (clickedValue instanceof Date) {
-      // For the hidden input (userClickedDay) that goes into the URL:
-      // FIX 2: Format the clickedValue (which represents the user's selected HKT date)
-      // directly to get the HKT date string.
+
 
       const formattedLocalDay = format(clickedValue, 'yyyy-MM-dd', { timeZone: displayTimeZone });
       setUserClickedDay(formattedLocalDay);

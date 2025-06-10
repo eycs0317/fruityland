@@ -113,7 +113,7 @@ export default function ClientPage() {
           </div>
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">Date:</dt>
-            <dd className="text-right">{apptDate || 'N/A'}</dd>
+            <dd className="text-right">{confirmationData?.date}</dd>
           </div>
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">Time:</dt>

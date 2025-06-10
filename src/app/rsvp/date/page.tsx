@@ -50,7 +50,8 @@ export default async function MainPage() {
     const data = Object.fromEntries(formData.entries());
 
     const selectedDate = data.selectedDate as string;
-
+    console.log('----data:----', data);
+    console.log('------>Selected Date:', selectedDate);
     if (data.btNext) {
       if (selectedDate) {
         redirect(`/rsvp/time?date=${selectedDate}&group=${couponGroup}&couponCode=${couponCode}`);
