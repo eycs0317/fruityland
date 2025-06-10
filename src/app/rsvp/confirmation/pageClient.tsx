@@ -109,19 +109,19 @@ export default function ClientPage() {
         <Heading level={1} content="Your reservation is confirmed for FruityLand." className="text-2xl pb-8" />
         <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
       </section>
-      <section className="relative w-1/3 pb-8 px-8">
+      <section className="relative w-1/2 pb-8 px-8">
         <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
           <QRCode
-            size={256}
+            size={500}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            viewBox={`0 0 256 256`}
-            value={`${domain}/verify-reservation?cc=${confirmationData?.couponCode}`}
+            viewBox={`0 0 500 500`}
+            value={`${domain}/rsvp/confirmation?cc=${confirmationData?.couponCode}`}
           />
         </div>
       </section>
 
       <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Booking Details:</h2>
+        <Heading level={1} content="Booking Details" className="text-xl pb-8" />
         <dl className="space-y-2 text-gray-700">
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">Coupon Code:</dt>
