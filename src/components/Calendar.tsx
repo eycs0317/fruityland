@@ -25,15 +25,15 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface CalendarProps {
   initialDate?: string;
-  allowedMinDate?: Date
-  allowedMaxDate?: Date;
+  allowedMinDate?: Date | undefined
+  allowedMaxDate?: Date | undefined;
 }
 
 export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }: CalendarProps) {
   const displayTimeZone = APP_DISPLAY_TIMEZONE;
 
 
-
+  // Try to change to HK calendar, but it doesnt work, believe
   const initialLocalDate = initialDate
     ? convertUTCToLocal(new Date(initialDate), displayTimeZone)
     : convertUTCToLocal(new Date(), displayTimeZone);
@@ -82,29 +82,7 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
       }
     }
 
-    // 2. Add event listener to the document for clicks outside the calendar
-    // const handleClickOutside = (event: MouseEvent) => {
-    //   // Check if the click target is NOT within the calendar component
-    //   if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
-    //     // If there's a selected date and the click was outside, clear the selection
-    //     if (value instanceof Date) { // Only clear if something is currently selected
-    //       onChange(null); // Set value to null to deselect the date visually
-    //       setUserClickedDay(''); // Clear the hidden input value too
-    //       console.log('CLIENT (Calendar.tsx): Clicked outside. Selection cleared.');
-    //     }
-    //   }
-    // };
-
-    // document.addEventListener('mousedown', handleClickOutside);
-
-    // // 3. Clean up the event listener when the component unmounts
-    // return () => {
-    //   document.removeEventListener('mousedown', handleClickOutside);
-    // };
   }, [initialDate, value, userClickedDay, displayTimeZone]); // Include `value` in dependencies to re-run effect when `value` changes
-
-
-
 
   return (
     <div ref={calendarRef} className='w-full max-w-md mx-auto p-4'>

@@ -11,8 +11,9 @@ import {useSearchParams} from 'next/navigation';
 import Heading from '@/ui/foundations/heading';
 import FormField from '@/ui/foundations/formField';
 
-// No direct import of getScheduleDetailsByCouponCode here for client component
+import { parseISO, format } from 'date-fns';
 
+import QRCode from 'react-qr-code';
 // Define types for the data fetched from your API route
 type ConfirmationDetails = {
   couponCode: string;
@@ -32,7 +33,7 @@ export default function ClientPage() {
   const searchParams = useSearchParams();
   console.log('------searchParams at confirmation:------', searchParams);
   const couponCodeFromURL = searchParams.get('cc'); // Get couponCode from URL
-  const apptDate = searchParams.get('date'); // Get date from URL, if needed
+  // const apptDate = searchParams.get('date'); // Get date from URL, if needed
   const [confirmationData, setConfirmationData] = useState<ConfirmationDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -49,9 +50,17 @@ export default function ClientPage() {
       try {
         const response = await fetch(`/api/coupon-details?cc=${couponCodeFromURL}`);
         const result: APIResponse = await response.json();
-        console.log('result--------', result)
+        console.log('hello result--------', result)
+
+        const parseISODate = parseISO(result.data?.date || '');
+        const formattedDate = format(parseISODate, 'MMMM-dd-yy');
+        console.log('Formatted -----Date:', formattedDate);
+
+        const parseISOTime = parseISO(result.data?.time || '');
+        const formattedTime = format(parseISOTime, 'p')
         if (result.success && result.data) {
-          setConfirmationData(result.data);
+          setConfirmationData({...result.data, date: formattedDate,time: formattedTime});
+
         } else {
           setError(result.message || 'Failed to load confirmation details.');
         }
@@ -101,7 +110,17 @@ export default function ClientPage() {
       </section>
 
       <section className="relative w-1/3 pb-8 px-8">
-        <Image src="/assets/i/placeholder/qrCode.svg" alt="QR Code" layout="responsive" width="300" height="300" />
+      <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
+            <QRCode
+              size={256} // Adjust the size as needed. This is the pixel size for the SVG.
+              style={{ height: "auto", maxWidth: "100%", width: "100%" }} // Make it responsive
+              value={`${confirmationData?.couponCode}:${confirmationData?.date}:${confirmationData?.time}`} // The data to encode
+              viewBox={`0 0 256 256`} // Important for SVG scaling
+              //Note - need the domain to be added here.
+              // value={`${domain}/verify-reservation?cc=${confirmationData?.couponCode}&uid=${confirmationData?.uid}&date=${confirmationData?.date}&time=${confirmationData?.time}`}
+            />
+          </div>
+        {/* <Image src="/assets/i/placeholder/qrCode.svg" alt="QR Code" layout="responsive" width="300" height="300" /> */}
       </section>
 
       <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">

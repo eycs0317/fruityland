@@ -21,101 +21,119 @@ import { createReservation } from '@/utils/createReservation';
 import { Appointment } from '@/utils/appointmentUtils';
 
 interface PageProps {
-  searchParams?: {
+  searchParams?: Promise<{
     date?: string;
     group?: string;
     couponCode?: string;
-  };
+  }>;
 }
-export default async function MainPage({ searchParams }: PageProps ) {
-  const { date, group, couponCode } = searchParams;
-  // console.log('----searchParams:----', searchParams);
-  // console.log('----searchParams:----', date, group,couponCode);
-  // const selectedDateParam = awaitedSearchParams.date || ''; // e.g., "2025-07-10" (representing the local HK date)
+
+export default async function MainPage({ searchParams }: PageProps) {
+  // Await the searchParams Promise as per Next.js 15 behavior
+  const resolvedSearchParams = await searchParams;
+
+  // Destructure the resolved search parameters
+  const date = resolvedSearchParams?.date;
+  const group = resolvedSearchParams?.group;
+  const couponCode = resolvedSearchParams?.couponCode;
+
+  // Initialize arrays for appointments and grouped data
   let appointments: Appointment[] = [];
   let groupedAppointmentData: { time: string; count: number; availableCount: number; isFullyBooked: boolean; uids: string[]; }[] = [];
-  // let displayDate = 'Date not selected';
-  // console.log('----selectedDateParam:----', awaitedSearchParams);
 
+  // Fetch appointments if a group is provided
   if (group) {
     try {
-      // console.log('----selectedDateParam.grouppppppppppp:', awaitedSearchParams.group);
+      // Construct API URL for searching open appointments by group
       const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByGroup?group=${group}`;
 
+      // Fetch data from the API
       const response = await fetch(apiUrl, {
         method: 'GET',
-        cache: 'no-store'
+        cache: 'no-store' // Ensure fresh data is fetched
       });
+
+      // Check if the API response was successful
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      // Parse the JSON response
       appointments = await response.json();
-    // console.log('Fetched Appointments:', appointments);
-    // console.log('Fetched Appointments length:', appointments.length);
+
+      // Group and sort the fetched appointments
       groupedAppointmentData = groupAndSortAppointments(appointments);
-      // console.log('Grouped Appointment Data:', groupedAppointmentData);
 
     } catch (error) {
+        // Log and handle errors during API call or data processing
         console.error('Failed to fetch appointments in MainPage:', error);
         appointments = [];
         groupedAppointmentData = [];
     }
-
   }
 
+  // Server Action to handle form submission
   async function handleSubmit(formData: FormData) {
-    'use server'
+    'use server' // Mark this function as a Server Action
+
+    // Extract data from the form
     const data = Object.fromEntries(formData.entries());
     console.log('------Form Data Submitted:--------', data);
 
-    const { rsvpTime, couponCode: submittedCouponCode, btBack, btSchedule } = data; // Renamed couponCode from form to avoid confusion
+    // Destructure specific fields from the form data
+    const { rsvpTime, couponCode: submittedCouponCode, btBack, btSchedule } = data;
 
-    if (btSchedule) { // If the 'Schedule' button was clicked
+    // Handle 'Schedule' button click
+    if (btSchedule) {
+      // Validate if an RSVP time was selected
       if (!rsvpTime) {
-        // Handle case where rsvpTime is missing from the form
-        return 'Please select a time slot.'; // This message would be caught by useFormState if used
+        // Throw an error if no time is selected, as per Server Action return type expectations
+        throw new Error('Please select a time slot.');
       }
 
-      let reservationSuccess = false; // Flag to track reservation status
-      let errorMessage = '';
+      let errorMessage = ''; // Variable to hold error message
 
       try {
+        // Attempt to create the reservation using a utility function
         const result = await createReservation({
           couponCode: submittedCouponCode as string,
           rsvpTime: rsvpTime as string,
         });
 
+        // Check if reservation creation was successful
         if (!result.success) {
-          // If creation fails, set error message
           errorMessage = result.message || 'Failed to create reservation.';
-          console.error('Reservation creation failed:', errorMessage);
+          // Throw an error if reservation creation failed
+          throw new Error(errorMessage);
         } else {
-          // If creation succeeds, set success flag
-          reservationSuccess = true;
           console.log('Reservation created successfully:', result.data);
         }
       } catch (error: Error | unknown) {
-        // Catch any unexpected errors from createReservation (e.g., network, DB connection issues)
-        errorMessage = error.message || 'An unexpected error occurred during reservation creation.';
+        // Catch any unexpected errors from createReservation
+        // Use a type guard to safely access the error message
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else {
+          errorMessage = 'An unexpected error occurred during reservation creation.';
+        }
         console.error('Error during reservation submission (createReservation failed):', errorMessage);
+        // Re-throw the error to ensure the Server Action's contract is met
+        throw new Error(errorMessage);
       }
 
-      // --- IMPORTANT: Now, handle the redirect or error based on the flags ---
-      if (reservationSuccess) {
-        // This is where the redirect should happen, OUTSIDE the previous try-catch block.
-        // If createReservation was successful, Next.js handles the redirect signal here.
-        redirect(`/rsvp/confirmation?cc=${submittedCouponCode}&date=${date}&group=${group}&uid=${rsvpTime}`);
-      } else {
-        // If reservation was not successful, return the error message to the client
-        return errorMessage;
-      }
+      // If reservation was successful, redirect the user to the confirmation page
+      // `redirect` terminates the execution of the Server Action
+      redirect(`/rsvp/confirmation?cc=${submittedCouponCode}&date=${date}&group=${group}&uid=${rsvpTime}`);
 
     } else if (btBack) {
+      // If 'Back' button was clicked, redirect to the date selection page
       redirect('/rsvp/date');
     }
 
-    // Fallback if neither button was clicked (shouldn't typically happen)
-    return 'Invalid form submission.';
+    // This line is reached if neither btSchedule nor btBack is present,
+    // or if a branch completes without a redirect/throw.
+    // Explicitly returning void satisfies the Server Action return type.
+    return;
   }
 
   return (
@@ -132,6 +150,7 @@ export default async function MainPage({ searchParams }: PageProps ) {
           <dd className="flex-5">{date}</dd>
         </dl>
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
+        {/* Render hidden input for couponCode if available */}
         {couponCode && <input type="hidden" name="couponCode" value={couponCode} />}
           <div className="flex flex-row gap-4">
             <div className="flex flex-col flex-1 gap-4">
@@ -139,11 +158,11 @@ export default async function MainPage({ searchParams }: PageProps ) {
                 groupLabel: 'Select a time',
                 groupName: 'rsvpTime',
                 groupClassName: 'flex flex-col',
-                radios: groupedAppointmentData.length > 0 ? groupedAppointmentData.map(group => ({
-                  label: group.time,
-                  value: group.uids[0],
-                  id: `slot_group_${group.time.replace(/[^a-zA-Z0-9]/g, '')}`,
-                  isDisabled: group.isFullyBooked,
+                radios: groupedAppointmentData.length > 0 ? groupedAppointmentData.map(groupItem => ({
+                  label: groupItem.time,
+                  value: groupItem.uids[0], // Assuming uids[0] is the UID for the slot
+                  id: `slot_group_${groupItem.time.replace(/[^a-zA-Z0-9]/g, '')}`,
+                  isDisabled: groupItem.isFullyBooked,
                 })) : [
                   { label: 'No slots available for this date', value: '', id: 'no_slots_available', isDisabled: true }
                 ]
@@ -151,10 +170,10 @@ export default async function MainPage({ searchParams }: PageProps ) {
             </div>
             <div className="flex flex-col pt-8 flex-1 text-right">
               {groupedAppointmentData.length > 0 ? (
-                groupedAppointmentData.map(group => (
-                  <div key={`count_${group.time.replace(/[^a-zA-Z0-9]/g, '')}`}
-                       className={`flex flex-col ${group.isFullyBooked ? 'text-neutral-500' : ''}`}>
-                    {group.isFullyBooked ? 'Full' : `${group.availableCount} slots`}
+                groupedAppointmentData.map(groupItem => (
+                  <div key={`count_${groupItem.time.replace(/[^a-zA-Z0-9]/g, '')}`}
+                       className={`flex flex-col ${groupItem.isFullyBooked ? 'text-neutral-500' : ''}`}>
+                    {groupItem.isFullyBooked ? 'Full' : `${groupItem.availableCount} slots`}
                   </div>
                 ))
               ) : (
