@@ -6,35 +6,76 @@ import {prisma} from '@/lib/prisma';
 
 function generateCalendar() {
   const slots = [];
-  const startDate = new Date(Date.UTC(2025, 6, 10, 6, 0, 0)); // July 10, 2025 @ 6:00 AM UTC
+  const actualStartDate = new Date(Date.UTC(2025, 6, 10, 6, 0, 0)); // July 10, 2025
 
   const weekdaySessions = [
     [6, 0], [6, 30], [7, 0], [7, 30],
-    // break 8–9
     [9, 0], [9, 30], [10, 0], [10, 30], [11, 0], [11, 30],
   ];
 
   const weekendSessions = [
     [4, 0], [4, 30], [5, 0], [5, 30], [6, 0], [6, 30], [7, 0], [7, 30],
-    // break 8–9
     [9, 0], [9, 30], [10, 0], [10, 30], [11, 0], [11, 30],
   ];
 
   const SLOTS_PER_SESSION = 10;
   let groupNumber = 1;
 
-  for (let week = 0; week < 8; week++) {
-    const weekStartDate = new Date(startDate);
-    weekStartDate.setUTCDate(startDate.getUTCDate() + week * 7);
+  // Week 1 weekday group: July 10–11 (Thu–Fri)
+  for (let dayOffset = 0; dayOffset < 2; dayOffset++) {
+    const dayDate = new Date(actualStartDate);
+    dayDate.setUTCDate(actualStartDate.getUTCDate() + dayOffset);
 
-    // Weekday group
-    const weekdayDays = week === 0 ? 2 : 5; // Special case for week 1 (Thu–Fri)
-    for (let day = 0; day < weekdayDays; day++) {
-      const currentDate = new Date(weekStartDate);
-      currentDate.setUTCDate(currentDate.getUTCDate() + day);
+    for (const [hour, minute] of weekdaySessions) {
+      const sessionTime = new Date(dayDate);
+      sessionTime.setUTCHours(hour, minute, 0, 0);
+
+      for (let slot = 0; slot < SLOTS_PER_SESSION; slot++) {
+        slots.push({
+          sessionDateTime: new Date(sessionTime),
+          group: groupNumber,
+          isWeekend: false,
+        });
+      }
+    }
+  }
+
+  groupNumber++;
+
+  // Week 1 weekend group: July 12–13 (Sat–Sun)
+  for (let dayOffset = 2; dayOffset < 4; dayOffset++) {
+    const dayDate = new Date(actualStartDate);
+    dayDate.setUTCDate(actualStartDate.getUTCDate() + dayOffset);
+
+    for (const [hour, minute] of weekendSessions) {
+      const sessionTime = new Date(dayDate);
+      sessionTime.setUTCHours(hour, minute, 0, 0);
+
+      for (let slot = 0; slot < SLOTS_PER_SESSION; slot++) {
+        slots.push({
+          sessionDateTime: new Date(sessionTime),
+          group: groupNumber,
+          isWeekend: true,
+        });
+      }
+    }
+  }
+
+  groupNumber++;
+
+  // Remaining weeks: Week 2 to Week 8
+  const remainingStart = new Date(Date.UTC(2025, 6, 14)); // Monday, July 14
+  for (let week = 0; week < 7; week++) {
+    const weekBase = new Date(remainingStart);
+    weekBase.setUTCDate(remainingStart.getUTCDate() + week * 7);
+
+    // Weekday group: Mon–Fri
+    for (let d = 0; d < 5; d++) {
+      const dayDate = new Date(weekBase);
+      dayDate.setUTCDate(weekBase.getUTCDate() + d);
 
       for (const [hour, minute] of weekdaySessions) {
-        const sessionTime = new Date(currentDate);
+        const sessionTime = new Date(dayDate);
         sessionTime.setUTCHours(hour, minute, 0, 0);
 
         for (let slot = 0; slot < SLOTS_PER_SESSION; slot++) {
@@ -49,13 +90,13 @@ function generateCalendar() {
 
     groupNumber++;
 
-    // Weekend group
-    for (let day = weekdayDays; day < weekdayDays + 2; day++) {
-      const currentDate = new Date(weekStartDate);
-      currentDate.setUTCDate(currentDate.getUTCDate() + day);
+    // Weekend group: Sat–Sun
+    for (let d = 5; d < 7; d++) {
+      const dayDate = new Date(weekBase);
+      dayDate.setUTCDate(weekBase.getUTCDate() + d);
 
       for (const [hour, minute] of weekendSessions) {
-        const sessionTime = new Date(currentDate);
+        const sessionTime = new Date(dayDate);
         sessionTime.setUTCHours(hour, minute, 0, 0);
 
         for (let slot = 0; slot < SLOTS_PER_SESSION; slot++) {
@@ -70,6 +111,7 @@ function generateCalendar() {
 
     groupNumber++;
   }
+
   return slots;
 }
 
