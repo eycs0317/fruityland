@@ -30,8 +30,9 @@ type APIResponse = {
 
 export default function ClientPage() {
   const searchParams = useSearchParams();
+  console.log('------searchParams at confirmation:------', searchParams);
   const couponCodeFromURL = searchParams.get('cc'); // Get couponCode from URL
-
+  const apptDate = searchParams.get('date'); // Get date from URL, if needed
   const [confirmationData, setConfirmationData] = useState<ConfirmationDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -112,7 +113,7 @@ export default function ClientPage() {
           </div>
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">Date:</dt>
-            <dd className="text-right">{confirmationData?.date || 'N/A'}</dd>
+            <dd className="text-right">{apptDate || 'N/A'}</dd>
           </div>
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">Time:</dt>

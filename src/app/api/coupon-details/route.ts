@@ -23,14 +23,14 @@ export async function GET(request: Request) {
 
     if (result.success && result.data) {
       const scheduleData = result.data;
-
+  console.log('---------scheduleData.sessionDateTime ---------', scheduleData.sessionDateTime);
       // Format the date and time explicitly in Hong Kong Time
       const formattedDate = formatInTimeZone(
         scheduleData.sessionDateTime, // Your UTC Date object from Prisma
         HONG_KONG_TIMEZONE,           // Target timezone
         'PPPP'                        // Date format string (e.g., "Monday, June 10, 2025")
       );
-
+  console.log('---------formattedDate ---------', formattedDate);
       const formattedTime = formatInTimeZone(
         scheduleData.sessionDateTime, // Your UTC Date object from Prisma
         HONG_KONG_TIMEZONE,           // Target timezone
