@@ -42,10 +42,10 @@ export default async function MainPage({ searchParams }: PageProps) {
   let groupedAppointmentData: { time: string; count: number; availableCount: number; isFullyBooked: boolean; uids: string[]; }[] = [];
 
   // Fetch appointments if a group is provided
-  if (group) {
+  if (group && date) {
     try {
       // Construct API URL for searching open appointments by group
-      const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByGroup?group=${group}`;
+      const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByGroup?group=${group}&date=${date}`;
 
       // Fetch data from the API
       const response = await fetch(apiUrl, {
@@ -60,10 +60,11 @@ export default async function MainPage({ searchParams }: PageProps) {
 
       // Parse the JSON response
       appointments = await response.json();
+      console.log('appts----->', appointments)
 
       // Group and sort the fetched appointments
       groupedAppointmentData = groupAndSortAppointments(appointments);
-
+      console.log('groupedAppointmentData----->', groupedAppointmentData)
     } catch (error) {
         // Log and handle errors during API call or data processing
         console.error('Failed to fetch appointments in MainPage:', error);

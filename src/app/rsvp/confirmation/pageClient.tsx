@@ -117,7 +117,9 @@ export default function ClientPage() {
               // value={`${confirmationData?.couponCode}:${confirmationData?.date}:${confirmationData?.time}`} // The data to encode
               viewBox={`0 0 256 256`} // Important for SVG scaling
               //Note - need the domain to be added here.
+
               value={`${domain}/verify-reservation?cc=${confirmationData?.couponCode}&uid=${confirmationData?.uid}&date=${confirmationData?.date}&time=${confirmationData?.time}`}
+
             />
           </div>
         {/* <Image src="/assets/i/placeholder/qrCode.svg" alt="QR Code" layout="responsive" width="300" height="300" /> */}
