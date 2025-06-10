@@ -109,7 +109,6 @@ export default function ClientPage() {
         <Heading level={1} content="Your reservation is confirmed for FruityLand." className="text-2xl pb-8" />
         <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
       </section>
-
       <section className="relative w-1/3 pb-8 px-8">
         <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
           <QRCode

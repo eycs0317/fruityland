@@ -45,8 +45,7 @@ export default async function MainPage() {
   const couponCode = session.coupon?.couponCode;
   const {startDate, endDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
   // console.log('Coupon Group:', session.coupon?.group);
-  console.log('Start Date:', startDate);
-  console.log('End Date:', endDate);
+
   async function handleSubmit(formData: FormData) {
     'use server'
 
