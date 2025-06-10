@@ -2,6 +2,8 @@
 
 // react
 import {useEffect, useState} from 'react';
+import {parseISO, format} from 'date-fns';
+import QRCode from 'react-qr-code';
 
 // nextjs
 import Image from 'next/image';
@@ -11,10 +13,6 @@ import {useSearchParams} from 'next/navigation';
 // ui
 import Heading from '@/ui/foundations/heading';
 import FormField from '@/ui/foundations/formField';
-
-import { parseISO, format } from 'date-fns';
-
-import QRCode from 'react-qr-code';
 
 // Define types for the data fetched from your API route
 type ConfirmationDetails = {
@@ -78,33 +76,33 @@ export default function ClientPage() {
   // Display loading state
   if (isLoading) {
     return (
-      <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <>
         <section className="w-full p-8 text-center">
           <Heading level={1} content="Loading Your Reservation Details..." className="text-2xl pb-8" />
         </section>
         <section className="relative w-1/3 pb-8 px-8">
           <Image src="/assets/i/icons/spinner.gif" alt="Loading" layout="responsive" width="100" height="100" />
         </section>
-      </main>
+      </>
     );
   }
 
   // Display error state
   if (error) {
     return (
-      <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <>
         <section className="w-full p-8 text-center">
           <Heading level={1} content="Error Loading Reservation" className="text-2xl pb-8 text-red-600" />
           <p className="text-lg text-gray-700 mb-8">{error}</p>
           <p className="text-lg text-gray-700"><Link href="/">Go back to homepage.</Link></p>
         </section>
-      </main>
+      </>
     );
   }
 
   // Display data once loaded
   return (
-    <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+    <>
       <section className="w-full p-8 text-center">
         <Heading level={1} content="Your reservation is confirmed for FruityLand." className="text-2xl pb-8" />
         <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
@@ -151,6 +149,6 @@ export default function ClientPage() {
           </div>
         </form>
       </section>
-    </main>
+    </>
   );
 }

@@ -4,8 +4,8 @@ import {NextRequest, NextResponse} from 'next/server';
 // prisma
 import {prisma} from '@/lib/prisma';
 
-//session
-import { getSession } from '@/lib/session';
+// lib
+import {getSession} from '@/lib/session';
 
 async function getCouponDetails(couponCode: string) {
   const couponSearch = await prisma.coupon.findUnique({
@@ -26,10 +26,8 @@ export async function POST(req: NextRequest) {
     try {
       const data = await req.formData();
       const couponCode = data.get('couponCode');
-  console.log('=-------d----',data)
       if (typeof couponCode === 'string') {
         const couponResult = await getCouponDetails(couponCode);
-        console.log('--couponResult:----', couponResult);
         const session = await getSession();
         if (couponResult) {
           session.coupon = {
