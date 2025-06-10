@@ -1,9 +1,20 @@
 import {getIronSession, SessionOptions} from 'iron-session';
 import {cookies} from 'next/headers';
 
+export interface CouponSessionData {
+  couponCode: string;
+  group?: number;
+  isWeekend?: boolean;
+  participantCount: number;
+  scheduleUID: string | null;
+  isRSVP: boolean;
+  status: number;
+  couponSchedule: string | null;
+}
 export interface SessionData {
   auth: boolean;
   authType: string;
+  coupon?: CouponSessionData;
 }
 
 export const sessionOptions: SessionOptions = {
