@@ -44,7 +44,7 @@ export default async function MainPage() {
         <Heading level={1} content="Event Date Search" className="text-4xl" />
       </section>
       <section className="w-full px-8 pb-8">
-        <form className="flex flex-col gap-8 w-full" action={handleSubmit} method="post">
+        <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />

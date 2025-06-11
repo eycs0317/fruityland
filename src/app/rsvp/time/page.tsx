@@ -124,7 +124,7 @@ export default async function MainPage({ searchParams }: PageProps) {
 
       // If reservation was successful, redirect the user to the confirmation page
       // `redirect` terminates the execution of the Server Action
-      redirect(`/rsvp/confirmation?cc=${submittedCouponCode}&date=${date}&group=${group}&uid=${rsvpTime}`);
+      redirect(`/rsvp/confirmation?cc=${submittedCouponCode}`);
 
     } else if (btBack) {
       // If 'Back' button was clicked, redirect to the date selection page

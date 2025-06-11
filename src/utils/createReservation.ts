@@ -46,6 +46,7 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
         data: {
           scheduleUID: rsvpTime,
           isRSVP: true,
+          status: 1,
         },
       }),
       prisma.schedule.update({

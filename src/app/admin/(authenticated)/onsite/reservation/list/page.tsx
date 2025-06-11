@@ -24,7 +24,7 @@ import PageClient from './pageClient';
 interface ReservationData {
   uid: string;
   couponCode: string;
-  status: string;
+  status: number;
   sessionDateTime: string; // ISO string from DB (UTC)
   group: number;
   // Add other fields you expect to display, e.g., participantCount, etc.

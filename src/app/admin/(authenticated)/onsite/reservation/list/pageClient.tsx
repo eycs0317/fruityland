@@ -17,7 +17,7 @@ import { parseISO, format } from 'date-fns';
 interface ReservationData {
   uid: string;
   couponCode: string;
-  status: string;
+  status: number;
   sessionDateTime: string; // ISO string from DB (UTC)
   group: number;
   // Add other fields you expect to display, e.g., participantCount, etc.
@@ -50,7 +50,6 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
                 <tr>
                   <th className="py-3 px-4 text-left">Time</th>
                   <th className="py-3 px-4 text-left">Coupon Code</th>
-                  <th className="py-3 px-4 text-left">Group</th>
                   <th className="py-3 px-4 text-left">Status</th>
                 </tr>
               </thead>
@@ -64,8 +63,7 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
                     <tr key={reservation.uid}>
                       <td className="py-3 px-4">{displayTime || 'N/A'}</td>
                       <td className="py-3 px-4">{reservation.couponCode || 'N/A'}</td>
-                      <td className="py-3 px-4">{reservation.group || 'N/A'}</td>
-                      <td className="py-3 px-4">{reservation.status || 'N/A'}</td>
+                      <td className="py-3 px-4">{(reservation.status == 1) ? 'Reserved' : (reservation.status == 2) ? 'Completed' : 'New'}</td>
                       {/* Add more cells based on your ReservationData interface */}
                     </tr>
                   );
