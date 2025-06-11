@@ -1,106 +1,111 @@
+
+
 // src/components/Calendar.tsx
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css'; // Custom styles for the calendar
 
-// Import functions and the timezone constant from your utility file
-import {
-  APP_DISPLAY_TIMEZONE,
-  // convertLocalToUTCForDB, // Used for converting TO UTC for API
-  convertUTCToLocal,     // Used for converting FROM UTC for display
-  // No need for formatUTCToLocalString here, as we use date-fns-tz's format directly
-} from '@/utils/timezoneUtils';
-
-
-
-// Import format from date-fns-tz as it supports the timeZone option
-import { format,  } from 'date-fns-tz';
+// Import format and parseISO from date-fns
+import {  parseISO } from 'date-fns';
 
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 interface CalendarProps {
-  initialDate?: string;
-  allowedMinDate?: Date | undefined
-  allowedMaxDate?: Date | undefined;
+  initialDate?: string; // Expecting ISO string (e.g., "2025-07-10T00:00:00.000Z")
+  allowedMinDate?: Date | undefined // These are Date objects passed as props
+  allowedMaxDate?: Date | undefined; // These are Date objects passed as props
 }
 
 export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }: CalendarProps) {
-  const displayTimeZone = APP_DISPLAY_TIMEZONE;
+  // `nowUTC` is a Date object representing the current moment.
+  // When formatted/displayed by ReactCalendar, it will implicitly use the browser's local timezone.
+  const nowUTC = new Date();
+  // console.log('nowUTC (Date object):', nowUTC); // Console logs are okay in client components
 
+  // --- REVISED INITIAL STATE CALCULATIONS ---
+  // This logic runs only ONCE when the component initially renders.
+  // It ensures the state is set correctly from props or a default.
+  const calculateInitialDateStates = () => {
+    let initialCalDate: Date;
+    let initialClickedIsoDate: string | undefined;
 
-  // Try to change to HK calendar, but it doesnt work, believe
-  const initialLocalDate = initialDate
-    ? convertUTCToLocal(new Date(initialDate), displayTimeZone)
-    : convertUTCToLocal(new Date(), displayTimeZone);
+    if (initialDate) {
+      // If initialDate prop is provided, parse it to a Date object
+      const parsedDate = parseISO(initialDate);
+      initialCalDate = parsedDate;
+      // Store the YYYY-MM-DD UTC string for userClickedDay
+      initialClickedIsoDate = parsedDate.toISOString().split('T')[0];
+    } else {
+      // If no initialDate prop, default to today's date in local time for display
+      initialCalDate = nowUTC; // Represents today's date in local time
+      // And default userClickedDay to today's YYYY-MM-DD UTC string
+      initialClickedIsoDate = nowUTC.toISOString().split('T')[0];
+    }
+    return {
+      calendarValue: initialCalDate,
+      clickedDayString: initialClickedIsoDate,
+    };
+  };
 
-  const [value, onChange] = useState<Value>(initialLocalDate);
+  const { calendarValue: initialCalValue, clickedDayString: initialClickedDayString } = calculateInitialDateStates();
 
+  // State to control the displayed date in the calendar component
+  // Initialized directly with the calculated value.
+  const [value, onChange] = useState<Value>(initialCalValue);
 
-
-  const [userClickedDay, setUserClickedDay] = useState<string>(() =>
-    format(initialLocalDate, 'yyyy-MM-dd', { timeZone: displayTimeZone })
-  );
-
+  // userClickedDay now stores a string (YYYY-MM-DD) or undefined, derived from UTC.
+  // Initialized directly with the calculated value.
+  const [userClickedDay, setUserClickedDay] = useState<string | undefined>(initialClickedDayString);
+  // --- END REVISED INITIAL STATE CALCULATIONS ---
 
   const calendarRef = useRef<HTMLDivElement>(null);
 
-
+  // Handler for when a day is clicked on the calendar
   const handleDayClick = (clickedValue: ValuePiece) => {
-
+    // console.log('Clicked Value (Date object from ReactCalendar):', clickedValue);
     if (clickedValue instanceof Date) {
-
-
-      const formattedLocalDay = format(clickedValue, 'yyyy-MM-dd', { timeZone: displayTimeZone });
-      setUserClickedDay(formattedLocalDay);
-      onChange(clickedValue)
-
-      onChange(clickedValue); // Keep calendar showing local HK date
-
+      // Convert Date object to YYYY-MM-DD string (UTC date part) immediately
+      const isoDateString = clickedValue.toISOString().split('T')[0];
+      setUserClickedDay(isoDateString);
+      // onChange still uses the Date object for ReactCalendar's display.
+      // This is crucial for ReactCalendar to visually update its selection.
+      onChange(clickedValue);
     } else {
-      setUserClickedDay('');
-      onChange(null); // Reset the calendar value if clickedValue is null
-
+      // If clickedValue is null (e.g., clearing selection), reset states.
+      setUserClickedDay(undefined);
+      onChange(null);
     }
   };
 
-  useEffect(() => {
-    // Existing logic for initialDate handling
-    if (initialDate) {
-      const hkDate = convertUTCToLocal(new Date(initialDate), displayTimeZone);
-      const formattedInitialDate = format(hkDate, 'yyyy-MM-dd', { timeZone: displayTimeZone });
-
-      if (!(value instanceof Date) || format(value, 'yyyy-MM-dd', { timeZone: displayTimeZone }) !== formattedInitialDate) {
-        onChange(hkDate);
-      }
-      if (userClickedDay !== formattedInitialDate) {
-        setUserClickedDay(formattedInitialDate);
-      }
-    }
-
-  }, [initialDate, value, userClickedDay, displayTimeZone]); // Include `value` in dependencies to re-run effect when `value` changes
+  // --- REMOVED useEffect FOR INITIAL SYNC ---
+  // The previous useEffect hook that was causing the conflict has been removed.
+  // Initial state synchronization is now handled entirely by the `useState` initializers.
+  // This ensures that the component's state will not be reset by the `initialDate` prop
+  // after a user has interacted with the calendar, thus preventing the "revert" issue.
+  // --- END REMOVED useEffect ---
 
   return (
     <div ref={calendarRef} className='w-full max-w-md mx-auto p-4'>
       <ReactCalendar
-        onChange={onChange}
-        value={value}
-        onClickDay={handleDayClick}
-        minDate={allowedMinDate}
-
-
-        maxDate={allowedMaxDate}
-        defaultActiveStartDate={allowedMinDate}
-        calendarType='gregory'
+        onChange={onChange} // Updates the 'value' state for calendar display
+        value={value} // The current date(s) displayed/selected in the calendar
+        onClickDay={handleDayClick} // Custom handler for day clicks
+        minDate={allowedMinDate} // Minimum selectable date (Date object)
+        maxDate={allowedMaxDate} // Maximum selectable date (Date object)
+        defaultActiveStartDate={allowedMinDate || (value instanceof Date ? value : nowUTC)}
+        calendarType='gregory' // Use Gregorian calendar type
       />
+      {/* Hidden input to pass the selected date to the form. */}
+      {/* `userClickedDay` is already a YYYY-MM-DD string or undefined. */}
       <input
         type="hidden"
-        name="selectedDate"
-        value={userClickedDay || ''}
+        name="selectedDate" // Name attribute for form submission
+        value={userClickedDay || ''} // Direct use, as it's already a string
       />
     </div>
   );
