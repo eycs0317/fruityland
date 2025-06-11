@@ -14,8 +14,12 @@ import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 
+// Calendar
+import Calendar from '@/components/Calendar';
+
 // lib
 import {getSession} from '@/lib/session';
+import {getEventMinMaxDate} from '@/lib/getEventMinMaxDate';
 
 export default async function MainPage() {
   const session = await getSession();
@@ -23,25 +27,17 @@ export default async function MainPage() {
     redirect('/admin');
   }
 
-  async function handleSubmit(formData: FormData) {
-    'use server'
-    const data = Object.fromEntries(formData.entries());
+  const {startDate, endDate} = await getEventMinMaxDate();
 
-    if (data.eventDate != '' && data.btSearch) {
-      redirect('/admin/onsite/reservation/list');
-    }
-  }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
       <section className="w-full p-8">
-        <Heading level={1} content="Event Date Search" className="text-4xl pb-8" />
+        <Heading level={1} content="Event Date Search" className="text-4xl" />
       </section>
-      <section className="w-full p-8">
-        <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
-          <div className="flex flex-col gap-4">
-            <FormField type="input" fieldData={{type: 'text', id: 'eventDate', label: 'Event Date', wrapperClassName: 'w-full', isRequired:true}} />
-          </div>
+      <section className="w-full px-8 pb-8">
+        <form className="flex flex-col gap-8 w-full" action="/api/listConfirmationByDate" method="post">
+          <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
           </div>

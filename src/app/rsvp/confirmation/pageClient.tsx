@@ -81,7 +81,7 @@ export default function ClientPage() {
           <Heading level={1} content="Loading Your Reservation Details..." className="text-2xl pb-8" />
         </section>
         <section className="relative w-1/3 pb-8 px-8">
-          <Image src="/assets/i/icons/spinner.gif" alt="Loading" layout="responsive" width="100" height="100" />
+          <Image src="/assets/i/icons/spinner.gif" alt="Loading" width="100" height="100" />
         </section>
       </>
     );
