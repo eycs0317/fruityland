@@ -26,9 +26,17 @@ export default async function MainPage() {
   if (!session.auth || session.authType != 'onsiteAdmin') {
     redirect('/admin');
   }
-
   const {startDate, endDate} = await getEventMinMaxDate();
 
+  async function handleSubmit(formData: FormData) {
+    'use server'
+    const data = Object.fromEntries(formData.entries());
+    // console.log('---------data===>', data.selectedDate);
+    if(data.btSearch) {
+      redirect('/admin/onsite/reservation/list?date=' + data.selectedDate);
+    }
+
+  }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
@@ -36,7 +44,7 @@ export default async function MainPage() {
         <Heading level={1} content="Event Date Search" className="text-4xl" />
       </section>
       <section className="w-full px-8 pb-8">
-        <form className="flex flex-col gap-8 w-full" action="/api/listConfirmationByDate" method="post">
+        <form className="flex flex-col gap-8 w-full" action={handleSubmit} method="post">
           <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />

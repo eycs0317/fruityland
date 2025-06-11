@@ -9,6 +9,7 @@ import QRCode from 'react-qr-code';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useSearchParams} from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 // ui
 import Heading from '@/ui/foundations/heading';
@@ -100,6 +101,7 @@ export default function ClientPage() {
     );
   }
 
+
   // Display data once loaded
   return (
     <>
@@ -136,12 +138,12 @@ export default function ClientPage() {
            <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">Participants:</dt>
             <dd className="text-right">2</dd>
-          </div> 
+          </div>
         </dl>
       </section>
 
       <section className="w-full p-8">
-        <form className="flex flex-col gap-8 w-full" action="/">
+        <form className="flex flex-col gap-8 w-full" action='/'>
           <FormField type='hidden' fieldData={{id: 'couponCode', value: confirmationData?.couponCode || ''}} />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
