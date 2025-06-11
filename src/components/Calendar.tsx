@@ -62,7 +62,7 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
   // Initialized directly with the calculated value.
   const [userClickedDay, setUserClickedDay] = useState<string | undefined>(initialClickedDayString);
   // --- END REVISED INITIAL STATE CALCULATIONS ---
-
+console.log('userclickday in <Calendar', userClickedDay);
   const calendarRef = useRef<HTMLDivElement>(null);
 
   // Handler for when a day is clicked on the calendar
