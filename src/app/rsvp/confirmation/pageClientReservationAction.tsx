@@ -1,7 +1,7 @@
 'use client';
 
 // react
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 // nextjs
 import {useSearchParams} from 'next/navigation';
@@ -15,34 +15,39 @@ export default function ClientPage() {
   const couponCodeFromURL = searchParams.get('cc');
 
   const [isCheckedIn, setIsCheckedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchCheckInStatus = async () => {
-    const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
-    const result = await response.json();
+  useEffect(() => {
+    const fetchCheckInStatus = async () => {
+      const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
+      const result = await response.json();
 
-    if (result.data.status) {
-      setIsCheckedIn(true);
-    } else {
-      setIsCheckedIn(false);
-    }
-  };
-  fetchCheckInStatus();
+      if (result.data.status) {
+        setIsCheckedIn(true);
+      } else {
+        setIsLoading(false);
+      }
+    };
+    fetchCheckInStatus();
+  }, [couponCodeFromURL]);
 
-  if (isCheckedIn) {
+  if (isLoading) {
     return null;
   }
 
   return (
     <>
-      <section className="w-full p-8">
-        <form className="flex flex-col gap-8 w-full" action="/">
-          <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCodeFromURL || ''}} />
-          <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
-            <FormField type='button' fieldData={{type: 'submit', id: 'btCancel', className: 'secondary', value:'Cancel Reservation'}} />
-          </div>
-        </form>
-      </section>
+      {!isCheckedIn ? 
+        <section className="w-full p-8">
+          <form className="flex flex-col gap-8 w-full" action="/">
+            <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCodeFromURL || ''}} />
+            <div className="flex flex-col gap-4">
+              <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
+              <FormField type='button' fieldData={{type: 'submit', id: 'btCancel', className: 'secondary', value:'Cancel Reservation'}} />
+            </div>
+          </form>
+        </section> : ''
+      }
     </>
   );
 }
