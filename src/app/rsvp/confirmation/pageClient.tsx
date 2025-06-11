@@ -12,7 +12,6 @@ import {useSearchParams} from 'next/navigation';
 
 // ui
 import Heading from '@/ui/foundations/heading';
-import FormField from '@/ui/foundations/formField';
 
 // Define types for the data fetched from your API route
 type ConfirmationDetails = {
@@ -33,6 +32,7 @@ export default function ClientPage() {
   const searchParams = useSearchParams();
 
   const couponCodeFromURL = searchParams.get('cc');
+  const couponStatus = searchParams.get('status');
 
   const [confirmationData, setConfirmationData] = useState<ConfirmationDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -105,16 +105,32 @@ export default function ClientPage() {
     <>
       <section className="w-full p-8 text-center">
         <Heading level={1} content="Your reservation is confirmed for FruityLand." className="text-2xl pb-8" />
-        <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
+        {(() => {
+          if (couponStatus === 'checkedIn') {
+            return (
+              <p className="text-success-800">This reservation is successfully checked in!</p>
+            );
+          } else {
+            return (
+              <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
+            );
+          }
+        })()}
       </section>
       <section className="relative w-1/2 pb-8 px-8">
         <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
-          <QRCode
-            size={500}
-            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            viewBox={`0 0 500 500`}
-            value={`${domain}/rsvp/confirmation?cc=${confirmationData?.couponCode}`}
-          />
+          {(() => {
+            if (couponStatus != 'checkedIn') {
+              return (
+                <QRCode
+                  size={500}
+                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                  viewBox={`0 0 500 500`}
+                  value={`${domain}/rsvp/confirmation?cc=${confirmationData?.couponCode}`}
+                />
+              );
+            }
+          })()}
         </div>
       </section>
 
@@ -138,16 +154,6 @@ export default function ClientPage() {
             <dd className="text-right">2</dd>
           </div> 
         </dl>
-      </section>
-
-      <section className="w-full p-8">
-        <form className="flex flex-col gap-8 w-full" action="/">
-          <FormField type='hidden' fieldData={{id: 'couponCode', value: confirmationData?.couponCode || ''}} />
-          <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btModify', className: 'secondary', value:'Modify'}} />
-            <FormField type='button' fieldData={{type: 'submit', id: 'btCancel', className: 'secondary', value:'Cancel Reservation'}} />
-          </div>
-        </form>
       </section>
     </>
   );
