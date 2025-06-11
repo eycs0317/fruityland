@@ -8,7 +8,7 @@ export default async function FormButton() {
   const session = await getSession();
   if (session.auth && session.authType == 'customerAdmin') {
     return (
-      <nav className="flex flex-row w-full px-8">
+      <nav className="flex flex-row w-full px-8 py-2 bg-warning-300">
         <div className="flex-2">
           <Link href="/admin/support">Customer Supoort Dashboard</Link>
         </div>
@@ -19,7 +19,7 @@ export default async function FormButton() {
     );
   } else if (session.auth && session.authType == 'onsiteAdmin') {
     return (
-      <nav className="flex flex-row w-full px-8">
+      <nav className="flex flex-row w-full px-8 py-2 bg-warning-300">
         <div className="flex-2">
           <Link href="/admin/onsite">Onsite Support Dashboard</Link>
         </div>
