@@ -11,9 +11,9 @@ import Image from 'next/image';
 import {redirect} from 'next/navigation';
 
 // ui
-import FormField from '@/ui/foundations/formField';
+// import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
-
+import FormField from '@/ui/foundations/formField';
 // utils
 import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 import { createReservation } from '@/utils/createReservation';
@@ -33,7 +33,7 @@ export default async function MainPage({ searchParams }: PageProps) {
   const resolvedSearchParams = await searchParams;
 
   // Destructure the resolved search parameters
-  const date = resolvedSearchParams?.date;
+  const date = resolvedSearchParams?.date; //for display
   const group = resolvedSearchParams?.group;
   const couponCode = resolvedSearchParams?.couponCode;
 
@@ -64,7 +64,7 @@ export default async function MainPage({ searchParams }: PageProps) {
 
       // Group and sort the fetched appointments
       groupedAppointmentData = groupAndSortAppointments(appointments);
-      console.log('groupedAppointmentData----->', groupedAppointmentData)
+      // console.log('groupedAppointmentData----->', groupedAppointmentData)
     } catch (error) {
         // Log and handle errors during API call or data processing
         console.error('Failed to fetch appointments in MainPage:', error);

@@ -44,16 +44,17 @@ export default async function MainPage() {
   const couponGroup = session.coupon?.group ?? 0;
   const couponCode = session.coupon?.couponCode;
   const {startDate, endDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
-  // console.log('Coupon Group:', session.coupon?.group);
-
+  //confirm startDate an endDate are UTC
+console.log('-----startDate:-----', startDate);
+console.log('-----endDate:-----', endDate);
   async function handleSubmit(formData: FormData) {
     'use server'
 
     const data = Object.fromEntries(formData.entries());
-
-    const selectedDate = data.selectedDate as string;
+console.log('----data.selectedDate:----', data.selectedDate);
+    const selectedDate = data.selectedDate ; //string
     console.log('----data:----', data);
-    console.log('------>Selected Date:', selectedDate);
+    console.log('------>Selected Date:indate/page-----------',  selectedDate);
     if (data.btNext) {
       if (selectedDate) {
         redirect(`/rsvp/time?date=${selectedDate}&group=${couponGroup}&couponCode=${couponCode}`);
