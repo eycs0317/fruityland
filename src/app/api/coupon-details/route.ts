@@ -53,7 +53,6 @@ export async function GET(request: Request) {
     } else {
       return NextResponse.json(
         { success: false, message: result.message || 'Failed to retrieve coupon schedule details.' },
-        { status: 404 }
       );
     }
   } catch (error) {

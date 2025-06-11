@@ -46,8 +46,14 @@ export async function POST(req: NextRequest) {
             const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
             return response;
           } else { //legit coupon but not RSVP
-            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
-            return response;
+
+            if (session.auth && session.authType == 'onsiteAdmin') {
+              const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
+              return response;
+            } else {
+              const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
+              return response;
+            }
           }
         } else {
           const response = NextResponse.redirect(new URL(siteURL + '/'));

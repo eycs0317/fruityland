@@ -1,5 +1,8 @@
 'use client';
 
+// react
+import {useState} from 'react';
+
 // nextjs
 import {useSearchParams} from 'next/navigation';
 
@@ -11,7 +14,24 @@ export default function ClientPage() {
 
   const couponCodeFromURL = searchParams.get('cc');
 
-  // Display data once loaded
+  const [isCheckedIn, setIsCheckedIn] = useState(false);
+
+  const fetchCheckInStatus = async () => {
+    const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
+    const result = await response.json();
+
+    if (result.data.status) {
+      setIsCheckedIn(true);
+    } else {
+      setIsCheckedIn(false);
+    }
+  };
+  fetchCheckInStatus();
+
+  if (isCheckedIn) {
+    return null;
+  }
+
   return (
     <>
       <section className="w-full p-8">

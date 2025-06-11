@@ -29,7 +29,7 @@ export default function ClientPage() {
   };
   fetchCheckInStatus();
 
-  if (couponStatus === 'checkedIn') {
+  if (couponStatus === 'checkedIn' || isCheckedIn) {
     return null;
   }
 

@@ -22,6 +22,9 @@ type ConfirmationDetails = {
   group: string;
   uid: string;
 };
+type ConfirmationWalkInDetails = {
+  couponCode: string;
+};
 
 type APIResponse = {
   success: boolean;
@@ -36,6 +39,7 @@ export default function ClientPage() {
   const couponStatus = searchParams.get('status');
 
   const [confirmationData, setConfirmationData] = useState<ConfirmationDetails | null>(null);
+  const [confirmationWalkInData, setConfirmationWalkInData] = useState<ConfirmationWalkInDetails | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,16 +57,15 @@ export default function ClientPage() {
         const response = await fetch(`/api/coupon-details?cc=${couponCodeFromURL}`);
         const result: APIResponse = await response.json();
 
-        const parseISODate = parseISO(result.data?.date || '');
-        const formattedDate = format(parseISODate, 'MMMM d, yyyy');
-
-        const parseISOTime = parseISO(result.data?.time || '');
-        const formattedTime = format(parseISOTime, 'p');
-
         if (result.success && result.data) {
+          const parseISODate = parseISO(result.data?.date || '');
+          const formattedDate = format(parseISODate, 'MMMM d, yyyy');
+
+          const parseISOTime = parseISO(result.data?.time || '');
+          const formattedTime = format(parseISOTime, 'p');
           setConfirmationData({...result.data, date: formattedDate,time: formattedTime});
         } else {
-          setError(result.message || 'Failed to load confirmation details.');
+          setConfirmationWalkInData({couponCode:couponCodeFromURL});
         }
       } catch {
         setError('An unexpected error occurred while fetching details.');
@@ -73,6 +76,19 @@ export default function ClientPage() {
 
     fetchConfirmationData();
   }, [couponCodeFromURL]);
+
+  const [isCheckedIn, setIsCheckedIn] = useState(false);
+  const fetchCheckInStatus = async () => {
+    const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
+    const result = await response.json();
+
+    if (result.data.status) {
+      setIsCheckedIn(true);
+    } else {
+      setIsCheckedIn(false);
+    }
+  };
+  fetchCheckInStatus();
 
   // Display loading state
   if (isLoading) {
@@ -101,62 +117,94 @@ export default function ClientPage() {
     );
   }
 
-
-  // Display data once loaded
-  return (
-    <>
-      <section className="w-full p-8 text-center">
-        <Heading level={1} content="Your reservation is confirmed for FruityLand." className="text-2xl pb-8" />
-        {(() => {
-          if (couponStatus === 'checkedIn') {
-            return (
-              <p className="text-success-800">This reservation is successfully checked in!</p>
-            );
-          } else {
-            return (
-              <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
-            );
-          }
-        })()}
-      </section>
-      <section className="relative w-1/2 pb-8 px-8">
-        <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
+  if (confirmationWalkInData) {
+    return (
+      <>
+        <section className="w-full p-8 text-center">
+          <Heading level={1} content={(isCheckedIn) ? 'Walk-in session is checked in.' : 'Coupon details for FruityLand.'} className="text-2xl pb-8" />
           {(() => {
-            if (couponStatus != 'checkedIn') {
+            if (isCheckedIn) {
               return (
-                <QRCode
-                  size={500}
-                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                  viewBox={`0 0 500 500`}
-                  value={`${domain}/rsvp/confirmation?cc=${confirmationData?.couponCode}`}
-                />
+                <p className="text-success-800">Check in completed with this coupon.</p>
               );
             }
           })()}
-        </div>
-      </section>
+        </section>
 
-      <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">
-        <Heading level={1} content="Booking Details" className="text-xl pb-8" />
-        <dl className="space-y-2 text-gray-700">
-          <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">Coupon Code:</dt>
-            <dd className="text-right">{confirmationData?.couponCode ? confirmationData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
+        <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">
+          <Heading level={1} content="Booking Details" className="text-xl pb-8" />
+          <dl className="space-y-2 text-gray-700">
+            <div className="flex justify-between border-b pb-2">
+              <dt className="font-bold">Coupon Code:</dt>
+              <dd className="text-right">{confirmationWalkInData.couponCode ? confirmationWalkInData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
+            </div>
+             <div className="flex justify-between border-b pb-2">
+              <dt className="font-bold">Participants:</dt>
+              <dd className="text-right">2</dd>
+            </div>
+          </dl>
+        </section>
+      </>
+    );
+  }
+
+  // Display data once loaded
+  if (confirmationData) {
+    return (
+      <>
+        <section className="w-full p-8 text-center">
+          <Heading level={1} content={(isCheckedIn) ? 'Reservation is checked in.' : 'Reservation is confirmed for FruityLand.'} className="text-2xl pb-8" />
+          {(() => {
+            if (isCheckedIn) {
+              return (
+                <p className="text-success-800">Check in completed with this reservation.</p>
+              );
+            } else {
+              return (
+                <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
+              );
+            }
+          })()}
+        </section>
+        <section className="relative w-1/2 pb-8 px-8">
+          <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
+            {(() => {
+              if (couponStatus != 'checkedIn') {
+                return (
+                  <QRCode
+                    size={500}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    viewBox={`0 0 500 500`}
+                    value={`${domain}/rsvp/confirmation?cc=${confirmationData?.couponCode}`}
+                  />
+                );
+              }
+            })()}
           </div>
-          <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">Date:</dt>
-            <dd className="text-right">{confirmationData?.date}</dd>
-          </div>
-          <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">Time:</dt>
-            <dd className="text-right">{confirmationData?.time || 'N/A'}</dd>
-          </div>
-           <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">Participants:</dt>
-            <dd className="text-right">2</dd>
-          </div>
-        </dl>
-      </section>
-    </>
-  );
+        </section>
+
+        <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">
+          <Heading level={1} content="Booking Details" className="text-xl pb-8" />
+          <dl className="space-y-2 text-gray-700">
+            <div className="flex justify-between border-b pb-2">
+              <dt className="font-bold">Coupon Code:</dt>
+              <dd className="text-right">{confirmationData?.couponCode ? confirmationData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
+            </div>
+            <div className="flex justify-between border-b pb-2">
+              <dt className="font-bold">Date:</dt>
+              <dd className="text-right">{confirmationData?.date}</dd>
+            </div>
+            <div className="flex justify-between border-b pb-2">
+              <dt className="font-bold">Time:</dt>
+              <dd className="text-right">{confirmationData?.time || 'N/A'}</dd>
+            </div>
+             <div className="flex justify-between border-b pb-2">
+              <dt className="font-bold">Participants:</dt>
+              <dd className="text-right">2</dd>
+            </div>
+          </dl>
+        </section>
+      </>
+    );
+  }
 }
