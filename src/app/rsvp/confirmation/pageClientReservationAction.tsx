@@ -22,7 +22,7 @@ export default function ClientPage() {
   const [clickedAction, setClickedAction] = useState<string | null>(null);
 
   useEffect(() => {
-    useEffect(() => {
+
     const fetchCheckInStatus = async () => {
         const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
         const result = await response.json();
@@ -81,7 +81,7 @@ export default function ClientPage() {
     }
 
 
-  }  }, [couponCodeFromURL]);
+  }
 
   if (isLoading) {
     return null;
