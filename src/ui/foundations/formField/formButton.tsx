@@ -34,11 +34,18 @@ export type FormButtonProps = {
   };
 };
 
-export default function FormButton({fieldData}: FormButtonProps) {
+export default function FormButton({fieldData, ...rest}: FormButtonProps) {
   const defaultClassName = 'button';
 
   return (
-    <button type={fieldData.type} name={fieldData.id} id={fieldData.id} className={defaultClassName + ((fieldData.className) ? ' ' + fieldData.className : '')} value={fieldData.value} onClick={fieldData.onClick}>{fieldData.value}
+    <button
+      type={fieldData.type}
+      name={fieldData.id}
+      id={fieldData.id}
+      className={defaultClassName + ((fieldData.className) ? ' ' + fieldData.className : '')}
+      value={fieldData.value}
+      onClick={fieldData.onClick}
+      {...rest}>{fieldData.value}
       {(() => {
         return (fieldData.image) ? <Image src={fieldData.image.src} alt={fieldData.image.alt} width={fieldData.image.width} height={fieldData.image.height} priority={true} /> : null;
       })()}

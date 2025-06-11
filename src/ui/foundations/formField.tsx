@@ -21,44 +21,44 @@ interface FormFieldProps {
   fieldData: unknown;
 }
 
-export default function FormField({type, fieldData}: FormFieldProps) {
+export default function FormField({type, fieldData, ...rest}: FormFieldProps) {
   return (
     <>
       {(() => {
         switch (type) {
           case 'button':
             if (isFormButtonFieldData(fieldData)) {
-              return <FormButton fieldData={fieldData} />;
+              return <FormButton fieldData={fieldData} {...rest} />;
             } else {
               return <p>Error: Invalid button data</p>;
             }
           case 'checkbox':
             if (isFormCheckboxFieldData(fieldData)) {
-              return <FormCheckbox fieldData={fieldData} />;
+              return <FormCheckbox fieldData={fieldData} {...rest} />;
             } else {
               return <p>Error: Invalid checkbox data</p>;
             }
           case 'hidden':
             if (isFormHiddenFieldData(fieldData)) {
-              return <FormHidden fieldData={fieldData} />;
+              return <FormHidden fieldData={fieldData} {...rest} />;
             } else {
               return <p>Error: Invalid hidden data</p>;
             }
           case 'radio':
             if (isFormRadioFieldData(fieldData)) {
-              return <FormRadio fieldData={fieldData} />;
+              return <FormRadio fieldData={fieldData} {...rest} />;
             } else {
               return <p>Error: Invalid radio data</p>;
             }
           case 'select':
             if (isFormSelectFieldData(fieldData)) {
-              return <FormSelect fieldData={fieldData} />;
+              return <FormSelect fieldData={fieldData} {...rest} />;
             } else {
               return <p>Error: Invalid select data</p>;
             }
           default:
             if (isFormInputFieldData(fieldData)) {
-              return <FormInput fieldData={fieldData} />;
+              return <FormInput fieldData={fieldData} {...rest} />;
             } else {
               return <p>Error: Invalid input data</p>;
             }
