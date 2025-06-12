@@ -1,10 +1,11 @@
 // nextjs
 import {NextRequest, NextResponse} from 'next/server';
 
+// utils
+import {getSiteURL} from '@/utils/getSiteURL';
+
 export async function POST(req: NextRequest) {
-  const host = req.headers.get('host');
-  const protocol = req.headers.get('x-forwarded-proto') || 'https'; // 'http' fallback for local
-  const siteURL = protocol + '://' + host;
+  const siteURL = getSiteURL(req);
 
   if (req.method === 'POST') {
     try {

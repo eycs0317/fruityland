@@ -1,29 +1,23 @@
 // nextjs
 import {NextRequest, NextResponse} from 'next/server';
 
-// lib
-import {getSession} from '@/lib/session';
+// utils
+import {getSiteURL} from '@/utils/getSiteURL';
+import {loginSetAuth} from '@/utils/loginSetAuth';
 
 export async function POST(req: NextRequest) {
-  const host = req.headers.get('host');
-  const protocol = req.headers.get('x-forwarded-proto') || 'https'; // 'http' fallback for local
-  const siteURL = protocol + '://' + host;
+  const siteURL = getSiteURL(req);
 
   if (req.method === 'POST') {
     try {
       const data = await req.formData();
+      const userId = data.get('userId') as string;
+      const password = data.get('password') as string;
+      const btLogin = data.get('btLogin') as string;
 
-      if (data.get('userId') === 'efxadmin' && data.get('password') === '!@#$%^&*()' && data.get('btLogin')) {
-        const session = await getSession();
-        session.auth = true;
-        session.authType = 'efxAdmin';
-        
-        await session.save();
-        return NextResponse.redirect(new URL(siteURL + '/efx/dashboard'));
-      } else {
-        const response = NextResponse.redirect(new URL(siteURL + '/efx'));
-        return response;
-      }
+      const redirectURL = await loginSetAuth(userId, password, btLogin, '/efx');
+      const response = NextResponse.redirect(new URL(siteURL + redirectURL));
+      return response;
     } catch {
       const response = NextResponse.redirect(new URL(siteURL + '/efx'));
       return response;

@@ -4,12 +4,13 @@ import {NextRequest, NextResponse} from 'next/server';
 // prisma
 import {prisma} from '@/lib/prisma';
 
-export async function GET(request: NextRequest) {
-  const host = request.headers.get('host');
-  const protocol = request.headers.get('x-forwarded-proto') || 'https'; // 'http' fallback for local
-  const siteURL = protocol + '://' + host;
+// utils
+import {getSiteURL} from '@/utils/getSiteURL';
+
+export async function GET(req: NextRequest) {
+  const siteURL = getSiteURL(req);
   
-  const {searchParams} = new URL(request.url);
+  const {searchParams} = new URL(req.url);
   const couponCode = searchParams.get('cc');
 
   try {

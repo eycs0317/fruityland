@@ -1,43 +1,21 @@
 // prisma
 import { prisma } from '@/lib/prisma';
 
+// utils
+import {cancelReservation} from '@/utils/cancelReservation';
+
 export async function createReservation(details: { couponCode: string; rsvpTime: string; }) {
   const { couponCode, rsvpTime } = details;
 
   try {
 
-
-    // 0. Check and process existing reservation for modification
+    // 0. Check and cancel existing reservation for modification
     const existingCouponRSVP = await prisma.coupon.findUnique({
       where: { couponCode: couponCode },
       select: { isRSVP: true },
     });
     if (existingCouponRSVP) {
-      await prisma.$transaction(async (tx) => {
-        const updatedCoupon = await tx.coupon.update({
-          where: { couponCode },
-          data: {
-            isRSVP: false,
-            status: 0,
-          },
-          select: { scheduleUID: true },
-        });
-
-        let updatedCouponScedule = null;
-        if (updatedCoupon.scheduleUID) {
-          await tx.schedule.update({
-            where: { uid: updatedCoupon.scheduleUID },
-            data: { isBooked: false },
-          });
-          updatedCouponScedule = await tx.coupon.update({
-            where: { couponCode },
-            data: {
-              scheduleUID: null,
-            },
-          });
-        }
-        return updatedCouponScedule;
-      });
+      cancelReservation(couponCode);
     }
 
     // 1. Find the selected schedule (appointment)

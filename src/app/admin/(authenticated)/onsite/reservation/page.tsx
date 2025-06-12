@@ -18,14 +18,17 @@ import AdminHeader from '@/ui/patterns/adminHeader';
 import Calendar from '@/components/Calendar';
 
 // lib
-import {getSession} from '@/lib/session';
 import {getEventMinMaxDate} from '@/lib/getEventMinMaxDate';
 
+// utils
+import {protectPage} from '@/utils/protectPage';
+
 export default async function MainPage() {
-  const session = await getSession();
-  if (!session.auth || session.authType != 'onsiteAdmin') {
-    redirect('/admin');
+  const auth = await protectPage('onsiteAdmin');
+  if (auth != null) {
+    redirect(auth);
   }
+
   const {startDate, endDate} = await getEventMinMaxDate();
 
   async function handleSubmit(formData: FormData) {

@@ -9,8 +9,8 @@ import React, {Suspense} from 'react';
 // ui
 import AdminHeader from '@/ui/patterns/adminHeader';
 
-// lib
-import {getSession} from '@/lib/session';
+// utils
+import {checkAuth} from '@/utils/checkAuth';
 
 // client
 import PageClient from './pageClient';
@@ -18,8 +18,8 @@ import PageClientCheckInAction from './pageClientCheckInAction';
 import PageClientReservationAction from './pageClientReservationAction';
 
 export default async function MainPage() {
-  const session = await getSession();
-  if (session.auth && session.authType == 'onsiteAdmin') {
+  const auth = await checkAuth('onsiteAdmin');
+  if (auth) {
     return (
       <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
         <AdminHeader />

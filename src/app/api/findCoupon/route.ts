@@ -7,6 +7,9 @@ import {prisma} from '@/lib/prisma';
 // lib
 import {getSession} from '@/lib/session';
 
+// utils
+import {getSiteURL} from '@/utils/getSiteURL';
+
 async function getCouponDetails(couponCode: string) {
   const couponSearch = await prisma.coupon.findUnique({
     where: {
@@ -18,9 +21,7 @@ async function getCouponDetails(couponCode: string) {
 }
 
 export async function POST(req: NextRequest) {
-  const host = req.headers.get('host');
-  const protocol = req.headers.get('x-forwarded-proto') || 'https'; // 'http' fallback for local
-  const siteURL = protocol + '://' + host;
+  const siteURL = getSiteURL(req);
 
   if (req.method === 'POST') {
     try {

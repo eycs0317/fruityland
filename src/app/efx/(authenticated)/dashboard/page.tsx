@@ -7,20 +7,20 @@ export const metadata = {
 import React from 'react';
 
 // nextjs
-import Link from 'next/link';
 import {redirect} from 'next/navigation';
 
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
+import AdminHeader from '@/ui/patterns/adminHeader';
 
-// lib
-import {getSession} from '@/lib/session';
+// utils
+import {protectPage} from '@/utils/protectPage';
 
 export default async function MainPage() {
-  const session = await getSession();
-  if (!session.auth || session.authType != 'efxAdmin') {
-    redirect('/efx');
+  const auth = await protectPage('efxAdmin');
+  if (auth != null) {
+    redirect(auth);
   }
 
   async function handleSubmit(formData: FormData) {
@@ -57,11 +57,7 @@ export default async function MainPage() {
   }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
-      <nav className="flex flex-row w-full px-8">
-        <div className="flex-1 text-right">
-          <Link href="/logout" prefetch={false}>Logout</Link>
-        </div>
-      </nav>
+      <AdminHeader />
       <section className="w-full p-8">
         <Heading level={1} content="EFX Dashboard" className="text-4xl pb-8" />
       </section>

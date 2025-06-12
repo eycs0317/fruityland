@@ -14,13 +14,13 @@ import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 
-// lib
-import {getSession} from '@/lib/session';
+// utils
+import {protectPage} from '@/utils/protectPage';
 
 export default async function MainPage() {
-  const session = await getSession();
-  if (!session.auth || session.authType != 'onsiteAdmin') {
-    redirect('/admin');
+  const auth = await protectPage('onsiteAdmin');
+  if (auth != null) {
+    redirect(auth);
   }
 
   return (
