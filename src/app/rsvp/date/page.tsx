@@ -20,41 +20,20 @@ import Calendar from '@/components/Calendar';
 // session
 import { getSession } from '@/lib/session';
 
-//helper functions
-// import searchByCouponGroup from '@/utils/searchByCouponGroup';
-
 //server side functions
 import { getMinMaxScheduleDatesByGroup } from '@/lib/getMinMaxScheduleDatesByGroup';
 
 
 export default async function MainPage() {
   const session = await getSession();
-  // const couponData = session.coupon;
-  // console.log('Session Coupon Data:----->', couponData);
-  // Session Coupon Data:-----> {
-  //   couponCode: '29506dd0109b',
-  //   group: 1,
-  //   isWeekend: false,
-  //   participantCount: 2,
-  //   scheduleUID: null,
-  //   isRSVP: false,
-  //   status: 0,
-  //   couponSchedule: null
-  // }
   const couponGroup = session.coupon?.group ?? 0;
   const couponCode = session.coupon?.couponCode;
   const {startDate, endDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
-  //confirm startDate an endDate are UTC
-// console.log('-----startDate:-----', startDate);
-// console.log('-----endDate:-----', endDate);
   async function handleSubmit(formData: FormData) {
     'use server'
 
     const data = Object.fromEntries(formData.entries());
-console.log('----data.selectedDate:----', data.selectedDate);
-    const selectedDate = data.selectedDate ; //string
-    // console.log('----data:----', data);
-    // console.log('------>Selected Date:indate/page-----------',  selectedDate);
+    const selectedDate = data.selectedDate;
     if (data.btNext) {
       if (selectedDate) {
         redirect(`/rsvp/time?date=${selectedDate}&group=${couponGroup}&couponCode=${couponCode}`);

@@ -9,7 +9,6 @@ import {useSearchParams} from 'next/navigation';
 // ui
 import FormField from '@/ui/foundations/formField';
 
-
 export default function ClientPage() {
   const searchParams = useSearchParams();
 
@@ -19,7 +18,6 @@ export default function ClientPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchCheckInStatus = async () => {
         const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
         const result = await response.json();

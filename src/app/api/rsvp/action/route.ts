@@ -14,8 +14,7 @@ export async function POST(req: NextRequest) {
       const actionCancel = data.get('btCancel');
 
       if (actionModify) {
-        // Need to do modify code here.  This is placeholder
-        const response = NextResponse.redirect(new URL(siteURL + '/'));
+        const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
         return response;
       } else if (actionCancel) {
         const response = NextResponse.redirect(new URL(siteURL + '/rsvp/cancel?cc=' + couponCode));

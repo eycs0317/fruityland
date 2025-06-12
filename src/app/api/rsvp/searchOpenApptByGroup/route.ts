@@ -11,8 +11,6 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const groupParam = searchParams.get('group');
   const dateParam = searchParams.get('date'); // 'YYYY-MM-DD' from the client
-console.log('dateParam ------- ', dateParam)// 2025-07-10
-console.log('groupParam ------- ', groupParam)// 1
 
   // Validate group parameter
   if (!groupParam) {
@@ -41,7 +39,6 @@ console.log('groupParam ------- ', groupParam)// 1
     // Parse the 'YYYY-MM-DD' string. parseISO will interpret this as midnight
     // in the local timezone where the server is running.
     const localParsedDate = parseISO(dateParam);
-  console.log('------localParsedDate------', localParsedDate)// 2025-07-10
     if (isNaN(localParsedDate.getTime())) {
       return NextResponse.json({ message: 'Invalid date parameter format. Expected YYYY-MM-DD.' }, { status: 400 });
     }
@@ -56,7 +53,6 @@ console.log('groupParam ------- ', groupParam)// 1
       localParsedDate.getDate(),
       0, 0, 0, 0
     ));
-  console.log('searchOpenApptByGroup startOfDayUtc ------- ', startOfDayUtc)// 2025-07-10T00:00:00.000Z
     // The end of the day in UTC is just before midnight of the next UTC day.
     const endOfDayUtc = new Date(Date.UTC(
       localParsedDate.getFullYear(),
@@ -64,7 +60,6 @@ console.log('groupParam ------- ', groupParam)// 1
       localParsedDate.getDate(),
       23, 59, 59, 999
     ));
-    console.log('searchOpenApptByGroup endOfDayUtc ------- ', endOfDayUtc)// 2025-07-10T23:59:59.999Z
     // Alternatively, you could add one day to startOfDayUtc and subtract a millisecond.
     // const endOfDayUtc = new Date(startOfDayUtc.getTime() + 24 * 60 * 60 * 1000 - 1);
 
@@ -77,7 +72,6 @@ console.log('groupParam ------- ', groupParam)// 1
 
   } else {
     // If dateParam is missing, log a warning or return an error if a date is strictly required
-    console.warn("Date parameter is missing in searchOpenApptByGroup API call. Returning all available slots for the group.");
     // Optionally, you might want to throw an error here if a date *must* always be present.
     // return NextResponse.json({ message: 'Date parameter is required for filtering.' }, { status: 400 });
   }
@@ -92,8 +86,7 @@ console.log('groupParam ------- ', groupParam)// 1
     });
 
     return NextResponse.json(appointments);
-  } catch (error) {
-    console.error('Error fetching open appointments by group (filtered by date):', error);
+  } catch {
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
 }

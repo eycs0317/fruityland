@@ -5,6 +5,41 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
   const { couponCode, rsvpTime } = details;
 
   try {
+
+
+    // 0. Check and process existing reservation for modification
+    const existingCouponRSVP = await prisma.coupon.findUnique({
+      where: { couponCode: couponCode },
+      select: { isRSVP: true },
+    });
+    if (existingCouponRSVP) {
+      await prisma.$transaction(async (tx) => {
+        const updatedCoupon = await tx.coupon.update({
+          where: { couponCode },
+          data: {
+            isRSVP: false,
+            status: 0,
+          },
+          select: { scheduleUID: true },
+        });
+
+        let updatedCouponScedule = null;
+        if (updatedCoupon.scheduleUID) {
+          await tx.schedule.update({
+            where: { uid: updatedCoupon.scheduleUID },
+            data: { isBooked: false },
+          });
+          updatedCouponScedule = await tx.coupon.update({
+            where: { couponCode },
+            data: {
+              scheduleUID: null,
+            },
+          });
+        }
+        return updatedCouponScedule;
+      });
+    }
+
     // 1. Find the selected schedule (appointment)
     const schedule = await prisma.schedule.findUnique({
       where: { uid: rsvpTime },
@@ -57,13 +92,9 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
       }),
     ]);
 
-    console.log(`Coupon ${updatedCoupon.couponCode} linked to schedule ${updatedSchedule.uid} and both marked as booked/RSVP'd.`);
     return { success: true, message: 'Reservation created successfully!', data: { updatedCoupon, updatedSchedule } };
 
-  } catch (error) {
-    console.error('Error in createReservation:', error);
-    // You might want to check for specific Prisma errors (e.g., P2002 for unique constraint violation)
-    // and return more specific messages.
+  } catch {
     return { success: false, message: 'Failed to process reservation due to a server error.' };
   }
 }
