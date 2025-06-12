@@ -9,7 +9,6 @@ import QRCode from 'react-qr-code';
 import Image from 'next/image';
 import Link from 'next/link';
 import {useSearchParams} from 'next/navigation';
-// import { useRouter } from 'next/navigation';
 
 // ui
 import Heading from '@/ui/foundations/heading';
