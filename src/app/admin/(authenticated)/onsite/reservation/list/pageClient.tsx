@@ -36,6 +36,7 @@ interface PageClientProps {
 export default function PageClient({ reservations, selectedDate }: PageClientProps) {
   // If the reservations array is empty, it implies either no data was found
   // or an error occurred during fetching on the server.
+  console.log('reservations', typeof reservations[0].status) //string
   const hasReservations = reservations?.length > 0;
   console.log('reservations', reservations)
   const groupedData = groupReservationsByTime(reservations)
