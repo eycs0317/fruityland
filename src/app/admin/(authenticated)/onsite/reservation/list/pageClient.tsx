@@ -39,7 +39,8 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
     <>
       <section className="w-full p-8">
         {/* Display the selected date in the heading */}
-        <Heading level={1} content={`Reservations for ${selectedDate}`} className="text-4xl pb-8" />
+        <Heading level={1} content={`Reservations`} className="text-4xl" />
+        <Heading level={2} content={format(selectedDate, 'MMMM d, yyyy')} className="text-2xl pb-8" />
       </section>
 
       <section className="w-full p-8">
@@ -49,11 +50,37 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
               <thead className="bg-gray-100 text-gray-700">
                 <tr>
                   <th className="py-3 px-4 text-left">Time</th>
-                  <th className="py-3 px-4 text-left">Coupon Code</th>
-                  <th className="py-3 px-4 text-left">Status</th>
+                  <th className="py-3 px-4 text-left">Reserved</th>
+                  <th className="py-3 px-4 text-left">Checked in</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
+                <tr>
+                  <td className="py-3 px-4">12:00 PM</td>
+                  <td className="py-3 px-4">5</td>
+                  <td className="py-3 px-4">3</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">1:00 PM</td>
+                  <td className="py-3 px-4">10</td>
+                  <td className="py-3 px-4">10</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">2:00 PM</td>
+                  <td className="py-3 px-4">10</td>
+                  <td className="py-3 px-4">9</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">3:00 PM</td>
+                  <td className="py-3 px-4">9</td>
+                  <td className="py-3 px-4">5</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4">4:00 PM</td>
+                  <td className="py-3 px-4">9</td>
+                  <td className="py-3 px-4">5</td>
+                </tr>
+
                 {reservations.map((reservation) => {
                   const sessionDateTime = parseISO(reservation.sessionDateTime);
                   // Format to user's browser local time for display
