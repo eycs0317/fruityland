@@ -74,7 +74,8 @@ export async function GET(request: Request) {
 
       // Data from the linked Coupon (if it exists)
       couponCode: schedule.coupon?.couponCode || 'N/A', // Get couponCode from the related coupon
-      status: schedule.coupon?.status?.toString() || 'N/A', // Get status from the related coupon
+      // status: schedule.coupon?.status?.toString() || 'N/A', // Get status from the related coupon
+      status: schedule.coupon?.status ?? 0,
       group: schedule.group, // Group is directly on Schedule
       sessionDateTime: schedule.sessionDateTime.toISOString(), // SessionDateTime is directly on Schedule (in UTC)
     }));
