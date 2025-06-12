@@ -12,8 +12,18 @@ import Link from 'next/link';
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
+import Message from '@/ui/patterns/message';
 
-export default async function MainPage() {
+interface PageProps {
+  searchParams?: Promise<{
+    message?: string;
+  }>;
+}
+
+export default async function MainPage({searchParams}: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const message = resolvedSearchParams?.message;
+
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <nav className="flex flex-row w-full px-8">
@@ -25,6 +35,7 @@ export default async function MainPage() {
         <Heading level={1} content="Admin Login" className="text-4xl pb-8" />
       </section>
       <section className="w-full p-8">
+        <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/admin/auth" method="post">
           <div className="flex flex-col gap-4">
             <FormField type="input" fieldData={{type: 'text', id: 'userId', label: 'User ID', wrapperClassName: 'w-full', isRequired:true}} />

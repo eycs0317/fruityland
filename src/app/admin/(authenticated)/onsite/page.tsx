@@ -13,11 +13,21 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
+import Message from '@/ui/patterns/message';
 
 // utils
 import {protectPage} from '@/utils/protectPage';
 
-export default async function MainPage() {
+interface PageProps {
+  searchParams?: Promise<{
+    message?: string;
+  }>;
+}
+
+export default async function MainPage({searchParams}: PageProps) {
+  const resolvedSearchParams = await searchParams;
+  const message = resolvedSearchParams?.message;
+
   const auth = await protectPage('onsiteAdmin');
   if (auth != null) {
     redirect(auth);
@@ -40,6 +50,7 @@ export default async function MainPage() {
         <Heading level={1} content="Support Dashboard" className="text-4xl pb-8" />
       </section>
       <section className="w-full p-8">
+        <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'secondary', value:'Coupon Code Search'}} />

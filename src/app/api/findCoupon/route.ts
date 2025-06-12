@@ -47,7 +47,6 @@ export async function POST(req: NextRequest) {
             const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
             return response;
           } else { //legit coupon but not RSVP
-
             if (session.auth && session.authType == 'onsiteAdmin') {
               const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
               return response;
@@ -57,18 +56,37 @@ export async function POST(req: NextRequest) {
             }
           }
         } else {
-          const response = NextResponse.redirect(new URL(siteURL + '/'));
-          return response;
+          const session = await getSession();
+          if (session.auth && session.authType == 'onsiteAdmin') {
+            const response = NextResponse.redirect(new URL(siteURL + '/admin/onsite/search?message=E0004'));
+            return response;
+          } else if (session.auth && session.authType == 'customerAdmin') {
+            const response = NextResponse.redirect(new URL(siteURL + '/admin/support?message=E0004'));
+            return response;
+          } else {
+            const response = NextResponse.redirect(new URL(siteURL + '/?message=E0004'));
+            return response;
+          }
         }
       } else {
-        return NextResponse.redirect(new URL(siteURL + '/'));
+        const session = await getSession();
+        if (session.auth && session.authType == 'onsiteAdmin') {
+          const response = NextResponse.redirect(new URL(siteURL + '/admin/onsite/search?message=E0004'));
+          return response;
+        } else if (session.auth && session.authType == 'customerAdmin') {
+          const response = NextResponse.redirect(new URL(siteURL + '/admin/support?message=E0004'));
+          return response;
+        } else {
+          const response = NextResponse.redirect(new URL(siteURL + '/?message=E0004'));
+          return response;
+        }
       }
     } catch {
-      const response = NextResponse.redirect(new URL(siteURL + '/'));
+      const response = NextResponse.redirect(new URL(siteURL + '/?message=E0005'));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL(siteURL + '/'));
+    const response = NextResponse.redirect(new URL(siteURL + '/?message=E0005'));
     return response;
   }
 }

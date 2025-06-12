@@ -13,15 +13,24 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
+import Message from '@/ui/patterns/message';
 
 // utils
 import {protectPage} from '@/utils/protectPage';
 
-export default async function MainPage() {
+interface PageProps {
+  searchParams?: Promise<{
+    message?: string;
+  }>;
+}
+
+export default async function MainPage({searchParams}: PageProps) {
   const auth = await protectPage('onsiteAdmin');
   if (auth != null) {
     redirect(auth);
   }
+  const resolvedSearchParams = await searchParams;
+  const message = resolvedSearchParams?.message;
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
@@ -30,9 +39,10 @@ export default async function MainPage() {
         <Heading level={1} content="Coupon Code Search" className="text-4xl pb-8" />
       </section>
       <section className="w-full p-8">
+        <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/findCoupon" method="post">
           <div className="flex flex-col gap-4">
-            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1111-2222-3333'}} />
+            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1234-1234'}} />
           </div>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
