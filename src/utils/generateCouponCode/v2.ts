@@ -1,3 +1,27 @@
+/*
+  DOCUMENTATION
+
+  v2 of generateCouponCode
+
+  Format of Coupon Code: NNXX-XXXX
+   - NN = Weekday(D) or Weekend(E) + Week Number
+      - D1 - Weekday and Week 1
+      - E1 - Weekend and Week 1
+      - D2 - Weekday and Week 2
+      - E1 - Weekend and Week 2
+      ...etc
+   - XX-XXXX = Randomized Generated Hex code
+
+  Number of generated coupon: 11,130
+   - Number of week: 8
+   - Number of days per week: 7 days, except for week 1 (4 days)
+   - Total number of days for event: 53 days
+   - Number of sessions per day: 14
+   - Total number of sessions for event: 742
+   - Number of coupon per session: 15
+   - Total number of coupon: 742 sessions x 15 coupons = 11,130
+*/
+
 // prisma
 import {prisma} from '@/lib/prisma';
 

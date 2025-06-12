@@ -1,3 +1,48 @@
+/*
+  DOCUMENTATION
+
+  v2 of generateCalendar
+
+  Start DateTime: July 10, 2025 @ 6:00 AM UTC
+  Length of event: 8 Weeks
+
+  Each week:
+   - Weekday Group (Mon–Fri):
+      - 3.5 hours (4–7:30 AM UTC) - Activity Time
+      - .5 hour (7:30-8 AM UTC) - Cleaning Time
+      - 2 hours (8–10 AM UTC) - Activity Time
+      - .5 hour (10-10:30 AM UTC) - Cleaning Time
+      - 1.5 hours (10:30–12 PM UTC) - Activity Time
+      TOTAL = 14 half-hour session per day for 5 days
+   - Weekend Group (Sat–Sun):
+      - 3.5 hours (4–7:30 AM UTC) - Activity Time
+      - .5 hour (7:30-8 AM UTC) - Cleaning Time
+      - 2 hours (8–10 AM UTC) - Activity Time
+      - .5 hour (10-10:30 AM UTC) - Cleaning Time
+      - 1.5 hours (10:30–12 PM UTC) - Activity Time
+      TOTAL = 14 half-hour session per day for 2 days
+
+  Group Numbers: start at 1, increment by 1 for each weekday/weekend in order
+    Week 1:
+      Weekday - Group 1 
+      Weekend - Group 2
+    Week 2:
+      Weekday - Group 3 
+      Weekend - Group 4
+    ...etc
+
+  Adjustment for week 1 due to the start date being on Thursday (July 10).
+
+  Number of generated coupon: 7,420
+   - Number of week: 8
+   - Number of days per week: 7 days, except for week 1 (4 days)
+   - Total number of days for event: 53 days
+   - Number of sessions per day: 14
+   - Total number of sessions for event: 14 weekend sessions x 53 days = 742 sessions
+   - Number of slots per session: 10
+   - Total number of slots: 742 sessions x 10 slots = 7,420
+*/
+
 // prisma
 import {prisma} from '@/lib/prisma';
 
