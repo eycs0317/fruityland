@@ -19,6 +19,7 @@ import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 import { createReservation } from '@/utils/createReservation';
 
 import { Appointment } from '@/utils/appointmentUtils';
+import InactivityDetector from '@/components/InactivityDetector';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -139,6 +140,7 @@ export default async function MainPage({ searchParams }: PageProps) {
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <InactivityDetector />
       <section className="w-full p-8 text-center">
         <Heading level={1} content="RSVP Step 2" className="text-4xl pb-8" />
       </section>
