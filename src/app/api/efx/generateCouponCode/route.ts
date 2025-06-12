@@ -98,14 +98,14 @@ export async function POST(req: NextRequest) {
       }
     } catch {
        return NextResponse.json({
-        message: 'Invalid data format'
+        message: 'Invalid data format',
       }, {
         status: 400
       });
     }
   } else {
     return NextResponse.json({
-      message: `Method ${req.method} Not Allowed`
+      message: `Method ${req.method} Not Allowed`,
     }, {
       status: 405
     });
