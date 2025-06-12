@@ -13,6 +13,9 @@ import Heading from '@/ui/foundations/heading';
 // date-fns for parsing and formatting dates/times
 import { parseISO, format } from 'date-fns';
 
+//utils
+import { groupReservationsByTime } from '@/utils/groupReservation'
+
 // Define the interface for the ReservationData (should match what your API returns)
 interface ReservationData {
   uid: string;
@@ -33,7 +36,12 @@ interface PageClientProps {
 export default function PageClient({ reservations, selectedDate }: PageClientProps) {
   // If the reservations array is empty, it implies either no data was found
   // or an error occurred during fetching on the server.
+  console.log('reservations', typeof reservations[0].status) //string
   const hasReservations = reservations?.length > 0;
+  console.log('reservations', reservations)
+  const groupedData = groupReservationsByTime(reservations)
+
+  console.log('---for display--->', groupedData);
 
   return (
     <>
@@ -55,43 +63,16 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                <tr>
-                  <td className="py-3 px-4">12:00 PM</td>
-                  <td className="py-3 px-4">5</td>
-                  <td className="py-3 px-4">3</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">1:00 PM</td>
-                  <td className="py-3 px-4">10</td>
-                  <td className="py-3 px-4">10</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">2:00 PM</td>
-                  <td className="py-3 px-4">10</td>
-                  <td className="py-3 px-4">9</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">3:00 PM</td>
-                  <td className="py-3 px-4">9</td>
-                  <td className="py-3 px-4">5</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">4:00 PM</td>
-                  <td className="py-3 px-4">9</td>
-                  <td className="py-3 px-4">5</td>
-                </tr>
-
-                {reservations.map((reservation) => {
-                  const sessionDateTime = parseISO(reservation.sessionDateTime);
+                {groupedData.map((timeSlot) => {
+                  const sessionDateTime = parseISO(timeSlot.sessionDateTime);
                   // Format to user's browser local time for display
                   const displayTime = format(sessionDateTime, 'p'); // e.g., 1:30 PM, 2:00 AM
 
                   return (
-                    <tr key={reservation.uid}>
-                      <td className="py-3 px-4">{displayTime || 'N/A'}</td>
-                      <td className="py-3 px-4">{reservation.couponCode || 'N/A'}</td>
-                      <td className="py-3 px-4">{(reservation.status == 1) ? 'Reserved' : (reservation.status == 2) ? 'Completed' : 'New'}</td>
-                      {/* Add more cells based on your ReservationData interface */}
+                    <tr key={timeSlot.sessionDateTime}>
+                      <td className="py-3 px-4 ">{displayTime || 'N/A'}</td>
+                      <td className="py-3 px-4 text-center">{timeSlot.reservedNumber || 'N/A'}</td>
+                      <td className="py-3 px-4 text-center">{timeSlot.checkIn}</td>
                     </tr>
                   );
                 })}
