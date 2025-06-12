@@ -22,11 +22,11 @@ export async function POST(req: NextRequest) {
         return response;
       }
     } catch {
-      const response = NextResponse.redirect(new URL(siteURL + '/'));
+      const response = NextResponse.redirect(new URL(siteURL + '/?message=E0005'));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL(siteURL + '/'));
+    const response = NextResponse.redirect(new URL(siteURL + '/?message=E0005'));
     return response;
   }
 }

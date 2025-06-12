@@ -15,15 +15,25 @@ export async function POST(req: NextRequest) {
       const password = data.get('password') as string;
       const btLogin = data.get('btLogin') as string;
 
-      const redirectURL = await loginSetAuth(userId, password, btLogin, '/efx');
-      const response = NextResponse.redirect(new URL(siteURL + redirectURL));
-      return response;
+      if (userId == '' || password == '') {
+        const response = NextResponse.redirect(new URL(siteURL + '/efx?message=E0001'));
+        return response;
+      } else {
+        const redirectURL = await loginSetAuth(userId, password, btLogin, '/efx');
+        if (redirectURL == '/efx') {
+          const response = NextResponse.redirect(new URL(siteURL + '/efx?message=E0002'));
+          return response;
+        } else {
+          const response = NextResponse.redirect(new URL(siteURL + redirectURL + '?message=S0001'));
+          return response;
+        }
+      }
     } catch {
-      const response = NextResponse.redirect(new URL(siteURL + '/efx'));
+      const response = NextResponse.redirect(new URL(siteURL + '/efx?message=E0003'));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL(siteURL + '/efx'));
+    const response = NextResponse.redirect(new URL(siteURL + '/efx?message=E0003'));
     return response;
   }
 }

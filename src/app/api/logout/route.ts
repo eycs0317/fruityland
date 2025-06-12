@@ -9,6 +9,6 @@ export async function GET(req: NextRequest) {
   const siteURL = getSiteURL(req);
 
   const redirectURL = await logoutDistroyAuth();
-  const response = NextResponse.redirect(new URL(siteURL + redirectURL));
+  const response = NextResponse.redirect(new URL(siteURL + redirectURL + '?message=S0002'));
   return response;
 }

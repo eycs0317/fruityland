@@ -15,14 +15,14 @@ export async function POST(req: NextRequest) {
         if (calendarData.count === 0) {
           return NextResponse.json({
             message: 'Calendar data generated successfully.',
-            redirect: '/efx/confirmation?type=calendar&count=' + calendarData.count,
+            redirect: '/efx/confirmation?type=calendar&count=' + calendarData.count + '&message=I0001',
           }, {
             status: 200
           });
         } else {
           return NextResponse.json({
             message: 'Calendar data not generated.',
-            redirect: '/efx/confirmation?type=calendar&count=' + calendarData.count,
+            redirect: '/efx/confirmation?type=calendar&count=' + calendarData.count + '&message=S0003',
           }, {
             status: 200
           });

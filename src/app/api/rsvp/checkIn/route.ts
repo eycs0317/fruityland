@@ -15,21 +15,21 @@ export async function POST(req: NextRequest) {
       if (typeof couponCode === 'string') {
         const couponResult = await checkInCoupon(couponCode);
         if (couponResult) {
-          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + couponCode + '&status=checkedIn'));
+          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + couponCode + '&status=checkedIn&message=S0005'));
           return response;
         } else {
-          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + couponCode));
+          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + couponCode + '&message=E0007'));
           return response;
         }
       } else {
-        return NextResponse.redirect(new URL(siteURL + '/'));
+        return NextResponse.redirect(new URL(siteURL + '/&message=E0005'));
       }
     } catch {
-      const response = NextResponse.redirect(new URL(siteURL + '/'));
+      const response = NextResponse.redirect(new URL(siteURL + '/&message=E0005'));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL(siteURL + '/'));
+    const response = NextResponse.redirect(new URL(siteURL + '/&message=E0005'));
     return response;
   }
 }

@@ -15,13 +15,25 @@ export default async function Message({ messageCode }: { messageCode: string }) 
         break;
       case 'E0005': message = 'Error processing.  Please try again later.';
         break;
+      case 'E0006': message = 'Session timeout due to inactivity.';
+        break;
+      case 'E0007': message = 'Unable to check in.  Please try again later.';
+        break;
 
       // Info
-      // case 'I0001': message = 'Login successful.';
-        // break;
+      case 'I0001': message = 'Data existed.  No new data generated.';
+        break;
 
       // Success
       case 'S0001': message = 'Login successful.';
+        break;
+      case 'S0002': message = 'Logout successful.';
+        break;
+      case 'S0003': message = 'Data successfully generated.';
+        break;
+      case 'S0004': message = 'Reservation successful cancelled.';
+        break;
+      case 'S0005': message = 'Checked in successful.';
         break;
     }
 

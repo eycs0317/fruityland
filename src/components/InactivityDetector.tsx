@@ -4,8 +4,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation'; // For redirection
 
-// const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
-const INACTIVITY_TIMEOUT_MS = 3 * 1000; // Set to 3 seconds for testing
+const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+// const INACTIVITY_TIMEOUT_MS = 3 * 1000; // Set to 3 seconds for testing
 export default function InactivityDetector() {
   const router = useRouter();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -17,7 +17,7 @@ export default function InactivityDetector() {
     timeoutRef.current = setTimeout(() => {
       // Perform logout/redirect when inactive
       console.log('User inactive. Redirecting to logout.');
-      router.push('/'); // Or '/admin/login'
+      router.push('/?message=E0006'); // Or '/admin/login'
     }, INACTIVITY_TIMEOUT_MS);
   }, [router]);
 

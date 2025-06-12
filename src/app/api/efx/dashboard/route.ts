@@ -26,6 +26,9 @@ export async function POST(req: NextRequest) {
         if (response.status == 200) {
           const response = NextResponse.redirect(new URL(siteURL + result.redirect));
           return response;
+        } else {
+          const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard?message=E0005'));
+          return response;
         }
       } else if (btGenerateCouponCode) {
         const response = await fetch(process.env.URL + '/api/efx/generateCouponCode', {
@@ -39,14 +42,17 @@ export async function POST(req: NextRequest) {
         if (response.status == 200) {
           const response = NextResponse.redirect(new URL(siteURL + result.redirect));
           return response;
+        } else {
+          const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard?message=E0005'));
+          return response;
         }
       }
     } catch {
-      const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard'));
+      const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard?message=E0005'));
       return response;
     }
   } else {
-    const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard'));
+    const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard?message=E0005'));
     return response;
   }
 }

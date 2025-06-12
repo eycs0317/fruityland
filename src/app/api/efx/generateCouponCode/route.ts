@@ -15,14 +15,14 @@ export async function POST(req: NextRequest) {
         if (couponCodeData.count === 0) {
           return NextResponse.json({
             message: 'Coupon code data generated successfully.',
-            redirect: '/efx/confirmation?type=couponCode&count=' + couponCodeData.count,
+            redirect: '/efx/confirmation?type=couponCode&count=' + couponCodeData.count + '&message=I0001',
           }, {
             status: 200
           });
         } else {
           return NextResponse.json({
             message: 'Coupon code data not generated.',
-            redirect: '/efx/confirmation?type=couponCode&count=' + couponCodeData.count,
+            redirect: '/efx/confirmation?type=couponCode&count=' + couponCodeData.count + '&message=S0003',
           }, {
             status: 200
           });
