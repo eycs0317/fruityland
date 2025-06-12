@@ -23,6 +23,8 @@ import { getSession } from '@/lib/session';
 //server side functions
 import { getMinMaxScheduleDatesByGroup } from '@/lib/getMinMaxScheduleDatesByGroup';
 
+import InactivityDetector from '@/components/InactivityDetector';
+
 
 export default async function MainPage() {
   const session = await getSession();
@@ -46,6 +48,7 @@ export default async function MainPage() {
   }
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+      <InactivityDetector />
       <section className="w-full p-8 text-center">
         <Heading level={1} content="RSVP Step 1" className="text-4xl pb-8" />
       </section>
