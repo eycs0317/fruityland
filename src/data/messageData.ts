@@ -1,0 +1,76 @@
+export function getMessage(): { message: Record<string, Record<string, string>> } {
+  return {
+    message: {
+      'e0001': {
+        'en-US': 'User Id and Password required',
+        'zh-CN': '需要用户名和密码',
+        'zh-HK': '需要使用者名稱和密碼',
+      },
+      'e0002': {
+        'en-US': 'Login credential is invalid.',
+        'zh-CN': '登入凭证无效。',
+        'zh-HK': '登入憑證無效。',
+      },
+      'e0003': {
+        'en-US': 'Error logging in.  Please try again later.',
+        'zh-CN': '登录错误。请稍后重试。',
+        'zh-HK': '登入錯誤。請稍後重試。',
+      },
+      'e0004': {
+        'en-US': 'Invalid coupon code.  Please check and try again.',
+        'zh-CN': '优惠券代码无效。请检查并重试。',
+        'zh-HK': '優惠券代碼無效。請檢查並重試。',
+      },
+      'e0005': {
+        'en-US': 'Error processing.  Please try again later.',
+        'zh-CN': '处理错误。请稍后重试。',
+        'zh-HK': '處理錯誤。請稍後重試。',
+      },
+      'e0006': {
+        'en-US': 'Session timeout due to inactivity.',
+        'zh-CN': '系统逾时，请重新登入。',
+        'zh-HK': '系統逾時，請重新登入。',
+      },
+      'e0007': {
+        'en-US': 'Unable to check in.  Please try again later.',
+        'zh-CN': '无法办理登入。请稍后重试。',
+        'zh-HK': '無法辦理登入。請稍後重試。',
+      },
+      'i0001': {
+        'en-US': 'Data existed.  No new data generated.',
+        'zh-CN': '数据已存在。未能产生新数据。',
+        'zh-HK': '數據已存在。未能產生新數據。',
+      },
+      'i0002': {
+        'en-US': 'Language changed.',
+        'zh-CN': '语言已更改。',
+        'zh-HK': '語言已更改。',
+      },
+      's0001': {
+        'en-US': 'Login successful.',
+        'zh-CN': '成功登录。',
+        'zh-HK': '成功登入。',
+      },
+      's0002': {
+        'en-US': 'Logout successful.',
+        'zh-CN': '成功登出。',
+        'zh-HK': '成功登出。',
+      },
+      's0003': {
+        'en-US': 'Data successfully generated.',
+        'zh-CN': '成功制造数据。',
+        'zh-HK': '成功制造數據。',
+      },
+      's0004': {
+        'en-US': 'Reservation successful cancelled.',
+        'zh-CN': '預約成功取消。',
+        'zh-HK': '預約成功取消。',
+      },
+      's0005': {
+        'en-US': 'Checked in successful.',
+        'zh-CN': '预约成功。',
+        'zh-HK': '預約成功。',
+      },
+    },
+  };
+}

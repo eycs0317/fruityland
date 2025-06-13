@@ -13,6 +13,9 @@ import {useSearchParams} from 'next/navigation';
 // ui
 import Heading from '@/ui/foundations/heading';
 
+// utils
+import {l10n} from '@/utils/l10n';
+
 // Define types for the data fetched from your API route
 type ConfirmationDetails = {
   couponCode: string;
@@ -31,7 +34,8 @@ type APIResponse = {
   data?: ConfirmationDetails;
 };
 
-export default function ClientPage() {
+export default function ClientPage({ lang }: { lang: string }) {
+
   const searchParams = useSearchParams();
 
   const couponCodeFromURL = searchParams.get('cc');
@@ -94,10 +98,10 @@ export default function ClientPage() {
     return (
       <>
         <section className="w-full p-8 text-center">
-          <Heading level={1} content="Loading Your Reservation Details..." className="text-2xl pb-8" />
+          <Heading level={1} content={l10n('rsvp', 'content-loading', lang)} className="text-2xl pb-8" />
         </section>
         <section className="relative w-1/3 pb-8 px-8">
-          <Image src="/assets/i/icons/spinner.gif" alt="Loading" width="100" height="100" />
+          <Image src="/assets/i/icons/spinner.gif" alt={l10n('rsvp', 'content-loading', lang)} width="100" height="100" />
         </section>
       </>
     );
@@ -108,9 +112,9 @@ export default function ClientPage() {
     return (
       <>
         <section className="w-full p-8 text-center">
-          <Heading level={1} content="Error Loading Reservation" className="text-2xl pb-8 text-red-600" />
+          <Heading level={1} content={l10n('rsvp', 'error-001', lang)} className="text-2xl pb-8 text-red-600" />
           <p className="text-lg text-gray-700 mb-8">{error}</p>
-          <p className="text-lg text-gray-700"><Link href="/">Go back to homepage.</Link></p>
+          <p className="text-lg text-gray-700"><Link href="/">{l10n('rsvp', 'error-002', lang)}</Link></p>
         </section>
       </>
     );
@@ -134,11 +138,11 @@ export default function ClientPage() {
           <Heading level={1} content="Booking Details" className="text-xl pb-8" />
           <dl className="space-y-2 text-gray-700">
             <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">Coupon Code:</dt>
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-003', lang)}:</dt>
               <dd className="text-right">{confirmationWalkInData.couponCode ? confirmationWalkInData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
             </div>
              <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">Participants:</dt>
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-006', lang)}:</dt>
               <dd className="text-right">2</dd>
             </div>
           </dl>
@@ -152,15 +156,15 @@ export default function ClientPage() {
     return (
       <>
         <section className="w-full p-8 text-center">
-          <Heading level={1} content={(isCheckedIn) ? 'Reservation is checked in.' : 'Reservation is confirmed for FruityLand.'} className="text-2xl pb-8" />
+          <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-2xl pb-8" />
           {(() => {
             if (isCheckedIn) {
               return (
-                <p className="text-success-800">Check in completed with this reservation.</p>
+                <p className="text-success-800">{l10n('rsvp', 'content-checked-in-001', lang)}</p>
               );
             } else {
               return (
-                <p className="text-lg text-gray-700">Present this confirmation at the entrance for event admission.</p>
+                <p className="text-lg text-gray-700">{l10n('rsvp', 'content-confirmation-001', lang)}</p>
               );
             }
           })()}
@@ -183,22 +187,22 @@ export default function ClientPage() {
         </section>
 
         <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">
-          <Heading level={1} content="Booking Details" className="text-xl pb-8" />
+          <Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />
           <dl className="space-y-2 text-gray-700">
             <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">Coupon Code:</dt>
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-003', lang)}:</dt>
               <dd className="text-right">{confirmationData?.couponCode ? confirmationData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
             </div>
             <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">Date:</dt>
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-004', lang)}:</dt>
               <dd className="text-right">{confirmationData?.date}</dd>
             </div>
             <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">Time:</dt>
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-005', lang)}:</dt>
               <dd className="text-right">{confirmationData?.time || 'N/A'}</dd>
             </div>
              <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">Participants:</dt>
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-006', lang)}:</dt>
               <dd className="text-right">2</dd>
             </div>
           </dl>

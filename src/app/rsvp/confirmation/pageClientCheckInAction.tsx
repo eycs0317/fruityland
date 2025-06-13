@@ -9,7 +9,10 @@ import {useSearchParams} from 'next/navigation';
 // ui
 import FormField from '@/ui/foundations/formField';
 
-export default function ClientPage() {
+// utils
+import {l10n} from '@/utils/l10n';
+
+export default function ClientPage({ lang }: { lang: string }) {
   const searchParams = useSearchParams();
 
   const couponCodeFromURL = searchParams.get('cc');
@@ -42,7 +45,7 @@ export default function ClientPage() {
           <form className="flex flex-col gap-8 w-full" action="/api/rsvp/checkIn" method="post">
             <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCodeFromURL || ''}} />
             <div className="flex flex-col gap-4">
-              <FormField type='button' fieldData={{type: 'submit', id: 'btCheckIn', className: 'primary', value:'Check In'}} />
+              <FormField type='button' fieldData={{type: 'submit', id: 'btCheckIn', className: 'primary', value:l10n('rsvp', 'button-006', lang)}} />
             </div>
           </form>
         </section> : ''

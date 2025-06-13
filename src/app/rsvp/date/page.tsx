@@ -1,19 +1,33 @@
-
 // metadata
-export const metadata = {
-  title: 'RSVP [Date]',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const session = await getSession();
+  const lang = session.lang || 'zh-HK';
+
+  const localizedTitles: Record<string, string> = {
+    'en-US': 'Reservation [Date Selection]',
+    'zh-CN': '预约 [选择日期]',
+    'zh-HK': '預約 [選擇日期]',
+  };
+
+  return {
+    title: localizedTitles[lang] ?? 'Reservation [Date Selection]',
+  };
+}
 
 // react
 import React from 'react';
 
 // nextjs
 import {redirect} from 'next/navigation';
+import type {Metadata} from 'next';
 
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
+
+// utils
+import {l10n} from '@/utils/l10n';
 
 // Calendar
 import Calendar from '@/components/Calendar';
@@ -31,6 +45,7 @@ import InactivityDetector from '@/components/InactivityDetector';
 
 export default async function MainPage() {
   const session = await getSession();
+  const lang = session?.lang ?? 'zh-HK';
   const couponGroup = session.coupon?.group ?? 0;
   const couponCode = session.coupon?.couponCode;
   let { startDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
@@ -75,7 +90,7 @@ if (rawStartDate && rawStartDate <= today) {
       <InactivityDetector />
       <AdminHeader />
       <section className="w-full p-8 text-center">
-        <Heading level={1} content="RSVP Step 1" className="text-4xl pb-8" />
+        <Heading level={1} content={l10n('rsvp', 'title-date', lang)} className="text-4xl pb-8" />
       </section>
       <section className="relative w-full pb-8 px-8">
       </section>
@@ -84,8 +99,8 @@ if (rawStartDate && rawStartDate <= today) {
 
         <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
           <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:'Next'}} />
-            <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:'Back'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:l10n('rsvp', 'button-002', lang)}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
         </form>
       </section>
