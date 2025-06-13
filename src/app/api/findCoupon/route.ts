@@ -1,3 +1,4 @@
+// app/api/findCoupon/routeModule.ts
 // nextjs
 import {NextRequest, NextResponse} from 'next/server';
 
@@ -25,11 +26,15 @@ export async function POST(req: NextRequest) {
 
   if (req.method === 'POST') {
     try {
+
       const data = await req.formData();
       const couponCode = data.get('couponCode');
+
       if (typeof couponCode === 'string') {
         const couponResult = await getCouponDetails(couponCode);
         const session = await getSession();
+
+
         if (couponResult) {
           session.coupon = {
             couponCode: couponResult.couponCode,
@@ -42,6 +47,7 @@ export async function POST(req: NextRequest) {
             couponSchedule: couponResult.scheduleUID ? couponResult.scheduleUID : null,
           }
           await session.save()
+
           // coupon found and got scheduleUID,
           if (couponResult.scheduleUID) {
             const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
@@ -50,7 +56,7 @@ export async function POST(req: NextRequest) {
             if (session.auth && session.authType == 'onsiteAdmin') {
               const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
               return response;
-            } else {
+            } else { // need to check if coupon expired
               const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
               return response;
             }
