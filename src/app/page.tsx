@@ -9,6 +9,12 @@ import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
 
+// lib
+import {getSession} from '@/lib/session';
+
+// utils
+import {l10n} from '@/utils/l10n';
+
 // client
 import PageClient from './pageClient';
 
@@ -22,11 +28,16 @@ export default async function MainPage({searchParams}: PageProps) {
   const resolvedSearchParams = await searchParams;
   const message = resolvedSearchParams?.message;
 
+  const session = await getSession();
+  const lang = session?.lang ?? 'zh-HK';
+
+
+
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
       <section className="w-full p-8 text-center">
-        <Heading level={1} content="Welcome FruityLand." className="text-4xl pb-8" />
+        <Heading level={1} content={l10n('home-title', lang)} className="text-4xl pb-8" />
       </section>
       <section className="relative w-full px-20 pb-8">
         <Image src="/assets/i/home.svg" alt="FruityLand" width="300" height="300" />
@@ -35,7 +46,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/findCoupon" method="post">
           <div className="flex flex-col gap-4">
-            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: 'Coupon Code', wrapperClassName: 'w-full', isRequired:true, placeholder: '1234-1234'}} />
+            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: l10n('home-input-001', lang), wrapperClassName: 'w-full', isRequired:true, placeholder: '1234-1234'}} />
           </div>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
