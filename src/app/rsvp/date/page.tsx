@@ -13,6 +13,7 @@ import {redirect} from 'next/navigation';
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
+import AdminHeader from '@/ui/patterns/adminHeader';
 
 // Calendar
 import Calendar from '@/components/Calendar';
@@ -49,6 +50,7 @@ export default async function MainPage() {
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
+      <AdminHeader />
       <section className="w-full p-8 text-center">
         <Heading level={1} content="RSVP Step 1" className="text-4xl pb-8" />
       </section>

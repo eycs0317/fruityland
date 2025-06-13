@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
       cancelReservation(couponCode);
 
-      const response = NextResponse.redirect(new URL(siteURL + '/?message=E0004'));
+      const response = NextResponse.redirect(new URL(siteURL + '/?message=S0004'));
       return response;
     }
     catch {

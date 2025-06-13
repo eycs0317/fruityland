@@ -14,6 +14,8 @@ import {redirect} from 'next/navigation';
 // import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import FormField from '@/ui/foundations/formField';
+import AdminHeader from '@/ui/patterns/adminHeader';
+
 // utils
 import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 import { createReservation } from '@/utils/createReservation';
@@ -141,6 +143,7 @@ export default async function MainPage({ searchParams }: PageProps) {
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
+      <AdminHeader />
       <section className="w-full p-8 text-center">
         <Heading level={1} content="RSVP Step 2" className="text-4xl pb-8" />
       </section>
