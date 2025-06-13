@@ -24,9 +24,17 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
+// lib
+import {getSession} from '@/lib/session';
+
+export default async function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
+  const session = await getSession();
+  if (!session.lang) {
+    session.lang = 'zh-HK';
+    await session.save();
+  }
   return (
-    <html lang="en">
+    <html lang={session.lang}>
       <body>
         {children}
       </body>

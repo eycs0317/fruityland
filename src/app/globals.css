@@ -157,11 +157,6 @@ header a:visited { color:var(--color-nav); };
 header a:hover { color:var(--color-nav-active); };
 header a:active { color:var(--color-nav-active); };
 
-footer a:link { color:var(--color-link-dark); };
-footer a:visited { color:var(--color-link-dark); };
-footer a:hover { color:var(--color-link-dark-active); };
-footer a:active { color:var(--color-link-dark-active); };
-
 .hero .button { margin-top:var(--margin-hero-y); }
 
 .container p { margin-bottom:var(--margin-paragraph); }

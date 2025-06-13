@@ -23,6 +23,8 @@ export default async function Message({ messageCode }: { messageCode: string }) 
       // Info
       case 'I0001': message = 'Data existed.  No new data generated.';
         break;
+      case 'I0002': message = 'Language changed.';
+        break;
 
       // Success
       case 'S0001': message = 'Login successful.';

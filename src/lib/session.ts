@@ -14,6 +14,7 @@ export interface CouponSessionData {
 export interface SessionData {
   auth: boolean;
   authType: string;
+  lang?: string;
   coupon?: CouponSessionData;
 }
 

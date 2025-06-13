@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 
 // nextjs
 import Image from 'next/image';
@@ -8,6 +8,9 @@ import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
+
+// client
+import PageClient from './pageClient';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -39,6 +42,9 @@ export default async function MainPage({searchParams}: PageProps) {
           </div>
         </form>
       </section>
+      <Suspense fallback={<div>Loading...</div>}>
+        <PageClient />
+      </Suspense>
     </main>
   );
 }

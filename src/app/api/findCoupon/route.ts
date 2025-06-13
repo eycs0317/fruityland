@@ -9,6 +9,7 @@ import {getSession} from '@/lib/session';
 
 // utils
 import {getSiteURL} from '@/utils/getSiteURL';
+import {formatCouponCode} from '@/utils/formatCouponCode';
 
 async function getCouponDetails(couponCode: string) {
   const couponSearch = await prisma.coupon.findUnique({
@@ -26,7 +27,13 @@ export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
       const data = await req.formData();
-      const couponCode = data.get('couponCode');
+      let couponCode = data.get('couponCode');
+      if (typeof couponCode === 'string') {
+        couponCode = formatCouponCode(couponCode);
+      } else {
+        couponCode = '';
+      }
+
       if (typeof couponCode === 'string') {
         const couponResult = await getCouponDetails(couponCode);
         const session = await getSession();
