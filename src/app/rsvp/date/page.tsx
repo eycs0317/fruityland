@@ -27,11 +27,34 @@ import { getMinMaxScheduleDatesByGroup } from '@/lib/getMinMaxScheduleDatesByGro
 import InactivityDetector from '@/components/InactivityDetector';
 
 
+
+
 export default async function MainPage() {
   const session = await getSession();
   const couponGroup = session.coupon?.group ?? 0;
   const couponCode = session.coupon?.couponCode;
-  const {startDate, endDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
+  let { startDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
+  const { endDate } = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
+
+const today = new Date();
+const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+
+// Convert UTC strings from the DB into local Date objects
+const rawStartDate = startDate ? new Date(startDate) : null; // e.g., '2025-07-01T04:00:00.000Z'
+const rawEndDate = endDate ? new Date(endDate) : null;     // e.g., '2025-07-05T04:00:00.000Z'
+
+// Check if coupon has expired
+if (rawEndDate && rawEndDate < today) {
+  // redirect('/efx?message=E0007')
+  redirect('/')
+}
+
+if (rawStartDate && rawStartDate <= today) {
+  startDate = tomorrow;
+} else {
+  startDate = rawStartDate;
+}
+
   async function handleSubmit(formData: FormData) {
     'use server'
 
