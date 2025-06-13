@@ -29,12 +29,15 @@ import {getSession} from '@/lib/session';
 
 export default async function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
   const session = await getSession();
+  let lang = '';
   if (!session.lang) {
-    session.lang = 'zh-HK';
-    await session.save();
+    lang = 'zh-HK';
+  } else {
+    lang = session.lang;
   }
+
   return (
-    <html lang={session.lang}>
+    <html lang={lang}>
       <body>
         {children}
       </body>
