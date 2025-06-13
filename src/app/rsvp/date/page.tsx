@@ -24,9 +24,9 @@ import { getSession } from '@/lib/session';
 //server side functions
 import { getMinMaxScheduleDatesByGroup } from '@/lib/getMinMaxScheduleDatesByGroup';
 
-// import InactivityDetector from '@/components/InactivityDetector';
+import InactivityDetector from '@/components/InactivityDetector';
 
-// import { subHours } from 'date-fns';
+
 
 
 export default async function MainPage() {
@@ -45,6 +45,7 @@ const rawEndDate = endDate ? new Date(endDate) : null;     // e.g., '2025-07-05T
 
 // Check if coupon has expired
 if (rawEndDate && rawEndDate < today) {
+  // redirect('/efx?message=E0007')
   redirect('/')
 }
 
