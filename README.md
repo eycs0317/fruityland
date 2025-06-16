@@ -1,3 +1,7 @@
+## Info for date-fns-tz
+
+https://github.com/marnusw/date-fns-tz/releases/tag/v3.0.0
+
 ## Need to do
 
 feed data to rsvp/comfirmtation with date to display. Now only have dumby data
