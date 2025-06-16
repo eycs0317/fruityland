@@ -111,6 +111,26 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '系统正在处理预约详情...',
         'zh-HK': '系統正在處理預約詳情...',
       },
+      'content-legal-1': {
+        'en-US': 'By clicking on the Schedule button below, you agree to the ',
+        'zh-CN': '點擊下面的預約按鈕，即表示您同意',
+        'zh-HK': '點擊下面的預約按鈕，即表示您同意',
+      },
+      'content-legal-2': {
+        'en-US': ' and ',
+        'zh-CN': '和',
+        'zh-HK': '和',
+      },
+      'content-terms': {
+        'en-US': 'Terms and Conditions',
+        'zh-CN': '条款及细则',
+        'zh-HK': '條款及細則',
+      },
+      'content-waiver': {
+        'en-US': 'Waiver',
+        'zh-CN': '免责声明',
+        'zh-HK': '免責聲明',
+      },
       'error-001': {
         'en-US': 'Error Loading Reservation',
         'zh-CN': '系统无法取得预订细节',

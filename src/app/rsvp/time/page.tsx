@@ -20,6 +20,7 @@ import {format} from 'date-fns';
 
 // nextjs
 import Image from 'next/image';
+import Link from 'next/link';
 import type {Metadata} from 'next';
 import {redirect} from 'next/navigation';
 
@@ -207,6 +208,7 @@ export default async function MainPage({ searchParams }: PageProps) {
             </div>
           </div>
           <div className="flex flex-col gap-4">
+            <p><small>{l10n('rsvp', 'content-legal-1', lang)}<Link href="/legal/terms" target="_blank">{l10n('rsvp', 'content-terms', lang)}</Link>{l10n('rsvp', 'content-legal-2', lang)}<Link href="/legal/waiver" target="_blank">{l10n('rsvp', 'content-waiver', lang)}</Link></small></p>
             <FormField type='button' fieldData={{type: 'submit', id: 'btSchedule', className: 'primary', value:l10n('rsvp', 'button-003', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
