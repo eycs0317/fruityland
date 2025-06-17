@@ -84,6 +84,7 @@ export default async function MainPage({searchParams}: PageProps) {
       startEndUTC.startDate = resetStartUTC(startEndUTC.startDate, hktTomorrowUTC);
     }
     // console.log(startEndUTC);
+
   } else {
     redirect('/?message=E0004');
   }
@@ -98,7 +99,7 @@ export default async function MainPage({searchParams}: PageProps) {
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/date" method="post">
-          <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate ? new Date(startEndUTC.startDate) : undefined} allowedMaxDate={startEndUTC?.endDate ? new Date(startEndUTC.endDate) : undefined}/>
+          <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate?.toISOString()} allowedMaxDate={startEndUTC?.endDate?.toISOString()}/>
           <Timezone />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:l10n('rsvp', 'button-002', lang)}} />

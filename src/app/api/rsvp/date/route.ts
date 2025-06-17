@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         const response = NextResponse.redirect(new URL(siteURL + '/'));
         return response;
       } else if (btNext) {
-        if (!selectedDate || typeof selectedDate != 'string' || selectedDate == '2025-01-01') {
+        if (!selectedDate || typeof selectedDate != 'string' || selectedDate == '2024-12-31' || selectedDate == '2025-01-01') {
           const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date?message=E0009'));
           return response;
         } else {

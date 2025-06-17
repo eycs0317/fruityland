@@ -17,11 +17,9 @@ import AdminHeader from '@/ui/patterns/adminHeader';
 // Calendar
 import Calendar from '@/components/Calendar';
 
-// lib
-import {getEventMinMaxDate} from '@/lib/getEventMinMaxDate';
-
 // utils
 import {protectPage} from '@/utils/protectPage';
+import {getStartEndUTC} from '@/utils/v2Function/getStartEndUTC';
 
 export default async function MainPage() {
   const auth = await protectPage('onsiteAdmin');
@@ -29,7 +27,10 @@ export default async function MainPage() {
     redirect(auth);
   }
 
-  const {startDate, endDate} = await getEventMinMaxDate();
+  const startEndUTC = await getStartEndUTC('00000000');
+  if (!startEndUTC.startDate || !startEndUTC.endDate) {
+    redirect('/admin/onsite?message=E0005');
+  }
 
   async function handleSubmit(formData: FormData) {
     'use server'
@@ -48,7 +49,7 @@ export default async function MainPage() {
       </section>
       <section className="w-full px-8 pb-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
-          <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
+          <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate?.toISOString()} allowedMaxDate={startEndUTC?.endDate?.toISOString()}/>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
           </div>
