@@ -26,8 +26,12 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
   const nowUTC = new Date();
 
   // -- Date parsing helper
-  const toLocalDate = (isoStr?: string): Date | undefined => {
-    return isoStr ? new Date(isoStr) : undefined;
+  const toLocalStartOfDay = (isoStr?: string): Date | undefined => {
+    if (!isoStr) return undefined;
+
+    const local = new Date(isoStr);
+    local.setHours(0, 0, 0, 0); // force to local midnight
+    return local;
   };
 
   // --- Initial State Calculation ---
@@ -69,8 +73,8 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
   };
 
   // Convert ISO string props to local Date objects
-  const localMinDate = toLocalDate(allowedMinDate);
-  const localMaxDate = toLocalDate(allowedMaxDate);
+  const localMinDate = toLocalStartOfDay(allowedMinDate);
+  const localMaxDate = toLocalStartOfDay(allowedMaxDate);
 
   return (
     <div ref={calendarRef} className="w-full max-w-md mx-auto p-4">
