@@ -19,7 +19,8 @@ import {l10n} from '@/utils/l10n';
 import PageClient from './pageClient';
 
 // v2 function to test
-import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
+// import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
+import { getStartEndUTC } from '@/utils/v2Function/getStartEndUTC';
 interface PageProps {
   searchParams?: Promise<{
     message?: string;
@@ -34,7 +35,8 @@ export default async function MainPage({searchParams}: PageProps) {
   const lang = session?.lang ?? 'zh-HK';
 
 
-  console.log(getHKTomorrowUTC());
+  // console.log(getHKTomorrowUTC());
+  console.log(getStartEndUTC('d2007f70'))
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
