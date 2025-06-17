@@ -22,7 +22,7 @@ export default function ClientPage({ lang }: { lang: string }) {
 
   useEffect(() => {
     const fetchCheckInStatus = async () => {
-      const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
       const result = await response.json();
 
       if (result.data.status) {

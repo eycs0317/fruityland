@@ -26,7 +26,7 @@ export default function CouponSearchForm() {
 
     try {
       // Step 1: Call your API route to validate the coupon code
-      const response = await fetch('/api/validateCoupon', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/validateCoupon`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

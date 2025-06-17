@@ -15,7 +15,7 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
       select: { isRSVP: true },
     });
     if (existingCouponRSVP) {
-      cancelReservation(couponCode);
+      await cancelReservation(couponCode);
     }
 
     // 1. Find the selected schedule (appointment)

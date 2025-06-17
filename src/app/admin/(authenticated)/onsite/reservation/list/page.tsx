@@ -54,7 +54,7 @@ console.log('<<<<<<<userSelectedDate>>>>>>>', userSelectedDate);
     // Construct API URL for fetching reservations for the determined date
     // This API route (e.g., /api/admin/reservations/list) needs to be created
     // and should filter reservations by the `date` parameter.
-    const apiUrl = `http://localhost:3000/api/admin/reservations/list?date=${userSelectedDate}`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/admin/reservations/list?date=${userSelectedDate}`;
 
     const response = await fetch(apiUrl, {
       method: 'GET',

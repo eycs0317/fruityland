@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function ClientPage() {
   const handleClick = async (e: React.MouseEvent<HTMLAnchorElement>, lang:string) => {
     e.preventDefault();
-    const res = await fetch(`/api/language?lang=${lang}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/language?lang=${lang}`, {
       method: 'GET',
       credentials: 'include',
     });

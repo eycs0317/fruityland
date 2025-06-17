@@ -57,7 +57,7 @@ export default function ClientPage({ lang }: { lang: string }) {
 
     const fetchConfirmationData = async () => {
       try {
-        const response = await fetch(`/api/coupon-details?cc=${couponCodeFromURL}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/coupon-details?cc=${couponCodeFromURL}`);
         const result: APIResponse = await response.json();
 
         if (result.success && result.data) {
@@ -82,7 +82,7 @@ export default function ClientPage({ lang }: { lang: string }) {
 
   const [isCheckedIn, setIsCheckedIn] = useState(false);
   const fetchCheckInStatus = async () => {
-    const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
     const result = await response.json();
 
     if (result.data.status) {

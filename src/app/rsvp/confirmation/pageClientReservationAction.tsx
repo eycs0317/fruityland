@@ -22,16 +22,17 @@ export default function ClientPage({ lang }: { lang: string }) {
 
   useEffect(() => {
     const fetchCheckInStatus = async () => {
-        const response = await fetch(`/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
-        const result = await response.json();
+      if (!couponCodeFromURL || typeof window === 'undefined') return;
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/rsvp/getCheckInStatus?cc=${couponCodeFromURL}`);
+      const result = await response.json();
 
-        if (result.data.status) {
-          setIsCheckedIn(true);
-        } else {
-          setIsLoading(false);
-        }
-      };
-      fetchCheckInStatus();
+      if (result.data.status) {
+        setIsCheckedIn(true);
+      } else {
+        setIsLoading(false);
+      }
+    };
+    fetchCheckInStatus();
   },[couponCodeFromURL])
 
   if (isLoading) {

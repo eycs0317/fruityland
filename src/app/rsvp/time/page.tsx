@@ -64,7 +64,7 @@ export default async function MainPage({searchParams}: PageProps) {
   if (group && date) {
     try {
       // Construct API URL for searching open appointments by group
-      const apiUrl = `http://localhost:3000/api/rsvp/searchOpenApptByGroup?group=${group}&date=${date}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/rsvp/searchOpenApptByGroup?group=${group}&date=${date}`;
 
       // Fetch data from the API
       const response = await fetch(apiUrl, {
