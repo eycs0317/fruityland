@@ -98,7 +98,7 @@ export default async function MainPage({searchParams}: PageProps) {
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/date" method="post">
-          <Calendar allowedMinDate={startEndUTC?.startDate ?? undefined} allowedMaxDate={startEndUTC?.endDate ?? undefined}/>
+          <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate ?? undefined} allowedMaxDate={startEndUTC?.endDate ?? undefined}/>
           <Timezone />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:l10n('rsvp', 'button-002', lang)}} />
