@@ -1,15 +1,18 @@
+
+
 import { prisma } from '@/lib/prisma';
 import { addDays } from 'date-fns'; // Used for easily adding days
 
 interface SessionDetail {
   uid: string;
-  sessionDateTime: string; // Changed to string to store ISO 8601 string
+  sessionDateTime: Date;
+  sessionDateTimetoISO: string // Changed to string to store ISO 8601 string
   group: number;
   isWeekend: boolean;
   isBooked: boolean;
 }
 
-export async function getEventSessionsBySelectedDate(dateString: string, durationDays: number = 2): Promise<Date[]> {
+export async function getEventSessionsBySelectedDate(dateString: string | undefined, durationDays: number = 2): Promise<SessionDetail[]> {
   if (!dateString) {
     console.error("No dateString provided to getSessionsInPeriod.");
     return [];
@@ -57,7 +60,8 @@ export async function getEventSessionsBySelectedDate(dateString: string, duratio
     // Extract just the Date objects from the Prisma results
     const sessions: SessionDetail[] = rawSessions.map(s => ({
       uid: s.uid,
-      sessionDateTime: s.sessionDateTime.toISOString(), // Convert Date object to ISO string
+      sessionDateTime: s.sessionDateTime,
+      sessionDateTimetoISO: s.sessionDateTime.toISOString(), // Convert Date object to ISO string
       group: s.group,
       isWeekend: s.isWeekend,
       isBooked: s.isBooked,

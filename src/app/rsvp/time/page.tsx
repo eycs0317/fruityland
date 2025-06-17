@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // react
 import React from 'react';
-import {format} from 'date-fns';
+// import {format} from 'date-fns';
 
 // nextjs
 import Image from 'next/image';
@@ -39,9 +39,10 @@ import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 import {Appointment} from '@/utils/appointmentUtils';
 import InactivityDetector from '@/components/InactivityDetector';
 
-import { getSchedulesByGroup } from '@/utils/v2Function/getSchedulesByGroup';
-import { filterSchedulesBySelectedDate} from '@/utils/v2Function/filterSchedulesBySelectedDate';
-import { getEventSessionsBySelectedDate } from '@'
+// import { getSchedulesByGroup } from '@/utils/v2Function/getSchedulesByGroup';
+// import { filterSchedulesBySelectedDate} from '@/utils/v2Function/filterSchedulesBySelectedDate';
+import { getEventSessionsBySelectedDate } from '@/utils/v2Function/getEventSessionsBySelectedDate';
+import { filterSessionsByDate } from '@/utils/v2Function/filterSessionsByDate';
 interface PageProps {
   searchParams?: Promise<{
     message?: string;
@@ -58,14 +59,30 @@ export default async function MainPage({searchParams}: PageProps) {
   // Destructure the resolved search parameters
   const date = session.rsvpDate; //for display
   const group = session.coupon?.group;
+
+
+
   // testing --------------->
 console.log('typeof date------>',  date)
 // const schedulesByGroup = await getSchedulesByGroup(group)
 // console.log('schedulesByGroup------>', schedulesByGroup)
 // const filteredSchedules = await filterSchedulesBySelectedDate(schedulesByGroup, date)
 // console.log('filteredSchedules------>', filteredSchedules)
-const twoday = await getSessionsInPeriod(date)
-console.log('twoday------>', twoday)
+console.log('date------>',  date)
+const selecteddateplus48hrs = await getEventSessionsBySelectedDate(date)
+console.log('new  result return selected date(local) + 48hrs sessionTime------>', selecteddateplus48hrs)
+const result =  filterSessionsByDate(
+  selecteddateplus48hrs.map(session => session.sessionDateTime), // <--- Map to extract only the Date objects
+  date,
+  'America/Los_Angeles'
+);
+console.log('result---->', result)
+// const groupedData = groupAndSortAppointments(selecteddateplus48hrs)
+// console.log('new groupedData ------>', groupedData)
+
+
+
+
 
 
   // Initialize arrays for appointments and grouped data
@@ -106,7 +123,7 @@ console.log('twoday------>', twoday)
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
-      {/* <InactivityDetector /> */}
+      <InactivityDetector />
       <AdminHeader />
       <section className="w-full p-8 text-center">
         <Heading level={1} content={l10n('rsvp', 'title-date', lang)} className="text-4xl pb-8" />
