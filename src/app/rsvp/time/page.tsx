@@ -39,6 +39,9 @@ import {groupAndSortAppointments} from '@/utils/appointmentUtils';
 import {Appointment} from '@/utils/appointmentUtils';
 import InactivityDetector from '@/components/InactivityDetector';
 
+import { getSchedulesByGroup } from '@/utils/v2Function/getSchedulesByGroup';
+import { filterSchedulesBySelectedDate} from '@/utils/v2Function/filterSchedulesBySelectedDate';
+import { getEventSessionsBySelectedDate } from '@'
 interface PageProps {
   searchParams?: Promise<{
     message?: string;
@@ -55,6 +58,15 @@ export default async function MainPage({searchParams}: PageProps) {
   // Destructure the resolved search parameters
   const date = session.rsvpDate; //for display
   const group = session.coupon?.group;
+  // testing --------------->
+console.log('typeof date------>',  date)
+// const schedulesByGroup = await getSchedulesByGroup(group)
+// console.log('schedulesByGroup------>', schedulesByGroup)
+// const filteredSchedules = await filterSchedulesBySelectedDate(schedulesByGroup, date)
+// console.log('filteredSchedules------>', filteredSchedules)
+const twoday = await getSessionsInPeriod(date)
+console.log('twoday------>', twoday)
+
 
   // Initialize arrays for appointments and grouped data
   let appointments: Appointment[] = [];
@@ -79,7 +91,7 @@ export default async function MainPage({searchParams}: PageProps) {
 
       // Parse the JSON response
       appointments = await response.json();
-      console.log('appts----->', appointments)
+      // console.log('appts----->', appointments)
 
       // Group and sort the fetched appointments
       groupedAppointmentData = groupAndSortAppointments(appointments);
@@ -94,7 +106,7 @@ export default async function MainPage({searchParams}: PageProps) {
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
-      <InactivityDetector />
+      {/* <InactivityDetector /> */}
       <AdminHeader />
       <section className="w-full p-8 text-center">
         <Heading level={1} content={l10n('rsvp', 'title-date', lang)} className="text-4xl pb-8" />
@@ -106,7 +118,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Message messageCode={message ?? ''} />
         <dl className="flex flex-row pb-4">
           <dt className="font-bold flex-1">{l10n('rsvp', 'content-001', lang)}</dt>
-          <dd className="flex-5">{date ? format(date, 'MMMM d, yyyy') : ''}</dd>
+          <dd className="flex-5">{date}</dd>
         </dl>
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/time" method="post">
           <div className="flex flex-row gap-4">

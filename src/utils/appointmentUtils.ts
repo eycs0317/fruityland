@@ -46,7 +46,8 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
 
     // 2. Convert the UTC Date object to the local display timezone (HKT)
     const localZonedDate = convertUTCToLocal(utcSlotDate, APP_DISPLAY_TIMEZONE);
-
+//     const localZonedDate = utcSlotDate
+// console.log('localZonedDate:', localZonedDate)
     if (isNaN(localZonedDate.getTime())) {
       console.error('APPT_UTILS: Invalid Zoned Date after conversion for sessionDateTime:', appt.sessionDateTime, 'Zoned Date:', localZonedDate);
       return; // Skip if conversion resulted in an invalid date

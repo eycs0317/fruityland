@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
       const rsvpTime = data.get('rsvpTime');
       const btNext = data.get('btNext');
       const btBack = data.get('btBack');
+      console.log('<------------->rsvpTime at api/rsvp/time', rsvpTime)
 
       if (btBack) {
         const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
