@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendar.css'; // Custom styles for the calendar
@@ -24,15 +24,6 @@ function formatAsLocalYYYYMMDD(date: Date): string {
 
 export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }: CalendarProps) {
   const nowUTC = new Date();
-
-  // -- Date parsing helper
-  const toLocalStartOfDay = (isoStr?: string): Date | undefined => {
-    if (!isoStr) return undefined;
-
-    const local = new Date(isoStr);
-    local.setHours(0, 0, 0, 0); // force to local midnight
-    return local;
-  };
 
   // --- Initial State Calculation ---
   const calculateInitialDateStates = () => {
@@ -59,6 +50,10 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
   const [value, onChange] = useState<Value>(initialCalValue);
   const [userClickedDay, setUserClickedDay] = useState<string | undefined>(initialClickedDayString);
 
+  const [localMinDate, setLocalMinDate] = useState<Date>();
+  const [localMaxDate, setLocalMaxDate] = useState<Date>();
+  const [isClient, setIsClient] = useState(false);
+
   const calendarRef = useRef<HTMLDivElement>(null);
 
   const handleDayClick = (clickedValue: ValuePiece) => {
@@ -72,21 +67,36 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
     }
   };
 
-  // Convert ISO string props to local Date objects
-  const localMinDate = toLocalStartOfDay(allowedMinDate);
-  const localMaxDate = toLocalStartOfDay(allowedMaxDate);
+  useEffect(() => {
+    // This runs only on the client after hydration
+    setIsClient(true);
+
+    if (allowedMinDate) {
+      const d = new Date(allowedMinDate);
+      d.setHours(0, 0, 0, 0); // Force to local midnight
+      setLocalMinDate(d);
+    }
+
+    if (allowedMaxDate) {
+      const d = new Date(allowedMaxDate);
+      d.setHours(0, 0, 0, 0); // Force to local midnight
+      setLocalMaxDate(d);
+    }
+  }, [allowedMinDate, allowedMaxDate]);
 
   return (
     <div ref={calendarRef} className="w-full max-w-md mx-auto p-4">
-      <ReactCalendar
-        onChange={onChange}
-        value={value}
-        onClickDay={handleDayClick}
-        minDate={localMinDate}
-        maxDate={localMaxDate}
-        defaultActiveStartDate={localMinDate || (value instanceof Date ? value : nowUTC)}
-        calendarType="gregory"
-      />
+      {isClient && (
+        <ReactCalendar
+          onChange={onChange}
+          value={value}
+          onClickDay={handleDayClick}
+          minDate={localMinDate}
+          maxDate={localMaxDate}
+          defaultActiveStartDate={localMinDate || (value instanceof Date ? value : nowUTC)}
+          calendarType="gregory"
+        />
+      )}
       <input
         type="hidden"
         name="selectedDate"
