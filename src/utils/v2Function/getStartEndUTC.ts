@@ -1,5 +1,12 @@
-import {prisma} from '@/lib/prisma';
+import { prisma } from '@/lib/prisma';
+import { checkAuth } from '../checkAuth'
 export async function getStartEndUTC(userInputCouponCode: string): Promise<{ startDate: Date | null; endDate: Date | null }> {
+    const customerAuth = await checkAuth('customerAdmin');
+    const onsiteAuth = await checkAuth('onsiteAdmin');
+    const efxAuth = await checkAuth('efxAdmin');
+    if(customerAuth || onsiteAuth || efxAuth){
+      return { startDate: new Date('2025-07-10T04:00:00.000Z'), endDate: new Date('2025-08-31T11:30:00.000Z') };
+    }
   try {
     const couponDetail = await prisma.coupon.findUnique({
       where: {
