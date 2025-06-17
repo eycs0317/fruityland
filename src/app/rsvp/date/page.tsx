@@ -26,20 +26,21 @@ import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
+import Timezone from '@/ui/patterns/userTimezone';
 
 // utils
 import {l10n} from '@/utils/l10n';
+import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
+import {getStartEndUTC} from '@/utils/v2Function/getStartEndUTC';
+import {checkExpire} from '@/utils/v2Function/checkExpire';
+import {resetStartUTC} from '@/utils/v2Function/resetStartUTC';
 
-// Calendar
+// components
 import Calendar from '@/components/Calendar';
+import InactivityDetector from '@/components/InactivityDetector';
 
 // session
 import {getSession} from '@/lib/session';
-
-//server side functions
-import { getMinMaxScheduleDatesByGroup } from '@/lib/getMinMaxScheduleDatesByGroup';
-
-import InactivityDetector from '@/components/InactivityDetector';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -48,34 +49,43 @@ interface PageProps {
 }
 
 export default async function MainPage({searchParams}: PageProps) {
-
-  // TO BE REPLACE BY NEW FUNCTIONS
   const session = await getSession();
   const lang = session?.lang ?? 'zh-HK';
 
   const resolvedSearchParams = await searchParams;
   const message = resolvedSearchParams?.message;
 
-  let { startDate} = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
-  const { endDate } = await getMinMaxScheduleDatesByGroup(session.coupon?.group ?? 0)
+  // get tomorrow hk time at 12am as UTC
+  const hktTomorrowUTC = getHKTomorrowUTC();
+  // console.log(hktTomorrowUTC);
 
-  const today = new Date();
-  const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+  let startEndUTC: {
+    startDate: Date | null;
+    endDate: Date | null;
+  } | undefined;
 
-  // Convert UTC strings from the DB into local Date objects
-  const rawStartDate = startDate ? new Date(startDate) : null; // e.g., '2025-07-01T04:00:00.000Z'
-  const rawEndDate = endDate ? new Date(endDate) : null;     // e.g., '2025-07-05T04:00:00.000Z'
+  if (session.coupon) {
+    // get start and end session time based on group or authType as UTC
+    startEndUTC = await getStartEndUTC(session.coupon.couponCode);
+    if (!startEndUTC.startDate || !startEndUTC.endDate) {
+      redirect('/?message=E0005'); // or throw an error, or use a fallback
+    }
+    // console.log(startEndUTC);
 
-  // Check if coupon has expired
-  if (rawEndDate && rawEndDate < today) {
-    // redirect('/efx?message=E0007')
-    redirect('/')
-  }
+    // get expired status
+    const expireStatus = checkExpire(startEndUTC.startDate, startEndUTC.endDate, hktTomorrowUTC);
+    // console.log(expireStatus);
 
-  if (rawStartDate && rawStartDate <= today) {
-    startDate = tomorrow;
+    if (expireStatus == 1) {
+      // coupon expired.  redirect with error code.
+      redirect('/?message=E0011');
+    } else if (expireStatus == 2) {
+      // start date passed, but coupon is not expired.  reset start date to tomorrow.
+      startEndUTC.startDate = resetStartUTC(startEndUTC.startDate, hktTomorrowUTC);
+    }
+    // console.log(startEndUTC);
   } else {
-    startDate = rawStartDate;
+    redirect('/?message=E0004');
   }
 
   return (
@@ -88,7 +98,8 @@ export default async function MainPage({searchParams}: PageProps) {
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/date" method="post">
-          <Calendar allowedMinDate={startDate ?? undefined} allowedMaxDate={endDate ?? undefined}/>
+          <Calendar allowedMinDate={startEndUTC?.startDate ?? undefined} allowedMaxDate={startEndUTC?.endDate ?? undefined}/>
+          <Timezone />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:l10n('rsvp', 'button-002', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />

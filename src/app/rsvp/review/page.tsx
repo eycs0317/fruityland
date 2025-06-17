@@ -4,13 +4,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const lang = session.lang || 'zh-HK';
 
   const localizedTitles: Record<string, string> = {
-    'en-US': 'Reservation [Time Selection]',
-    'zh-CN': '预约 [选择时间]',
-    'zh-HK': '預約 [選擇時間]',
+    'en-US': 'Reservation [Review]',
+    'zh-CN': '预约 [检查]',
+    'zh-HK': '預約 [檢查]',
   };
 
   return {
-    title: localizedTitles[lang] ?? 'Reservation [Time Selection]',
+    title: localizedTitles[lang] ?? 'Reservation [Review]',
   };
 }
 

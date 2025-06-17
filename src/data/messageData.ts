@@ -51,6 +51,11 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
         'zh-CN': '无法安排预订。请重试。',
         'zh-HK': '無法安排預訂。請重試。',
       },
+      'e0011': {
+        'en-US': 'Coupon expired.',
+        'zh-CN': '优惠券已过期。',
+        'zh-HK': '優惠券已過期。',
+      },
       'i0001': {
         'en-US': 'Data existed.  No new data generated.',
         'zh-CN': '数据已存在。未能产生新数据。',
