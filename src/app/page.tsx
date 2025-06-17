@@ -22,6 +22,8 @@ import PageClient from './pageClient';
 import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
 import { getStartEndUTC } from '@/utils/v2Function/getStartEndUTC';
 import { checkExpire } from '@/utils/v2Function/checkExpire';
+import { resetStartUTC } from '@/utils/v2Function/resetStartUTC';
+
 interface PageProps {
   searchParams?: Promise<{
     message?: string;
@@ -38,12 +40,14 @@ export default async function MainPage({searchParams}: PageProps) {
 
   const HKTomorrowUTC = await getHKTomorrowUTC()
   const { startDate, endDate } = await getStartEndUTC('d2007f70')
-  console.log('-------mainpage', HKTomorrowUTC,  startDate,endDate)
+  console.log('-------mainpage ', HKTomorrowUTC,  startDate,endDate)
 
-  if(startDate && endDate) {
+
     const status = checkExpire(startDate, endDate,HKTomorrowUTC)
-    console.log('-------mainpage', status)
-  }
+    console.log('-------mainpage status', status)
+
+  const result = resetStartUTC(startDate, HKTomorrowUTC)
+  console.log('----mainpage result', result)
 
 
 
