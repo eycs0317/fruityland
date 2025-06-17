@@ -1,3 +1,6 @@
+// react
+import {isValidElement} from 'react';
+
 // ui
 import {FormButtonProps} from '@/ui/foundations/formField/formButton';
 import {FormCheckboxProps} from '@/ui/foundations/formField/formCheckbox';
@@ -23,11 +26,14 @@ export function isFormButtonFieldData(data: unknown): data is FormButtonProps['f
 
 export function isFormCheckboxFieldData(data: unknown): data is FormCheckboxProps['fieldData'] {
   if (typeof data === 'object' && data !== null) {
-    const obj = data as { [key: string]: unknown };
+    const obj = data as Record<string, unknown>;
     return (
       typeof obj.id === 'string' &&
       typeof obj.value === 'string' &&
-      typeof obj.label === 'string'
+      (
+        typeof obj.label === 'string' ||
+        (isValidElement(obj.label))
+      )
     );
   }
   return false;

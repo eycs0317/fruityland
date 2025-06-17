@@ -14,12 +14,17 @@ export interface ScheduleSessionData {
   isWeekend?: boolean;
   isBooked?: boolean;
 }
+export interface LegalSessionData {
+  terms: boolean;
+  waiver: boolean;
+}
 export interface SessionData {
   auth: boolean;
   authType: string;
   lang?: string;
   coupon?: CouponSessionData;
   schedule?: ScheduleSessionData;
+  legal?: LegalSessionData;
   rsvpDate?: string;
 }
 

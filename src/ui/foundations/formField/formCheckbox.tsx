@@ -18,7 +18,7 @@ export type FormCheckboxProps = {
   fieldData: {
     id: string;
     value: string;
-    label: string;
+    label: string | React.ReactNode;
     className?: string;
     wrapperClassName?: string;
     isRequired?: boolean;
@@ -33,7 +33,7 @@ export default function FormInput({fieldData}: FormCheckboxProps) {
   const defaultClassName = 'border mr-2';
 
   return (
-    <div className={defaultWrapperClassName + ((fieldData.wrapperClassName) ? ' ' + fieldData.wrapperClassName : '') + ((fieldData.isRequired) ? ' formRequired' : '') + ((fieldData.isError) ? ' formError' : '')}>
+    <div className={defaultWrapperClassName + ((fieldData.wrapperClassName) ? ' ' + fieldData.wrapperClassName : '') + ((fieldData.isError) ? ' formError' : '')}>
       <input type="checkbox" name={fieldData.id} id={fieldData.id} className={defaultClassName + ((fieldData.className) ? ' ' + fieldData.className : '')} defaultValue={fieldData.value} defaultChecked={(fieldData.isChecked) ? fieldData.isChecked : false} />
       <label htmlFor={fieldData.id}>{fieldData.label}</label>
       {(() => {

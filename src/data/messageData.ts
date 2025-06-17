@@ -56,6 +56,16 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
         'zh-CN': '优惠券已过期。',
         'zh-HK': '優惠券已過期。',
       },
+      'e0012': {
+        'en-US': 'You must agree to the Terms and Conditions to proceed.',
+        'zh-CN': '您必须同意条款及细则才能继续。',
+        'zh-HK': '您必須同意條款及細則才能繼續。',
+      },
+      'e0013': {
+        'en-US': 'You must agree to the Waiver to proceed.',
+        'zh-CN': '您必须同意免责声明才能继续。',
+        'zh-HK': '您必須同意免責聲明才能繼續。',
+      },
       'i0001': {
         'en-US': 'Data existed.  No new data generated.',
         'zh-CN': '数据已存在。未能产生新数据。',

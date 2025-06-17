@@ -46,6 +46,9 @@ export async function POST(req: NextRequest) {
             isWeekend: couponResult.isWeekend,
             participantCount: couponResult.participantCount,
           }
+          delete session.rsvpDate;
+          delete session.schedule;
+          delete session.legal;
           await session.save()
 
           if (couponResult.scheduleUID) {

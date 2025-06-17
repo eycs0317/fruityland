@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
       const data = await req.formData();
+      const terms = data.get('terms');
+      const waiver = data.get('waiver');
       const btSchedule = data.get('btSchedule');
       const btBack = data.get('btBack');
 
@@ -22,6 +24,19 @@ export async function POST(req: NextRequest) {
         return response;
       } else if (btSchedule) {
         const session = await getSession();
+        session.legal = session.legal ?? { terms: false, waiver: false };
+        session.legal.terms = terms === 'terms';
+        session.legal.waiver = waiver === 'waiver';
+        await session.save();
+        if (terms != 'terms') {
+          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/review?message=E0012'));
+          return response;
+        }
+        if (waiver != 'waiver') {
+          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/review?message=E0013'));
+          return response;
+        }
+
         if (session.coupon && session.schedule) {
           const result = await createReservation({
             couponCode: session.coupon.couponCode as string,

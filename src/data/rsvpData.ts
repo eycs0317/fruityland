@@ -11,6 +11,11 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '预约 - 选择时间',
         'zh-HK': '預約 - 選擇時間',
       },
+      'title-review': {
+        'en-US': 'Reservation - Review',
+        'zh-CN': '预约 - 检查',
+        'zh-HK': '預約 - 檢查',
+      },
       'title-confirmation': {
         'en-US': 'Reservation is confirmed for Summer Go Fresh!',
         'zh-CN': '已确认预订夏日 Go Fresh 弹跳乐园',
@@ -76,6 +81,31 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '时间',
         'zh-HK': '時間',
       },
+      'content-review-002': {
+        'en-US': 'Booking Details',
+        'zh-CN': '预约详情',
+        'zh-HK': '預約詳情',
+      },
+      'content-review-003': {
+        'en-US': 'Coupon Code',
+        'zh-CN': '门票编号',
+        'zh-HK': '門票編號',
+      },
+      'content-review-004': {
+        'en-US': 'Date',
+        'zh-CN': '日期',
+        'zh-HK': '日期',
+      },
+      'content-review-005': {
+        'en-US': 'Time',
+        'zh-CN': '时间',
+        'zh-HK': '時間',
+      },
+      'content-review-006': {
+        'en-US': 'Participants',
+        'zh-CN': '参与者',
+        'zh-HK': '參與者',
+      },
       'content-confirmation-001': {
         'en-US': 'Present this confirmation at the entrance for event admission.',
         'zh-CN': '请在活动入口处出示此确认即可入场。',
@@ -117,14 +147,9 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '系統正在處理預約詳情...',
       },
       'content-legal-1': {
-        'en-US': 'By clicking on the Schedule button below, you agree to the ',
-        'zh-CN': '點擊下面的預約按鈕，即表示您同意',
-        'zh-HK': '點擊下面的預約按鈕，即表示您同意',
-      },
-      'content-legal-2': {
-        'en-US': ' and ',
-        'zh-CN': '和',
-        'zh-HK': '和',
+        'en-US': 'I agree with the ',
+        'zh-CN': '我同意',
+        'zh-HK': '我同意',
       },
       'content-terms': {
         'en-US': 'Terms and Conditions',
