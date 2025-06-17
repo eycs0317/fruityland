@@ -6,16 +6,21 @@ export interface CouponSessionData {
   group?: number;
   isWeekend?: boolean;
   participantCount: number;
-  scheduleUID: string | null;
-  isRSVP: boolean;
-  status: number;
-  couponSchedule: string | null;
+}
+export interface ScheduleSessionData {
+  uid: string;
+  sessionDateTime: Date;
+  group?: number;
+  isWeekend?: boolean;
+  isBooked?: boolean;
 }
 export interface SessionData {
   auth: boolean;
   authType: string;
   lang?: string;
   coupon?: CouponSessionData;
+  schedule?: ScheduleSessionData;
+  rsvpDate?: string;
 }
 
 export const sessionOptions: SessionOptions = {

@@ -71,6 +71,11 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '空位',
         'zh-HK': '空位',
       },
+      'content-004': {
+        'en-US': 'Time',
+        'zh-CN': '时间',
+        'zh-HK': '時間',
+      },
       'content-confirmation-001': {
         'en-US': 'Present this confirmation at the entrance for event admission.',
         'zh-CN': '请在活动入口处出示此确认即可入场。',

@@ -20,9 +20,7 @@ import {format} from 'date-fns';
 
 // nextjs
 import Image from 'next/image';
-import Link from 'next/link';
 import type {Metadata} from 'next';
-import {redirect} from 'next/navigation';
 
 // session
 import { getSession } from '@/lib/session';
@@ -32,33 +30,31 @@ import { getSession } from '@/lib/session';
 import Heading from '@/ui/foundations/heading';
 import FormField from '@/ui/foundations/formField';
 import AdminHeader from '@/ui/patterns/adminHeader';
+import Message from '@/ui/patterns/message';
 
 // utils
 import {l10n} from '@/utils/l10n';
 import {groupAndSortAppointments} from '@/utils/appointmentUtils';
-import { createReservation } from '@/utils/createReservation';
 
-import { Appointment } from '@/utils/appointmentUtils';
+import {Appointment} from '@/utils/appointmentUtils';
 import InactivityDetector from '@/components/InactivityDetector';
 
 interface PageProps {
   searchParams?: Promise<{
-    date?: string;
-    group?: string;
-    couponCode?: string;
+    message?: string;
   }>;
 }
 
-export default async function MainPage({ searchParams }: PageProps) {
+export default async function MainPage({searchParams}: PageProps) {
   const session = await getSession();
   const lang = session?.lang ?? 'zh-HK';
-  // Await the searchParams Promise as per Next.js 15 behavior
+
   const resolvedSearchParams = await searchParams;
+  const message = resolvedSearchParams?.message;
 
   // Destructure the resolved search parameters
-  const date = resolvedSearchParams?.date; //for display
-  const group = resolvedSearchParams?.group;
-  const couponCode = resolvedSearchParams?.couponCode;
+  const date = session.rsvpDate; //for display
+  const group = session.coupon?.group;
 
   // Initialize arrays for appointments and grouped data
   let appointments: Appointment[] = [];
@@ -96,70 +92,6 @@ export default async function MainPage({ searchParams }: PageProps) {
     }
   }
 
-  // Server Action to handle form submission
-  async function handleSubmit(formData: FormData) {
-    'use server' // Mark this function as a Server Action
-
-    // Extract data from the form
-    const data = Object.fromEntries(formData.entries());
-    console.log('------Form Data Submitted:--------', data);
-
-    // Destructure specific fields from the form data
-    const { rsvpTime, couponCode: submittedCouponCode, btBack, btSchedule } = data;
-
-    // Handle 'Schedule' button click
-    if (btSchedule) {
-      // Validate if an RSVP time was selected
-      if (!rsvpTime) {
-        // Throw an error if no time is selected, as per Server Action return type expectations
-        throw new Error('Please select a time slot.');
-      }
-
-      let errorMessage = ''; // Variable to hold error message
-
-      try {
-        // Attempt to create the reservation using a utility function
-        const result = await createReservation({
-          couponCode: submittedCouponCode as string,
-          rsvpTime: rsvpTime as string,
-        });
-
-        // Check if reservation creation was successful
-        if (!result.success) {
-          errorMessage = result.message || 'Failed to create reservation.';
-          // Throw an error if reservation creation failed
-          throw new Error(errorMessage);
-        } else {
-          console.log('Reservation created successfully:', result.data);
-        }
-      } catch (error: Error | unknown) {
-        // Catch any unexpected errors from createReservation
-        // Use a type guard to safely access the error message
-        if (error instanceof Error) {
-          errorMessage = error.message;
-        } else {
-          errorMessage = 'An unexpected error occurred during reservation creation.';
-        }
-        console.error('Error during reservation submission (createReservation failed):', errorMessage);
-        // Re-throw the error to ensure the Server Action's contract is met
-        throw new Error(errorMessage);
-      }
-
-      // If reservation was successful, redirect the user to the confirmation page
-      // `redirect` terminates the execution of the Server Action
-      redirect(`/rsvp/confirmation?cc=${submittedCouponCode}`);
-
-    } else if (btBack) {
-      // If 'Back' button was clicked, redirect to the date selection page
-      redirect('/rsvp/date');
-    }
-
-    // This line is reached if neither btSchedule nor btBack is present,
-    // or if a branch completes without a redirect/throw.
-    // Explicitly returning void satisfies the Server Action return type.
-    return;
-  }
-
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
@@ -171,13 +103,12 @@ export default async function MainPage({ searchParams }: PageProps) {
         <Image src="/assets/i/icons/calendar.svg" alt={l10n('rsvp', 'icon-001', lang)} layout="responsive" width="100" height="100" />
       </section>
       <section className="w-full p-8">
+        <Message messageCode={message ?? ''} />
         <dl className="flex flex-row pb-4">
           <dt className="font-bold flex-1">{l10n('rsvp', 'content-001', lang)}</dt>
           <dd className="flex-5">{date ? format(date, 'MMMM d, yyyy') : ''}</dd>
         </dl>
-        <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
-        {/* Render hidden input for couponCode if available */}
-        {couponCode && <input type="hidden" name="couponCode" value={couponCode} />}
+        <form className="flex flex-col gap-8 w-full" action="/api/rsvp/time" method="post">
           <div className="flex flex-row gap-4">
             <div className="flex flex-col flex-1 gap-4">
               <FormField type='radio' fieldData={{
@@ -208,8 +139,7 @@ export default async function MainPage({ searchParams }: PageProps) {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <p><small>{l10n('rsvp', 'content-legal-1', lang)}<Link href="/legal/terms" target="_blank">{l10n('rsvp', 'content-terms', lang)}</Link>{l10n('rsvp', 'content-legal-2', lang)}<Link href="/legal/waiver" target="_blank">{l10n('rsvp', 'content-waiver', lang)}</Link></small></p>
-            <FormField type='button' fieldData={{type: 'submit', id: 'btSchedule', className: 'primary', value:l10n('rsvp', 'button-003', lang)}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'primary', value:l10n('rsvp', 'button-002', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
         </form>

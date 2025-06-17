@@ -1,63 +1,51 @@
 // nextjs
 import {NextRequest, NextResponse} from 'next/server';
 
-// prisma
-import {prisma} from '@/lib/prisma';
+// session
+import {getSession} from '@/lib/session';
 
+// utils
+import {createReservation} from '@/utils/createReservation';
+import {getSiteURL} from '@/utils/getSiteURL';
 
-async function couponSearch(couponCode: string) {
-  // find records in db
+export async function POST(req: NextRequest) {
+  const siteURL = getSiteURL(req);
 
-  const couponSearch = await prisma.coupon.findUnique({
-    where: {
-      couponCode: couponCode,
-    },
-  });
-  return couponSearch;
-}
-
-export async function GET(req: NextRequest) {
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     try {
-      const {searchParams} = new URL(req.url);
-      const couponCode = searchParams.get('couponCode');
+      const data = await req.formData();
+      const btSchedule = data.get('btSchedule');
+      const btBack = data.get('btBack');
 
-      if (!couponCode) {
-        return NextResponse.json({
-          error: 'Need coupon code to query.'
-        }, {
-          status: 400
-        });
-      }
+      if (btBack) {
+        const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time'));
+        return response;
+      } else if (btSchedule) {
+        const session = await getSession();
+        if (session.coupon && session.schedule) {
+          const result = await createReservation({
+            couponCode: session.coupon.couponCode as string,
+            rsvpTime: session.schedule.uid as string,
+          });
 
-      const rsvpSearch = await couponSearch(couponCode);
-
-      if (rsvpSearch) {
-        return NextResponse.json({
-          message: 'Coupon code found.',
-          data: rsvpSearch,
-        }, {
-          status: 200
-        });
-      } else {
-        return NextResponse.json({
-          message: 'Coupon code not found.',
-        }, {
-          status: 400
-        });
+          if (!result.success) {
+            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time?message=E0010'));
+            return response;
+          } else {
+            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + session.coupon.couponCode));
+            return response;
+          }
+        } else {
+          const response = NextResponse.redirect(new URL(siteURL + '/&message=E0005'));
+          return response;
+        }
       }
     } catch {
-       return NextResponse.json({
-        message: 'Invalid data format'
-      }, {
-        status: 400
-      });
+      const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time?message=E0005'));
+      return response;
     }
   } else {
-    return NextResponse.json({
-      message: `Method ${req.method} Not Allowed`
-    }, {
-      status: 405
-    });
+    const response = NextResponse.redirect(new URL(siteURL + '/&message=E0005'));
+    return response;
   }
 }

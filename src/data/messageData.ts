@@ -36,6 +36,21 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
         'zh-CN': '无法办理登入。请稍后重试。',
         'zh-HK': '無法辦理登入。請稍後重試。',
       },
+      'e0008': {
+        'en-US': 'Please select a time slot.',
+        'zh-CN': '请选择一个时间段。',
+        'zh-HK': '請選擇一個時段。',
+      },
+      'e0009': {
+        'en-US': 'Please select a date.',
+        'zh-CN': '请选择一个日期。',
+        'zh-HK': '請選擇日期。',
+      },
+      'e0010': {
+        'en-US': 'Unable to schedule a reservation.  Please try again.',
+        'zh-CN': '无法安排预订。请重试。',
+        'zh-HK': '無法安排預訂。請重試。',
+      },
       'i0001': {
         'en-US': 'Data existed.  No new data generated.',
         'zh-CN': '数据已存在。未能产生新数据。',
