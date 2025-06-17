@@ -42,8 +42,7 @@ export async function getStartEndUTC(userInputCouponCode: string): Promise<{ sta
 
     const startDate = schedulesInGroup[0].sessionDateTime;
     const endDate = schedulesInGroup[schedulesInGroup.length - 1].sessionDateTime;
-    console.log('startDate', startDate);
-    console.log('endDate', endDate);
+
     return { startDate, endDate };
 
   }catch (error){
