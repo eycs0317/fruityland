@@ -56,7 +56,8 @@ export async function getEventSessionsBySelectedDate(dateString: string | undefi
         sessionDateTime: 'asc', // Order chronologically
       },
     });
-
+// console.log('rawSessions--->', rawSessions);
+const firstGroupNumber = rawSessions[0]?.group;
     // Extract just the Date objects from the Prisma results
     const sessions: SessionDetail[] = rawSessions.map(s => ({
       uid: s.uid,
@@ -66,9 +67,12 @@ export async function getEventSessionsBySelectedDate(dateString: string | undefi
       isWeekend: s.isWeekend,
       isBooked: s.isBooked,
     }));
+    // add filter by group
+const sessionsByGroup = sessions.filter(session => session.group === firstGroupNumber);
+// console.log('sessionsByGroup--->', sessionsByGroup);
 
     // console.log(`Found ${sessionDateTimes.length} sessions in the ${durationDays}-day period starting from ${dateString} UTC.`);
-    return sessions;
+    return sessionsByGroup;
 
   } catch (error) {
     console.error(`Error fetching sessions for date string "${dateString}":`, error);

@@ -60,7 +60,8 @@ export default async function MainPage({searchParams}: PageProps) {
     session.rsvpDate,
     session.timezone ?? 'Asia/Hong_Kong'
   );
-
+//   console.log('uniqueSessionUTC--->', uniqueSessionUTC);
+// console.log('availableSessions--->', availableSessions);
 const radioData = availableSessions.map(groupItem => {
   const uid = groupItem.availableUids[0];
   return {
