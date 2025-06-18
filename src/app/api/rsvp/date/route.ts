@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
     try {
       const data = await req.formData();
       const selectedDate = data.get('selectedDate');
+      const timezone = data.get('timezone');
       const btNext = data.get('btNext');
       const btBack = data.get('btBack');
 
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
         } else {
           const session = await getSession();
           session.rsvpDate = selectedDate;
+          session.timezone = typeof timezone === 'string' ? timezone : 'Asia/Hong_Kong';
           await session.save();
           const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time'));
           return response;

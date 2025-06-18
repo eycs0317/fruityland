@@ -26,6 +26,7 @@ export interface SessionData {
   schedule?: ScheduleSessionData;
   legal?: LegalSessionData;
   rsvpDate?: string;
+  timezone?: string;
 }
 
 export const sessionOptions: SessionOptions = {
