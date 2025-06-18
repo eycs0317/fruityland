@@ -61,6 +61,18 @@ export default async function MainPage({searchParams}: PageProps) {
     session.timezone ?? 'Asia/Hong_Kong'
   );
 
+const radioData = availableSessions.map(groupItem => {
+  const uid = groupItem.availableUids[0];
+  return {
+    label: formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong'),
+    value: uid ?? 'unavailable_uid',
+    id: `slot_group_${uid ?? 'unavailable_uid'}`,
+    isDisabled: groupItem.isFullyBooked || !uid
+  };
+});
+
+console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
+
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
@@ -84,14 +96,15 @@ export default async function MainPage({searchParams}: PageProps) {
                 groupLabel: l10n('rsvp', 'content-002', lang),
                 groupName: 'rsvpTime',
                 groupClassName: 'flex flex-col',
-                radios: availableSessions.length > 0 ? availableSessions.map(groupItem => ({
-                  label: formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong'),
-                  value: groupItem.availableUids[0],
-                  id: `slot_group_${groupItem.availableUids[0]}`,
-                  isDisabled: groupItem.isFullyBooked,
-                })) : [
-                  { label: 'No slots available for this date', value: '', id: 'no_slots_available', isDisabled: true }
-                ]
+                radios: availableSessions.map(groupItem => {
+                  const uid = groupItem.availableUids[0];
+                  return {
+                    label: formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong'),
+                    value: uid ?? 'unavailable_uid',
+                    id: `slot_group_${uid ?? 'unavailable_uid'}`,
+                    isDisabled: groupItem.isFullyBooked || !uid
+                  };
+                })
               }} />
             </div>
             <div className="flex flex-col pt-8 flex-1 text-right">
