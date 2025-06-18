@@ -23,7 +23,9 @@ export async function POST(req: NextRequest) {
         const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time'));
         return response;
       } else if (btSchedule) {
+
         const session = await getSession();
+
         session.legal = session.legal ?? { terms: false, waiver: false };
         session.legal.terms = terms === 'terms';
         session.legal.waiver = waiver === 'waiver';
@@ -38,10 +40,13 @@ export async function POST(req: NextRequest) {
         }
 
         if (session.coupon && session.schedule) {
+          console.log('******************************inside im here',)
           const result = await createReservation({
             couponCode: session.coupon.couponCode as string,
             rsvpTime: session.schedule.uid as string,
           });
+
+          console.log('******************************result', result)
 
           if (!result.success) {
             const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time?message=E0010'));
