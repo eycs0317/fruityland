@@ -20,6 +20,12 @@ export function filterSessionsByDate(
     return [];
   }
 
+  const uniqueDatesMap = new Map<number, Date>();
+  uniqueSessionUTC.forEach(date => {
+    uniqueDatesMap.set(date.getTime(), date);
+  });
+  const distinctUtcDates = Array.from(uniqueDatesMap.values());
+
   // 1. Determine the UTC boundaries for the `selectedDateString` in `userTimeZone`.
   //    Create a Date object representing midnight (00:00:00.000) of the `selectedDateString`
   //    as interpreted within the `userTimeZone`.
@@ -55,7 +61,7 @@ export function filterSessionsByDate(
 
 
   // 2. Filter the uniqueSessionUTC array
-  const filteredSessions = uniqueSessionUTC.filter(utcDate => {
+  const filteredSessions = distinctUtcDates.filter(utcDate => {
     // Check if the UTC date falls within the calculated UTC range
     // `gte` for start (inclusive), `lt` for end (exclusive)
     return utcDate >= startFilteringUtc && utcDate < endFilteringUtc;
