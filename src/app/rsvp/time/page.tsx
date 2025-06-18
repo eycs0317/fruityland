@@ -35,6 +35,7 @@ import Message from '@/ui/patterns/message';
 import {l10n} from '@/utils/l10n';
 import {getEventSessionsBySelectedDate} from '@/utils/v2Function/getEventSessionsBySelectedDate';
 import {filterSessionsByDate} from '@/utils/v2Function/filterSessionsByDate';
+import {formatInUserTimezone} from '@/utils/formatInUserTimezone';
 
 // components
 import InactivityDetector from '@/components/InactivityDetector';
@@ -84,7 +85,7 @@ export default async function MainPage({searchParams}: PageProps) {
                 groupName: 'rsvpTime',
                 groupClassName: 'flex flex-col',
                 radios: availableSessions.length > 0 ? availableSessions.map(groupItem => ({
-                  label: format(groupItem.utcSlotTime, 'h:mmaaa'),
+                  label: formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong'),
                   value: groupItem.availableUids[0],
                   id: `slot_group_${groupItem.availableUids[0]}`,
                   isDisabled: groupItem.isFullyBooked,
