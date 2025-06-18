@@ -39,7 +39,7 @@ export default function ClientPage({ lang }: { lang: string }) {
   const searchParams = useSearchParams();
 
   const couponCodeFromURL = searchParams.get('cc');
-  const couponStatus = searchParams.get('status');
+  // const couponStatus = searchParams.get('status');  // Used for QR Code.
 
   const [confirmationData, setConfirmationData] = useState<ConfirmationDetails | null>(null);
   const [confirmationWalkInData, setConfirmationWalkInData] = useState<ConfirmationWalkInDetails | null>(null);
@@ -172,7 +172,7 @@ export default function ClientPage({ lang }: { lang: string }) {
         <section className="relative w-1/2 pb-8 px-8">
           <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
             {(() => {
-              if (couponStatus != 'checkedIn') {
+              if (!isCheckedIn) {
                 return (
                   <QRCode
                     size={500}

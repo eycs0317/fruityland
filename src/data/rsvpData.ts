@@ -137,9 +137,9 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '參與者',
       },
       'content-checked-in-001': {
-        'en-US': 'Check in completed with this reservation.',
-        'zh-CN': '已完成本次预约的手续。',
-        'zh-HK': '已完成本次預約的手續。',
+        'en-US': 'Checked in completed.  This coupon is marked as used.',
+        'zh-CN': '已完成报到手续。此优惠券已使用。',
+        'zh-HK': '已完成报到手續。此優惠券已使用。',
       },
       'content-loading': {
         'en-US': 'Loading Your Reservation Details...',
