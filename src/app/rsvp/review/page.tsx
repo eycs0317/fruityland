@@ -16,7 +16,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // react
 import React from 'react';
-import {format} from 'date-fns';
 
 // nextjs
 import Image from 'next/image';
@@ -34,6 +33,7 @@ import Message from '@/ui/patterns/message';
 
 // utils
 import {l10n} from '@/utils/l10n';
+import {formatInUserTimezone} from '@/utils/formatInUserTimezone';
 
 // components
 import InactivityDetector from '@/components/InactivityDetector';
@@ -79,11 +79,11 @@ export default async function MainPage({searchParams}: PageProps) {
           </div>
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">{l10n('rsvp', 'content-review-004', lang)}</dt>
-            <dd className="text-right">{session.schedule?.sessionDateTime ? format(session.schedule.sessionDateTime, 'MMMM d, yyyy') : ''}</dd>
+            <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong', 'MMMM d, yyyy') : ''}</dd>
           </div>
           <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">{l10n('rsvp', 'content-review-005', lang)}</dt>
-            <dd className="text-right">{session.schedule?.sessionDateTime ? format(session.schedule.sessionDateTime, 'h:mmaaa') : ''}</dd>
+            <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
           </div>
            <div className="flex justify-between border-b pb-2">
             <dt className="font-bold">{l10n('rsvp', 'content-review-006', lang)}:</dt>
