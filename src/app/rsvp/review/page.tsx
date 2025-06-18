@@ -38,6 +38,8 @@ import {l10n} from '@/utils/l10n';
 // components
 import InactivityDetector from '@/components/InactivityDetector';
 
+// import { convertUTCToLocal, APP_DISPLAY_TIMEZONE } from '@/utils/timezoneUtils';
+
 interface PageProps {
   searchParams?: Promise<{
     message?: string;
@@ -51,6 +53,12 @@ export default async function MainPage({searchParams}: PageProps) {
   const resolvedSearchParams = await searchParams;
   const message = resolvedSearchParams?.message;
 
+
+  //for display
+  // const displayDate = convertUTCToLocal(session.schedule?.sessionDateTime, APP_DISPLAY_TIMEZONE);
+  // console.log('rsvp/review/page-----displaytime', displayDate)
+  // const displayTime = format(new Date(session.schedule?.sessionDateTime), 'h:mm a');
+  // console.log('rsvp/review/page-----displayTime', displayTime)
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />

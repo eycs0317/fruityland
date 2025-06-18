@@ -7,7 +7,8 @@ import { format } from 'date-fns-tz';
 
 export interface Appointment {
   uid: string;
-  sessionDateTime: string; // Assuming it comes as ISO string
+  sessionDateTime: string | Date ; // Assuming it comes as ISO string
+  sessionDateTimetoISO: string;
   isBooked: boolean;
   group: number;
   isWeekend: boolean;
@@ -21,6 +22,8 @@ interface GroupedAppointment {
   isFullyBooked: boolean;
   uids: string[]; // UIDs of all slots at this time
   utcSlotTime: Date; // Added this to store the UTC Date for reliable sorting
+  sessionDateTimetoISO: string;
+  localTime: string;
 }
 
 /**
@@ -33,20 +36,23 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
   // The value will hold aggregated data for that time slot.
 
 
-  const groupedAppointmentsMap = new Map<string, { count: number, availableCount: number, isFullyBooked: boolean, uids: string[], utcSlotTime: Date }>();
-
+  const groupedAppointmentsMap = new Map<string, { count: number, availableCount: number, isFullyBooked: boolean, uids: string[], utcSlotTime: Date, sessionDateTimetoISO: string, localTime: string }>();
+// console.log('groupedAppointmentsMap:', groupedAppointmentsMap)
   appointments.forEach(appt => {
     // 1. Parse the UTC slot string into a Date object
 
     const utcSlotDate = new Date(appt.sessionDateTime);
+
+    // console.log('utcSlotDate------->', utcSlotDate)
     if (isNaN(utcSlotDate.getTime())) {
       console.error('APPT_UTILS: Invalid UTC Date parsed from sessionDateTime, skipping:', appt.sessionDateTime);
       return; // Skip this appointment if the date is invalid
   }
-
+  // console.log('------utcSlotDate toisostring', utcSlotDate.toISOString())
     // 2. Convert the UTC Date object to the local display timezone (HKT)
     const localZonedDate = convertUTCToLocal(utcSlotDate, APP_DISPLAY_TIMEZONE);
-
+//     const localZonedDate = utcSlotDate
+// console.log('localZonedDate:', localZonedDate)
     if (isNaN(localZonedDate.getTime())) {
       console.error('APPT_UTILS: Invalid Zoned Date after conversion for sessionDateTime:', appt.sessionDateTime, 'Zoned Date:', localZonedDate);
       return; // Skip if conversion resulted in an invalid date
@@ -56,7 +62,9 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
     // Use 'h:mm a' for 12-hour format with AM/PM (e.g., 11:00 AM, 1:00 PM)
     // console.log('localZonedDate before formatting:', localZonedDate)
     const timeString = format(new Date(localZonedDate), 'h:mm a');
-
+    // 4. Format the original UTC date to the desired display time string for the 'localTime' field
+    // This explicitly formats the UTC date as a time string without timezone conversion
+    const localTimeStringUtc = format(utcSlotDate, 'h:mm a', { timeZone: 'UTC' });
     if (!groupedAppointmentsMap.has(timeString)) {
       // Initialize the group. Crucially, store the original UTC Date for sorting.
       groupedAppointmentsMap.set(timeString, {
@@ -64,10 +72,12 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
         availableCount: 0,
         isFullyBooked: false,
         uids: [],
-        utcSlotTime: utcSlotDate // Store the UTC date for accurate chronological sorting
+        utcSlotTime: utcSlotDate,
+        sessionDateTimetoISO: appt.sessionDateTime.toString(),
+        localTime: localTimeStringUtc
       });
     }
-
+  // console.log('groupedAppointmentsMap--->', groupedAppointmentsMap)
     const group = groupedAppointmentsMap.get(timeString)!;
     group.count++;
     group.uids.push(appt.uid);
