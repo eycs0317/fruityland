@@ -71,14 +71,15 @@ console.log('typeof date------>',  date)
 console.log('date------>',  date)
 const selecteddateplus48hrs = await getEventSessionsBySelectedDate(date)
 console.log('new  result return selected date(local) + 48hrs sessionTime------>', selecteddateplus48hrs)
-const result =  filterSessionsByDate(
-  selecteddateplus48hrs.map(session => session.sessionDateTime), // <--- Map to extract only the Date objects
-  date,
-  'America/Los_Angeles'
-);
+// const result =  filterSessionsByDate(
+//   selecteddateplus48hrs.map(session => session.sessionDateTime), // <--- Map to extract only the Date objects
+//   date,
+//   'America/Los_Angeles'
+// );
+const result = filterSessionsByDate(selecteddateplus48hrs, date, 'America/Los_Angeles')
 console.log('result---->', result)
-// const groupedData = groupAndSortAppointments(selecteddateplus48hrs)
-// console.log('new groupedData ------>', groupedData)
+const groupedData = groupAndSortAppointments(selecteddateplus48hrs)
+console.log('new groupedData ------>', groupedData)
 
 
 
