@@ -156,11 +156,11 @@ export default function ClientPage({ lang }: { lang: string }) {
     return (
       <div className="m-4 bg-neutral-000 border border-primary-300 mb-4 text-neutral-000 border-4 rounded-2xl">
         <section className="w-full p-8 text-center">
-          <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-2xl pb-8 text-primary-700" />
+          <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-4xl text-primary-700" />
         </section>
 
-        <section className="w-full relative w-1/2 pb-8 px-30">
-          <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
+        <section className="w-full pb-8 px-8">
+          <div className="px-8">
             {(() => {
               if (!isCheckedIn) {
                 return (

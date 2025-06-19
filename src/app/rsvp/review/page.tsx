@@ -62,12 +62,12 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <form className="flex flex-col gap-8 w-full" action="/api/rsvp/confirmation" method="post">
+      <form className="flex flex-col gap-4 w-full" action="/api/rsvp/confirmation" method="post">
         <div className="m-4 bg-primary-300 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
           <section className="w-full p-8 text-center">
-            <Heading level={1} content={l10n('rsvp', 'title-review', lang)} className="text-4xl pb-8 text-neutral-000" />
+            <Heading level={1} content={l10n('rsvp', 'title-review', lang)} className="text-4xl text-neutral-000" />
           </section>
-          <section className="w-full p-8">
+          <section className="w-full p-8 pt-0">
             <Message messageCode={message ?? ''} />
             <dl className="space-y-2 text-gray-700">
               <div className="rsvpDetails flex justify-between pb-2">
@@ -88,7 +88,7 @@ export default async function MainPage({searchParams}: PageProps) {
               </div>
             </dl>
           </section>
-          <section className="w-full p-8">
+          <section className="w-full p-8 pt-0">
             <FormField type='checkbox' fieldData={{
               id: 'terms',
               label: (
@@ -118,7 +118,7 @@ export default async function MainPage({searchParams}: PageProps) {
             <p>{l10n('rsvp', 'content-legal-5', lang)}</p>
           </section>
         </div>
-        <section className="w-full p-8">
+        <section className="w-full p-8 pt-0">
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSchedule', className: 'primary', value:l10n('rsvp', 'button-003', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
