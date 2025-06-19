@@ -154,22 +154,12 @@ export default function ClientPage({ lang }: { lang: string }) {
   // Display data once loaded
   if (confirmationData) {
     return (
-      <>
+      <div className="m-4 bg-neutral-000 border border-primary-300 mb-4 text-neutral-000 border-4 rounded-2xl">
         <section className="w-full p-8 text-center">
-          <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-2xl pb-8" />
-          {(() => {
-            if (isCheckedIn) {
-              return (
-                <p className="text-success-800">{l10n('rsvp', 'content-checked-in-001', lang)}</p>
-              );
-            } else {
-              return (
-                <p className="text-lg text-gray-700">{l10n('rsvp', 'content-confirmation-001', lang)}</p>
-              );
-            }
-          })()}
+          <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-2xl pb-8 text-primary-700" />
         </section>
-        <section className="relative w-1/2 pb-8 px-8">
+
+        <section className="w-full relative w-1/2 pb-8 px-30">
           <div style={{ height: "auto", margin: "0 auto", maxWidth: "100%", width: "100%" }}>
             {(() => {
               if (!isCheckedIn) {
@@ -186,28 +176,46 @@ export default function ClientPage({ lang }: { lang: string }) {
           </div>
         </section>
 
-        <section className="w-full p-8 bg-white shadow-md rounded-lg mt-4">
-          <Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />
+        <section className="w-full p-8 pt-0 bg-white shadow-md rounded-lg">
+          {/*<Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />*/}
           <dl className="space-y-2 text-gray-700">
-            <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-003', lang)}:</dt>
+            <div className="flex justify-between pb-2 text-primary-700 px-5">
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-003', lang)}</dt>
               <dd className="text-right">{confirmationData?.couponCode ? confirmationData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
             </div>
-            <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-004', lang)}:</dt>
+             <div className="rsvpDetailsConfirmed flex justify-between border-b pb-2">
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-006', lang)}</dt>
+              <dd className="text-right">{l10n('rsvp', 'content-confirmation-007', lang)}</dd>
+            </div>
+            <div className="rsvpDetailsConfirmed flex justify-between border-b pb-2">
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-004', lang)}</dt>
               <dd className="text-right">{confirmationData?.date}</dd>
             </div>
-            <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-005', lang)}:</dt>
+            <div className="rsvpDetailsConfirmed flex justify-between border-b pb-2">
+              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-005', lang)}</dt>
               <dd className="text-right">{confirmationData?.time || 'N/A'}</dd>
             </div>
-             <div className="flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-006', lang)}:</dt>
-              <dd className="text-right">2</dd>
-            </div>
           </dl>
+          {(() => {
+            if (isCheckedIn) {
+              return (
+                <p className="text-success-800">{l10n('rsvp', 'content-checked-in-001', lang)}</p>
+              );
+            } else {
+              return (
+                <p className="text-lg text-primary-700 mt-4">{l10n('rsvp', 'content-confirmation-001', lang)}</p>
+              );
+            }
+          })()}
+          {(() => {
+            if (!isCheckedIn) {
+              return (
+                <p className="text-lg text-primary-700">{l10n('rsvp', 'content-confirmation-008', lang)}</p>
+              );
+            }
+          })()}
         </section>
-      </>
+      </div>
     );
   }
 }

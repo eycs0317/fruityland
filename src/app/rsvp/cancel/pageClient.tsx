@@ -47,6 +47,7 @@ export default function ClientPage() {
           <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCodeFromURL || ''}} />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btConfirmCancel', className: 'danger', value:'Confirm Cancellation'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:'Back'}} />
           </div>
         </form>
       </section>

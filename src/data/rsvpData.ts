@@ -17,9 +17,9 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '確認預約',
       },
       'title-confirmation': {
-        'en-US': 'Reservation is confirmed for Summer Go Fresh!',
-        'zh-CN': '已确认预订夏日 Go Fresh 弹跳乐园',
-        'zh-HK': '已確認預訂夏日 Go Fresh 彈跳樂園',
+        'en-US': 'Reservation Confirmed',
+        'zh-CN': '成功预约',
+        'zh-HK': '成功預約',
       },
       'title-checked-in': {
         'en-US': 'Reservation is checked in.',
@@ -111,10 +111,15 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '参与者',
         'zh-HK': '參與者',
       },
+      'content-review-007': {
+        'en-US': '1 Adult + 1 Kid',
+        'zh-CN': '1成人 + 1小童',
+        'zh-HK': '1成人 + 1小童',
+      },
       'content-confirmation-001': {
-        'en-US': 'Present this confirmation at the entrance for event admission.',
-        'zh-CN': '请在活动入口处出示此确认即可入场。',
-        'zh-HK': '請在活動入口處出示此確認即可入場。',
+        'en-US': 'Please present this confirmation notice to enter the event.',
+        'zh-CN': '入场时，请出示此确认通知进入活动。',
+        'zh-HK': '入場時，請出示此確認通知進入活動。',
       },
       'content-confirmation-002': {
         'en-US': 'Booking Details',
@@ -141,6 +146,16 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '参与者',
         'zh-HK': '參與者',
       },
+      'content-confirmation-007': {
+        'en-US': '1 Adult + 1 Kid',
+        'zh-CN': '1成人 + 1小童',
+        'zh-HK': '1成人 + 1小童',
+      },
+      'content-confirmation-008': {
+        'en-US': 'If you have any enquiries, please call: xxxx-xxxx',
+        'zh-CN': '如有任何查询，可致电查询:xxxx-xxxx',
+        'zh-HK': '如有任何查詢，可致電查詢:xxxx-xxxx',
+      },
       'content-checked-in-001': {
         'en-US': 'Checked in completed.  This coupon is marked as used.',
         'zh-CN': '已完成报到手续。此优惠券已使用。',
@@ -153,13 +168,33 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       },
       'content-legal-1': {
         'en-US': 'I agree with the ',
-        'zh-CN': '我同意',
-        'zh-HK': '我同意',
+        'zh-CN': '你已成功确认换领家庭票(1位成人及1位小童)于所选时段。',
+        'zh-HK': '你已成功確認換領家庭票(1位成人及1位小童)於所選時段。',
+      },
+      'content-legal-2': {
+        'en-US': 'Please click here to confirm the reading park ',
+        'zh-CN': '请按此确认阅读乐园',
+        'zh-HK': '請按此確認閱讀樂園',
+      },
+      'content-legal-3': {
+        'en-US': ' and ',
+        'zh-CN': '以及',
+        'zh-HK': '及其',
+      },
+      'content-legal-4': {
+        'en-US': '.',
+        'zh-CN': '。',
+        'zh-HK': '。',
+      },
+      'content-legal-5': {
+        'en-US': 'After successfully booking the above date and time, please register on site 10 minutes before the time.',
+        'zh-CN': '成功预约上述日子及时间后，请于该时段10分钟前到场登记。',
+        'zh-HK': '成功預約上述日子及時間後，請於該時段10分鐘前到場登記。',
       },
       'content-terms': {
         'en-US': 'Terms and Conditions',
-        'zh-CN': '条款及细则',
-        'zh-HK': '條款及細則',
+        'zh-CN': '规则及指引',
+        'zh-HK': '規則及指引',
       },
       'content-waiver': {
         'en-US': 'Waiver',

@@ -29,13 +29,13 @@ export type FormCheckboxProps = {
 };
 
 export default function FormInput({fieldData}: FormCheckboxProps) {
-  const defaultWrapperClassName = 'flex items-center';
-  const defaultClassName = 'border mr-2';
+  const defaultWrapperClassName = 'flex place-items-start';
+  const defaultClassName = 'border mr-2 mt-2';
 
   return (
     <div className={defaultWrapperClassName + ((fieldData.wrapperClassName) ? ' ' + fieldData.wrapperClassName : '') + ((fieldData.isError) ? ' formError' : '')}>
       <input type="checkbox" name={fieldData.id} id={fieldData.id} className={defaultClassName + ((fieldData.className) ? ' ' + fieldData.className : '')} defaultValue={fieldData.value} defaultChecked={(fieldData.isChecked) ? fieldData.isChecked : false} />
-      <label htmlFor={fieldData.id}>{fieldData.label}</label>
+      <label htmlFor={fieldData.id} className="text-neutral-000">{fieldData.label}</label>
       {(() => {
         return (fieldData.helper) ? <small className="helper">{fieldData.helper}</small> : null;
       })()}

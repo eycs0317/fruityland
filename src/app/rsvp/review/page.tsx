@@ -69,23 +69,22 @@ export default async function MainPage({searchParams}: PageProps) {
           </section>
           <section className="w-full p-8">
             <Message messageCode={message ?? ''} />
-            <Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />
             <dl className="space-y-2 text-gray-700">
-              <div className="flex justify-between border-b pb-2">
+              <div className="rsvpDetails flex justify-between pb-2">
+                <dt className="font-bold">{l10n('rsvp', 'content-review-006', lang)}</dt>
+                <dd className="text-right">{l10n('rsvp', 'content-review-007', lang)}</dd>
+              </div>
+              {/*<div className="flex justify-between border-b pb-2">
                 <dt className="font-bold">{l10n('rsvp', 'content-review-003', lang)}:</dt>
                 <dd className="text-right">{session.coupon?.couponCode ? session.coupon.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
-              </div>
-              <div className="flex justify-between border-b pb-2">
+              </div>*/}
+              <div className="rsvpDetails flex justify-between pb-2">
                 <dt className="font-bold">{l10n('rsvp', 'content-review-004', lang)}</dt>
                 <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong', 'MMMM d, yyyy') : ''}</dd>
               </div>
-              <div className="flex justify-between border-b pb-2">
+              <div className="rsvpDetails flex justify-between pb-2">
                 <dt className="font-bold">{l10n('rsvp', 'content-review-005', lang)}</dt>
                 <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
-              </div>
-               <div className="flex justify-between border-b pb-2">
-                <dt className="font-bold">{l10n('rsvp', 'content-review-006', lang)}:</dt>
-                <dd className="text-right">2</dd>
               </div>
             </dl>
           </section>
@@ -95,9 +94,6 @@ export default async function MainPage({searchParams}: PageProps) {
               label: (
                 <>
                   {l10n('rsvp', 'content-legal-1', lang)}
-                  <Link href="/legal/terms" target="_blank">
-                    {l10n('rsvp', 'content-terms', lang)}
-                  </Link>
                 </>
               ),
               value: 'terms',
@@ -108,14 +104,18 @@ export default async function MainPage({searchParams}: PageProps) {
               id: 'waiver',
               label: (
                 <>
-                  {l10n('rsvp', 'content-legal-1', lang)}
+                  {l10n('rsvp', 'content-legal-2', lang)}
+                  <Link href="/legal/terms" target="_blank">{l10n('rsvp', 'content-terms', lang)}</Link>
+                  {l10n('rsvp', 'content-legal-3', lang)}
                   <Link href="/legal/waiver" target="_blank">{l10n('rsvp', 'content-waiver', lang)}</Link>
+                  {l10n('rsvp', 'content-legal-4', lang)}
                 </>
               ),
               value: 'waiver',
               isRequired: true,
               isChecked: session.legal?.waiver ?? false
             }} />
+            <p>{l10n('rsvp', 'content-legal-5', lang)}</p>
           </section>
         </div>
         <section className="w-full p-8">
