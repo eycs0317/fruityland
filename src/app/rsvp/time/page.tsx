@@ -19,14 +19,12 @@ import React from 'react';
 import {format, parseISO} from 'date-fns';
 
 // nextjs
-import Image from 'next/image';
 import type {Metadata} from 'next';
 
 // session
 import {getSession} from '@/lib/session';
 
 // ui
-import Heading from '@/ui/foundations/heading';
 import FormField from '@/ui/foundations/formField';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
@@ -78,20 +76,14 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <section className="w-full p-8 text-center">
-        <Heading level={1} content={l10n('rsvp', 'title-date', lang)} className="text-4xl pb-8" />
-      </section>
-      <section className="relative w-1/3 pb-8 px-8">
-        <Image src="/assets/i/icons/calendar.svg" alt={l10n('rsvp', 'icon-001', lang)} layout="responsive" width="100" height="100" />
-      </section>
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
-        <dl className="flex flex-row pb-4">
+        <dl className="flex flex-row pb-4 text-neutral-000">
           <dt className="font-bold flex-1">{l10n('rsvp', 'content-001', lang)}</dt>
           <dd className="flex-5">{session.rsvpDate ? format(parseISO(session.rsvpDate), 'MMMM d, yyyy') : ''}</dd>
         </dl>
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/time" method="post">
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 bg-neutral-000 border border-neutral-000 border-4 rounded-2xl p-4">
             <div className="flex flex-col flex-1 gap-4">
               <FormField type='radio' fieldData={{
                 groupLabel: l10n('rsvp', 'content-002', lang),
@@ -112,8 +104,8 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
               {availableSessions.length > 0 ? (
                 availableSessions.map(groupItem => (
                   <div key={`count_${groupItem.availableUids[0]}`}
-                       className={`flex flex-col ${groupItem.isFullyBooked ? 'text-neutral-500' : ''}`}>
-                    {groupItem.isFullyBooked ? 'Full' : `${groupItem.availableCount} ${l10n('rsvp', 'content-003', lang)}`}
+                       className={`flex flex-col ${groupItem.isFullyBooked ? 'text-neutral-500 pt-[7px] text-base' : 'text-primary-500 pt-[7px] text-base'}`}>
+                    {groupItem.isFullyBooked ? `${l10n('rsvp', 'content-005', lang)}` : `(${l10n('rsvp', 'content-003', lang)}: ${groupItem.availableCount})`}
                   </div>
                 ))
               ) : (

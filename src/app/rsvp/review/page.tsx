@@ -5,8 +5,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const localizedTitles: Record<string, string> = {
     'en-US': 'Reservation [Review]',
-    'zh-CN': '预约 [检查]',
-    'zh-HK': '預約 [檢查]',
+    'zh-CN': '预约 [確認]',
+    'zh-HK': '預約 [確認]',
   };
 
   return {
@@ -18,7 +18,6 @@ export async function generateMetadata(): Promise<Metadata> {
 import React from 'react';
 
 // nextjs
-import Image from 'next/image';
 import Link from 'next/link';
 import type {Metadata} from 'next';
 
@@ -63,34 +62,34 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <section className="w-full p-8 text-center">
-        <Heading level={1} content={l10n('rsvp', 'title-review', lang)} className="text-4xl pb-8" />
-      </section>
-      <section className="relative w-1/3 pb-8 px-8">
-        <Image src="/assets/i/icons/calendar.svg" alt={l10n('rsvp', 'icon-001', lang)} layout="responsive" width="100" height="100" />
-      </section>
-      <section className="w-full p-8">
-        <Message messageCode={message ?? ''} />
-        <Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />
-        <dl className="space-y-2 text-gray-700">
-          <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">{l10n('rsvp', 'content-review-003', lang)}:</dt>
-            <dd className="text-right">{session.coupon?.couponCode ? session.coupon.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
-          </div>
-          <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">{l10n('rsvp', 'content-review-004', lang)}</dt>
-            <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong', 'MMMM d, yyyy') : ''}</dd>
-          </div>
-          <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">{l10n('rsvp', 'content-review-005', lang)}</dt>
-            <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
-          </div>
-           <div className="flex justify-between border-b pb-2">
-            <dt className="font-bold">{l10n('rsvp', 'content-review-006', lang)}:</dt>
-            <dd className="text-right">2</dd>
-          </div>
-        </dl>
-        <form className="flex flex-col gap-8 w-full" action="/api/rsvp/confirmation" method="post">
+      <form className="flex flex-col gap-8 w-full" action="/api/rsvp/confirmation" method="post">
+        <div className="m-4 bg-primary-300 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
+          <section className="w-full p-8 text-center">
+            <Heading level={1} content={l10n('rsvp', 'title-review', lang)} className="text-4xl pb-8 text-neutral-000" />
+          </section>
+          <section className="w-full p-8">
+            <Message messageCode={message ?? ''} />
+            <Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />
+            <dl className="space-y-2 text-gray-700">
+              <div className="flex justify-between border-b pb-2">
+                <dt className="font-bold">{l10n('rsvp', 'content-review-003', lang)}:</dt>
+                <dd className="text-right">{session.coupon?.couponCode ? session.coupon.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
+              </div>
+              <div className="flex justify-between border-b pb-2">
+                <dt className="font-bold">{l10n('rsvp', 'content-review-004', lang)}</dt>
+                <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong', 'MMMM d, yyyy') : ''}</dd>
+              </div>
+              <div className="flex justify-between border-b pb-2">
+                <dt className="font-bold">{l10n('rsvp', 'content-review-005', lang)}</dt>
+                <dd className="text-right">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
+              </div>
+               <div className="flex justify-between border-b pb-2">
+                <dt className="font-bold">{l10n('rsvp', 'content-review-006', lang)}:</dt>
+                <dd className="text-right">2</dd>
+              </div>
+            </dl>
+          </section>
+          <section className="w-full p-8">
             <FormField type='checkbox' fieldData={{
               id: 'terms',
               label: (
@@ -117,12 +116,15 @@ export default async function MainPage({searchParams}: PageProps) {
               isRequired: true,
               isChecked: session.legal?.waiver ?? false
             }} />
+          </section>
+        </div>
+        <section className="w-full p-8">
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSchedule', className: 'primary', value:l10n('rsvp', 'button-003', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
-        </form>
-      </section>
+        </section>
+      </form>
     </main>
   );
 }

@@ -13,8 +13,8 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       },
       'title-review': {
         'en-US': 'Reservation - Review',
-        'zh-CN': '预约 - 检查',
-        'zh-HK': '預約 - 檢查',
+        'zh-CN': '确认预约',
+        'zh-HK': '確認預約',
       },
       'title-confirmation': {
         'en-US': 'Reservation is confirmed for Summer Go Fresh!',
@@ -37,9 +37,9 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '前進',
       },
       'button-003': {
-        'en-US': 'Schedule',
-        'zh-CN': '预约',
-        'zh-HK': '預約',
+        'en-US': 'Confirm',
+        'zh-CN': '确认',
+        'zh-HK': '確認',
       },
       'button-004': {
         'en-US': 'Modify',
@@ -72,14 +72,19 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '選擇時間',
       },
       'content-003': {
-        'en-US': 'Slots',
-        'zh-CN': '空位',
-        'zh-HK': '空位',
+        'en-US': 'Availability',
+        'zh-CN': '尚余名额',
+        'zh-HK': '尚餘名額',
       },
       'content-004': {
         'en-US': 'Time',
         'zh-CN': '时间',
         'zh-HK': '時間',
+      },
+      'content-005': {
+        'en-US': 'Full',
+        'zh-CN': '已满',
+        'zh-HK': '已滿',
       },
       'content-review-002': {
         'en-US': 'Booking Details',

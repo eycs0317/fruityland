@@ -135,8 +135,6 @@
 
 body {background-color:var(--color-primary-900); padding:1rem; font-size:1.25rem;}
 body main {background-color:var(--color-accent-200); border:10px solid var(--color-accent-100); border-radius:50px;
-
-  background-color: var(color-accent-200);
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E<path d='M20 10 C21.5 13, 21.5 17, 20 20 C18.5 17, 18.5 13, 20 10 Z' fill='%23FAA197' transform='rotate(-10 20 15)'/><path d='M50 20 C51.5 23, 51.5 27, 50 30 C48.5 27, 48.5 23, 50 20 Z' fill='%23FAA197' transform='rotate(15 50 25)'/><path d='M30 50 C31.5 53, 31.5 57, 30 60 C28.5 57, 28.5 53, 30 50 Z' fill='%23FAA197' transform='rotate(-25 30 55)'/><path d='M60 60 C61.5 63, 61.5 67, 60 70 C58.5 67, 58.5 63, 60 60 Z' fill='%23FAA197' transform='rotate(5 60 65)'/><path d='M10 40 C11.5 43, 11.5 47, 10 50 C8.5 47, 8.5 43, 10 40 Z' fill='%23FAA197' transform='rotate(-5 10 45)'/><path d='M70 10 C71.5 13, 71.5 17, 70 20 C68.5 17, 68.5 13, 70 10 Z' fill='%23FAA197' transform='rotate(20 70 15)'/><path d='M45 60 C46.5 63, 46.5 67, 45 70 C43.5 67, 43.5 63, 45 60 Z' fill='%23FAA197' transform='rotate(-15 45 65)'/>%3C/svg%3E");
   background-repeat: repeat;
 }
@@ -169,6 +167,8 @@ a:active { color:var(--color-link-light-active); text-decoration:underline; };
 .button.danger:active { background-color:var(--color-button-bg-danger-active); border-color:var(--color-button-border-danger-active); color:var(--color-button-text-danger-active); };
 
 .formInput input:active {border-color:var(--color-button-border-primary-active);}
+
+.isDisabled label{color:var(--color-neutral-500);}
 
 .formRequired label {font-weight:bold;}
 .formRequired label:after {content:'\00a0*';}
