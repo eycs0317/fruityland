@@ -23,7 +23,6 @@ import type {Metadata} from 'next';
 
 // ui
 import FormField from '@/ui/foundations/formField';
-import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
 import Timezone from '@/ui/patterns/userTimezone';
@@ -93,16 +92,13 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <section className="w-full p-8 text-center">
-        <Heading level={1} content={l10n('rsvp', 'title-date', lang)} className="text-4xl pb-8" />
-      </section>
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/date" method="post">
           <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate?.toISOString()} allowedMaxDate={startEndUTC?.endDate?.toISOString()}/>
           <Timezone />
           <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'secondary', value:l10n('rsvp', 'button-002', lang)}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'primary', value:l10n('rsvp', 'button-002', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
         </form>

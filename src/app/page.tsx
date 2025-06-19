@@ -60,7 +60,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Heading level={1} content={l10n('home', 'title', lang)} className="text-4xl pb-8" />
       </section>
       <section className="relative w-full px-20 pb-8">
-        <Image src="/assets/i/home.svg" alt={l10n('home', 'title', lang)} width="300" height="300" />
+        <Image src="/assets/i/home.png" alt={l10n('home', 'title', lang)} width="300" height="300" />
       </section>
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />

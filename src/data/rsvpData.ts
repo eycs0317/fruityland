@@ -28,8 +28,8 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       },
       'button-001': {
         'en-US': 'Back',
-        'zh-CN': '后退',
-        'zh-HK': '後退',
+        'zh-CN': '上一页',
+        'zh-HK': '上一頁',
       },
       'button-002': {
         'en-US': 'Next',

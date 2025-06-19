@@ -14,19 +14,19 @@ export default async function Message({ messageCode }: { messageCode: string }) 
     switch(messageCode.charAt(0)) {
       case 'E':
         return (
-          <section className="bg-alert-100 px-4 py-2 border border-alert-600 mb-4">
+          <section className="bg-primary-300 px-5 py-10 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
             <p>{message}</p>
           </section>
         );
       case 'I':
         return (
-          <section className="bg-info-100 px-4 py-2 border border-info-600 mb-4">
+          <section className="bg-primary-300 px-5 py-10 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
             <p>{message}</p>
           </section>
         );
       case 'S':
         return (
-          <section className="bg-success-100 px-4 py-2 border border-success-600 mb-4">
+          <section className="bg-primary-300 px-5 py-10 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
             <p>{message}</p>
           </section>
         );

@@ -7,14 +7,14 @@ export function getHome(): { home: Record<string, Record<string, string>> } {
         'zh-HK': '夏日 Go Fresh 彈跳樂園',
       },
       'input-001': {
-        'en-US': 'Coupon Code',
+        'en-US': 'Coupon ID',
         'zh-CN': '门票编号',
         'zh-HK': '門票編號',
       },
       'button-001': {
-        'en-US': 'Search',
-        'zh-CN': '搜索',
-        'zh-HK': '搜尋',
+        'en-US': 'Enter',
+        'zh-CN': '登录',
+        'zh-HK': '登入',
       },
     },
   };
