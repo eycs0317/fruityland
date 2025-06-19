@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import ReactCalendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+// import 'react-calendar/dist/Calendar.css';
 import './calendar.css'; // Custom styles for the calendar
 import { parseISO } from 'date-fns';
 
@@ -95,6 +95,14 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
           maxDate={localMaxDate}
           defaultActiveStartDate={localMinDate || (value instanceof Date ? value : nowUTC)}
           calendarType="gregory"
+          formatShortWeekday={(locale, date) => {
+            const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']; // Custom array of single letters
+            return weekdays[date.getDay()]; // date.getDay() returns 0 for Sunday, 1 for Monday, etc.
+          }}
+          // nextLabel={null}
+          // prevLabel={null}
+          // next2Label={null} // Hides the "next year" arrow
+          // prev2Label={null}
         />
       )}
       <input
