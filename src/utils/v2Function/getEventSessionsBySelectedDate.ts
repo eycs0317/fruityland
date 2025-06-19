@@ -2,7 +2,7 @@
 
 import { prisma } from '@/lib/prisma';
 import { addDays } from 'date-fns'; // Used for easily adding days
-
+import { getSession } from '@/lib/session';
 interface SessionDetail {
   uid: string;
   sessionDateTime: Date;
@@ -13,6 +13,11 @@ interface SessionDetail {
 }
 
 export async function getEventSessionsBySelectedDate(dateString: string | undefined, durationDays: number = 2): Promise<SessionDetail[]> {
+
+  const session = await getSession();
+  const sessionGroup = session.coupon?.group ?? 0;
+
+  console.log(`Session------>: ${JSON.stringify(session)}`);
   if (!dateString) {
     console.error("No dateString provided to getSessionsInPeriod.");
     return [];
@@ -56,8 +61,12 @@ export async function getEventSessionsBySelectedDate(dateString: string | undefi
         sessionDateTime: 'asc', // Order chronologically
       },
     });
-// console.log('rawSessions--->', rawSessions);
-const firstGroupNumber = rawSessions[0]?.group;
+console.log('rawSessions--->', rawSessions);
+// const newRawSessions = rawSessions.map(s => {
+//   return {...s, sessionDateTimetoISO: s.sessionDateTime.toISOString()}
+// })
+// console.log('new newRawSessions--->', newRawSessions);
+
     // Extract just the Date objects from the Prisma results
     const sessions: SessionDetail[] = rawSessions.map(s => ({
       uid: s.uid,
@@ -68,7 +77,7 @@ const firstGroupNumber = rawSessions[0]?.group;
       isBooked: s.isBooked,
     }));
     // add filter by group
-const sessionsByGroup = sessions.filter(session => session.group === firstGroupNumber);
+const sessionsByGroup = sessions.filter(session => session.group === sessionGroup);
 // console.log('sessionsByGroup--->', sessionsByGroup);
 
     // console.log(`Found ${sessionDateTimes.length} sessions in the ${durationDays}-day period starting from ${dateString} UTC.`);

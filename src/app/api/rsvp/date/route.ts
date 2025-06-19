@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       const timezone = data.get('timezone');
       const btNext = data.get('btNext');
       const btBack = data.get('btBack');
-
+  console.log('<<<<??????????????selectedDate',selectedDate);
       if (btBack) {
         const response = NextResponse.redirect(new URL(siteURL + '/'));
         return response;
