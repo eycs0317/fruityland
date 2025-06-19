@@ -7,7 +7,8 @@ export async function logoutDistroyAuth() {
   let lang: string;
 
   if (session.lang) {
-    lang = session.lang;
+    // lang = session.lang;
+    lang = 'zh-HK';
   } else {
     lang = 'zh-HK';
   }
