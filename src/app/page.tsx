@@ -1,11 +1,10 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 
 // nextjs
 import Image from 'next/image';
 
 // ui
 import FormField from '@/ui/foundations/formField';
-// import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
 
@@ -16,13 +15,13 @@ import {getSession} from '@/lib/session';
 import {l10n} from '@/utils/l10n';
 
 // client
-import PageClient from './pageClient';
+// import PageClient from './pageClient';
 
 // v2 function to test
-import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
-import { getStartEndUTC } from '@/utils/v2Function/getStartEndUTC';
-import { checkExpire } from '@/utils/v2Function/checkExpire';
-import { resetStartUTC } from '@/utils/v2Function/resetStartUTC';
+// import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
+// import { getStartEndUTC } from '@/utils/v2Function/getStartEndUTC';
+// import { checkExpire } from '@/utils/v2Function/checkExpire';
+// import { resetStartUTC } from '@/utils/v2Function/resetStartUTC';
 
 
 
@@ -39,20 +38,6 @@ export default async function MainPage({searchParams}: PageProps) {
   const session = await getSession();
   const lang = session?.lang ?? 'zh-HK';
 
-
-  const HKTomorrowUTC = await getHKTomorrowUTC()
-  const { startDate, endDate } = await getStartEndUTC('d2007f70')
-  console.log('-------mainpage ', HKTomorrowUTC,  startDate,endDate)
-
-
-    const status = checkExpire(startDate, endDate,HKTomorrowUTC)
-    console.log('-------mainpage status', status)
-
-  const result = resetStartUTC(startDate, HKTomorrowUTC)
-  console.log('----mainpage result', result)
-
-
-
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
@@ -60,7 +45,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Heading level={1} content={l10n('home', 'title', lang)} className="text-4xl pb-8" />
       </section>*/}
       <section className="grid justify-items-center relative w-full px-6">
-        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('home', 'title', lang)} width="100" height="100" />
+        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
       </section>
       <section className="grid grid-flow-col justify-items-center relative w-full px-6">
         <Image src="/assets/i/icons/avo.png" alt={l10n('home', 'title', lang)} width="75" height="75" />
@@ -80,9 +65,9 @@ export default async function MainPage({searchParams}: PageProps) {
           </div>
         </form>
       </section>
-      <Suspense fallback={<div>Loading...</div>}>
+      {/*<Suspense fallback={<div>Loading...</div>}>
         <PageClient />
-      </Suspense>
+      </Suspense>*/}
     </main>
   );
 }

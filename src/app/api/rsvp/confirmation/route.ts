@@ -31,11 +31,11 @@ export async function POST(req: NextRequest) {
         session.legal.waiver = waiver === 'waiver';
         await session.save();
         if (terms != 'terms') {
-          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/review?message=E0012'));
+          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/review?message=M0001'));
           return response;
         }
         if (waiver != 'waiver') {
-          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/review?message=E0013'));
+          const response = NextResponse.redirect(new URL(siteURL + '/rsvp/review?message=M0002'));
           return response;
         }
 

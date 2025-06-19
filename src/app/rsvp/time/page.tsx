@@ -16,10 +16,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // react
 import React from 'react';
-import {format, parseISO, addMinutes} from 'date-fns';
+// import {format, parseISO, addMinutes} from 'date-fns';
+import {addMinutes} from 'date-fns';
 
 // nextjs
 import type {Metadata} from 'next';
+import Image from 'next/image';
 
 // session
 import {getSession} from '@/lib/session';
@@ -76,13 +78,13 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <section className="w-full p-8">
+      <section className="w-full p-8 pb-0">
         <Message messageCode={message ?? ''} />
         <p className="text-neutral-000 pb-4 text-center">{l10n('rsvp', 'content-006', lang)}</p>
-        <dl className="flex flex-row pb-4 text-neutral-000">
+        {/*<dl className="flex flex-row pb-4 text-neutral-000">
           <dt className="font-bold flex-1">{l10n('rsvp', 'content-001', lang)}</dt>
           <dd className="flex-5">{session.rsvpDate ? format(parseISO(session.rsvpDate), 'MMMM d, yyyy') : ''}</dd>
-        </dl>
+        </dl>*/}
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/time" method="post">
           <div className="flex flex-row gap-4 bg-neutral-000 border border-neutral-000 border-4 rounded-2xl p-4">
             <div className="flex flex-col flex-1 gap-4">
@@ -110,6 +112,9 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
           </div>
         </form>
       </section>
+      <footer className="grid justify-items-center relative w-full pt-4">
+        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+      </footer>
     </main>
   );
 }

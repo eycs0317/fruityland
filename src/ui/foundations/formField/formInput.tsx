@@ -34,7 +34,7 @@ export type FormInputProps = {
 
 export default function FormInput({fieldData}: FormInputProps) {
   const defaultWrapperClassName = 'formInput flex flex-row';
-  const defaultClassName = 'flex-2 border-4 rounded-full rounded-l border-primary-300 px-2 py-3 w-full leading-[1.3] bg-neutral-000';
+  const defaultClassName = 'flex-1 border-4 rounded-full rounded-l border-primary-300 px-2 py-3 w-full leading-[1.3] bg-neutral-000';
 
   return (
     <div className={defaultWrapperClassName + ((fieldData.wrapperClassName) ? ' ' + fieldData.wrapperClassName : '') + ((fieldData.isRequired) ? ' formRequired' : '') + ((fieldData.isError) ? ' formError' : '')}>

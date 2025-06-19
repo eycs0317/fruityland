@@ -98,7 +98,7 @@ export default function ClientPage({ lang }: { lang: string }) {
     return (
       <>
         <section className="w-full p-8 text-center">
-          <Heading level={1} content={l10n('rsvp', 'content-loading', lang)} className="text-2xl pb-8" />
+          <Heading level={1} content={l10n('rsvp', 'content-loading', lang)} className="text-2xl pb-8 text-neutral-000" />
         </section>
         <section className="relative w-1/3 pb-8 px-8">
           <Image src="/assets/i/icons/spinner.gif" alt={l10n('rsvp', 'content-loading', lang)} width="100" height="100" />

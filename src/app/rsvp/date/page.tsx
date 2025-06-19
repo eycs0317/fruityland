@@ -20,6 +20,7 @@ import React from 'react';
 // nextjs
 import {redirect} from 'next/navigation';
 import type {Metadata} from 'next';
+import Image from 'next/image';
 
 // ui
 import FormField from '@/ui/foundations/formField';
@@ -104,6 +105,9 @@ export default async function MainPage({searchParams}: PageProps) {
           </div>
         </form>
       </section>
+      <footer className="grid justify-items-center relative w-full pt-4">
+        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+      </footer>
     </main>
   );
 }

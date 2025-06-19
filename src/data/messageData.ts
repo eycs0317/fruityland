@@ -29,7 +29,7 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
       'e0006': {
         'en-US': 'Session timeout due to inactivity.',
         'zh-CN': '系统逾时，请重新登入。',
-        'zh-HK': '系統逾時，請重新登入。',
+        'zh-HK': '你的預約時間已逾時，請重新登入。',
       },
       'e0007': {
         'en-US': 'Unable to check in.  Please try again later.',
@@ -56,15 +56,15 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
         'zh-CN': '优惠券已过期。',
         'zh-HK': '優惠券已過期。',
       },
-      'e0012': {
+      'm0001': {
         'en-US': 'You must agree to the Terms and Conditions to proceed.',
         'zh-CN': '您必须同意条款及细则才能继续。',
-        'zh-HK': '您必須同意條款及細則才能繼續。',
+        'zh-HK': '請確認已閱讀此條款。',
       },
-      'e0013': {
+      'm0002': {
         'en-US': 'You must agree to the Waiver to proceed.',
         'zh-CN': '您必须同意免责声明才能继续。',
-        'zh-HK': '您必須同意免責聲明才能繼續。',
+        'zh-HK': '請確認已閱讀此條款。',
       },
       'i0001': {
         'en-US': 'Data existed.  No new data generated.',

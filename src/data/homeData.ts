@@ -9,7 +9,7 @@ export function getHome(): { home: Record<string, Record<string, string>> } {
       'input-001': {
         'en-US': 'Coupon ID',
         'zh-CN': '门票编号',
-        'zh-HK': '門票編號',
+        'zh-HK': 'COUPON ID',
       },
       'button-001': {
         'en-US': 'Enter',

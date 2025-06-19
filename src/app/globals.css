@@ -189,3 +189,6 @@ blockquote { font-size:var(--text-blockquote); font-weight:100; font-style:itali
 
 img { height:auto; }
 img.avatar {border:1px solid transparent; border-radius:50%;}
+
+#reviewPage .messageErrorIcon {background-color:var(--color-neutral-000); color:var(--color-alert-600); border:2px solid var(--color-alert-600);}
+.formLegal label a {text-decoration:underline;}

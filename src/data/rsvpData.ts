@@ -34,7 +34,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'button-002': {
         'en-US': 'Next',
         'zh-CN': '前进',
-        'zh-HK': '前進',
+        'zh-HK': '確定',
       },
       'button-003': {
         'en-US': 'Confirm',
@@ -124,7 +124,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-confirmation-001': {
         'en-US': 'Please present this confirmation notice to enter the event.',
         'zh-CN': '入场时，请出示此确认通知进入活动。',
-        'zh-HK': '入場時，請出示此確認通知進入活動。',
+        'zh-HK': '入場時，請出示此QR Code確認通知參加活動。',
       },
       'content-confirmation-002': {
         'en-US': 'Booking Details',
@@ -159,7 +159,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-confirmation-008': {
         'en-US': 'If you have any enquiries, please call: xxxx-xxxx',
         'zh-CN': '如有任何查询，可致电查询:xxxx-xxxx',
-        'zh-HK': '如有任何查詢，可致電查詢:xxxx-xxxx',
+        'zh-HK': '如有任何查詢，可致電查詢：xxxx-xxxx',
       },
       'content-checked-in-001': {
         'en-US': 'Checked in completed.  This coupon is marked as used.',
@@ -176,15 +176,25 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '你已成功确认换领家庭票(1位成人及1位小童)于所选时段。',
         'zh-HK': '你已成功確認換領家庭票(1位成人及1位小童)於所選時段。',
       },
-      'content-legal-2': {
+      'content-legal-2a': {
         'en-US': 'Please click here to confirm the reading park ',
-        'zh-CN': '请按此确认阅读乐园',
-        'zh-HK': '請按此確認閱讀樂園',
+        'zh-CN': '请按此，确认阅读乐园',
+        'zh-HK': '*',
+      },
+      'content-legal-2b': {
+        'en-US': 'Please click here to confirm the reading park ',
+        'zh-CN': '请按此，确认阅读乐园',
+        'zh-HK': '請按此',
+      },
+      'content-legal-2c': {
+        'en-US': 'Please click here to confirm the reading park ',
+        'zh-CN': '请按此，确认阅读乐园',
+        'zh-HK': '，確認閱讀',
       },
       'content-legal-3': {
         'en-US': ' and ',
-        'zh-CN': '以及',
-        'zh-HK': '及其',
+        'zh-CN': '及',
+        'zh-HK': '及',
       },
       'content-legal-4': {
         'en-US': '.',
@@ -194,17 +204,17 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-legal-5': {
         'en-US': 'After successfully booking the above date and time, please register on site 10 minutes before the time.',
         'zh-CN': '成功预约上述日子及时间后，请于该时段10分钟前到场登记。',
-        'zh-HK': '成功預約上述日子及時間後，請於該時段10分鐘前到場登記。',
+        'zh-HK': '你已成功預約上述日子及時間，請於該時段10分鐘前到場登記。',
       },
       'content-terms': {
         'en-US': 'Terms and Conditions',
         'zh-CN': '规则及指引',
-        'zh-HK': '規則及指引',
+        'zh-HK': '樂園守則',
       },
       'content-waiver': {
         'en-US': 'Waiver',
         'zh-CN': '免责声明',
-        'zh-HK': '免責聲明',
+        'zh-HK': '安全指引',
       },
       'error-001': {
         'en-US': 'Error Loading Reservation',

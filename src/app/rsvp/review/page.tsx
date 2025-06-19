@@ -20,6 +20,7 @@ import React from 'react';
 // nextjs
 import Link from 'next/link';
 import type {Metadata} from 'next';
+import Image from 'next/image';
 
 // session
 import {getSession} from '@/lib/session';
@@ -59,7 +60,7 @@ export default async function MainPage({searchParams}: PageProps) {
   // const displayTime = format(new Date(session.schedule?.sessionDateTime), 'h:mm a');
   // console.log('rsvp/review/page-----displayTime', displayTime)
   return (
-    <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
+    <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4" id="reviewPage">
       <InactivityDetector />
       <AdminHeader />
       <form className="flex flex-col gap-4 w-full" action="/api/rsvp/confirmation" method="post">
@@ -88,7 +89,7 @@ export default async function MainPage({searchParams}: PageProps) {
               </div>
             </dl>
           </section>
-          <section className="w-full p-8 pt-0">
+          <section className="formLegal w-full p-8 pt-0">
             <FormField type='checkbox' fieldData={{
               id: 'terms',
               label: (
@@ -104,7 +105,11 @@ export default async function MainPage({searchParams}: PageProps) {
               id: 'waiver',
               label: (
                 <>
-                  {l10n('rsvp', 'content-legal-2', lang)}
+                  {/*{l10n('rsvp', 'content-legal-2a', lang)}*/}
+                  <strong className="text-accent-200">
+                    {l10n('rsvp', 'content-legal-2b', lang)}
+                  </strong>
+                  {l10n('rsvp', 'content-legal-2c', lang)}
                   <Link href="/legal/terms" target="_blank">{l10n('rsvp', 'content-terms', lang)}</Link>
                   {l10n('rsvp', 'content-legal-3', lang)}
                   <Link href="/legal/waiver" target="_blank">{l10n('rsvp', 'content-waiver', lang)}</Link>
@@ -115,15 +120,18 @@ export default async function MainPage({searchParams}: PageProps) {
               isRequired: true,
               isChecked: session.legal?.waiver ?? false
             }} />
-            <p>{l10n('rsvp', 'content-legal-5', lang)}</p>
+            <p className="pt-4">{l10n('rsvp', 'content-legal-5', lang)}</p>
           </section>
         </div>
-        <section className="w-full p-8 pt-0">
+        <section className="w-full px-8">
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSchedule', className: 'primary', value:l10n('rsvp', 'button-003', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
         </section>
+        <footer className="grid justify-items-center relative w-full pt-4">
+          <Image src="/assets/i/brand/logo-cy.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+        </footer>
       </form>
     </main>
   );
