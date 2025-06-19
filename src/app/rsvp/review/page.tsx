@@ -16,6 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // react
 import React from 'react';
+import {addMinutes} from 'date-fns';
 
 // nextjs
 import Link from 'next/link';
@@ -85,7 +86,7 @@ export default async function MainPage({searchParams}: PageProps) {
               </div>
               <div className="rsvpDetails flex pb-2 items-center">
                 <dt className="font-bold pl-4"><Image src="/assets/i/icons/time-light.svg" alt={l10n('rsvp', 'content-review-005', lang)} width="30" height="30" /></dt>
-                <dd className="pl-8 font-bold">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
+                <dd className="pl-8 font-bold">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''} - {session.schedule?.sessionDateTime ? formatInUserTimezone(addMinutes(session.schedule.sessionDateTime, 20), session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
               </div>
             </dl>
           </section>

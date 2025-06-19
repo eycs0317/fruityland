@@ -159,19 +159,26 @@ export default function ClientPage({ lang }: { lang: string }) {
           <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-4xl text-primary-700" />
         </section>
 
-        <section className="w-full pb-8 px-8">
-          <div className="px-8">
-            {(() => {
-              if (checkInStatus && checkInStatus === 'rsvp') {
-                return (
+        {(() => {
+          if (checkInStatus && checkInStatus === 'rsvp') {
+            return (
+              <section className="w-full pb-8 px-8">
+                <div className="flex flex-col justify-items-center px-8">
                   <Heading level={2} content={l10n('rsvp', 'content-confirmation-009', lang)} className="text-2xl text-primary-900 text-center" />
-                );
-              }
+                </div>
+              </section>
+            );
+          }
+        })()}
+
+        <section className="w-full pb-8 px-8">
+          <div className="flex justify-center px-8">
+            {(() => {
               if (!isCheckedIn) {
                 return (
                   <QRCode
                     size={500}
-                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    style={{ height: "auto", maxWidth: "100%", width: "50%" }}
                     viewBox={`0 0 500 500`}
                     value={`${domain}/rsvp/confirmation?cc=${confirmationData?.couponCode}`}
                   />
@@ -198,7 +205,7 @@ export default function ClientPage({ lang }: { lang: string }) {
             </div>
             <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
               <dt className="font-bold pl-4"><Image src="/assets/i/icons/time-dark.svg" alt={l10n('rsvp', 'content-confirmation-005', lang)} width="30" height="30" /></dt>
-              <dd className="font-bold pl-8">{confirmationData?.time || 'N/A'}</dd>
+              <dd className="font-bold pl-8">{confirmationData?.time}</dd>
             </div>
           </dl>
           {(() => {

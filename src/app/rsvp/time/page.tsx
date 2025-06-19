@@ -96,7 +96,7 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
                   const uid = groupItem.availableUids[0];
                   const availabilities = groupItem.isFullyBooked ? `(${l10n('rsvp', 'content-005', lang)})` : `(${l10n('rsvp', 'content-003', lang)}: ${groupItem.availableCount})`;
                   return {
-                    label: `${formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong')} - ${formatInUserTimezone(addMinutes(groupItem.utcSlotTime, 30), session.timezone ?? 'Asia/Hong_Kong')} ${availabilities}`,
+                    label: `${formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong')} - ${formatInUserTimezone(addMinutes(groupItem.utcSlotTime, 20), session.timezone ?? 'Asia/Hong_Kong')} ${availabilities}`,
                     value: uid ?? 'unavailable_uid',
                     id: `slot_group_${uid ?? 'unavailable_uid'}`,
                     isDisabled: groupItem.isFullyBooked || !uid,
