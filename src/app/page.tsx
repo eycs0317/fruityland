@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 // ui
 import FormField from '@/ui/foundations/formField';
-import Heading from '@/ui/foundations/heading';
+// import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
 
@@ -56,10 +56,17 @@ export default async function MainPage({searchParams}: PageProps) {
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
-      <section className="w-full p-8 text-center">
+      {/*<section className="w-full p-8 text-center">
         <Heading level={1} content={l10n('home', 'title', lang)} className="text-4xl pb-8" />
+      </section>*/}
+      <section className="grid justify-items-center relative w-full px-6">
+        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('home', 'title', lang)} width="100" height="100" />
       </section>
-      <section className="relative w-full px-20 pb-8">
+      <section className="grid grid-flow-col justify-items-center relative w-full px-6">
+        <Image src="/assets/i/icons/avo.png" alt={l10n('home', 'title', lang)} width="75" height="75" />
+        <Image src="/assets/i/icons/pineapple.png" alt={l10n('home', 'title', lang)} width="75" height="75" />
+      </section>
+      <section className="relative w-full px-6">
         <Image src="/assets/i/home.png" alt={l10n('home', 'title', lang)} width="300" height="300" />
       </section>
       <section className="w-full p-8">

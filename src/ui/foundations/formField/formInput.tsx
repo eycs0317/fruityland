@@ -38,7 +38,7 @@ export default function FormInput({fieldData}: FormInputProps) {
 
   return (
     <div className={defaultWrapperClassName + ((fieldData.wrapperClassName) ? ' ' + fieldData.wrapperClassName : '') + ((fieldData.isRequired) ? ' formRequired' : '') + ((fieldData.isError) ? ' formError' : '')}>
-      <label className="flex-1 border-4 rounded-full rounded-r border-primary-300 bg-primary-300 text-neutral-000 pl-4 content-center" htmlFor={fieldData.id}>{fieldData.label}:</label>
+      <label className="flex-1 border-4 rounded-full rounded-r border-primary-300 bg-primary-300 text-neutral-000 pl-4 content-center" htmlFor={fieldData.id}>{fieldData.label}</label>
       <input type={fieldData.type} name={fieldData.id} id={fieldData.id} className={(fieldData.className) ? fieldData.className : defaultClassName} defaultValue={fieldData.value ?? undefined} placeholder={fieldData.placeholder ?? undefined} maxLength={fieldData.maxLength ?? undefined} />
       {(() => {
         return (fieldData.helper) ? <small className="helper">{fieldData.helper}</small> : null;
