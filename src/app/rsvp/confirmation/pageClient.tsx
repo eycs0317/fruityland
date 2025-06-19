@@ -188,17 +188,17 @@ export default function ClientPage({ lang }: { lang: string }) {
               <dt className="font-bold">{l10n('rsvp', 'content-confirmation-003', lang)}</dt>
               <dd className="text-right">{confirmationData?.couponCode ? confirmationData.couponCode.match(/.{1,4}/g)?.join('-').toUpperCase() : 'N/A'}</dd>
             </div>
-             <div className="rsvpDetailsConfirmed flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-006', lang)}</dt>
-              <dd className="text-right">{l10n('rsvp', 'content-confirmation-007', lang)}</dd>
+             <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
+              <dt className="font-bold pl-4"><Image src="/assets/i/icons/participants-dark.svg" alt={l10n('rsvp', 'content-confirmation-006', lang)} width="30" height="30" /></dt>
+              <dd className="font-bold pl-8">{l10n('rsvp', 'content-confirmation-007', lang)}</dd>
             </div>
-            <div className="rsvpDetailsConfirmed flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-004', lang)}</dt>
-              <dd className="text-right">{confirmationData?.date}</dd>
+            <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
+              <dt className="font-bold pl-4"><Image src="/assets/i/icons/date-dark.svg" alt={l10n('rsvp', 'content-confirmation-004', lang)} width="30" height="30" /></dt>
+              <dd className="font-bold pl-8">{confirmationData?.date}</dd>
             </div>
-            <div className="rsvpDetailsConfirmed flex justify-between border-b pb-2">
-              <dt className="font-bold">{l10n('rsvp', 'content-confirmation-005', lang)}</dt>
-              <dd className="text-right">{confirmationData?.time || 'N/A'}</dd>
+            <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
+              <dt className="font-bold pl-4"><Image src="/assets/i/icons/time-dark.svg" alt={l10n('rsvp', 'content-confirmation-005', lang)} width="30" height="30" /></dt>
+              <dd className="font-bold pl-8">{confirmationData?.time || 'N/A'}</dd>
             </div>
           </dl>
           {(() => {
