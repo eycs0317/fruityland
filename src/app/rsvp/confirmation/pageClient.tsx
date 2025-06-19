@@ -39,7 +39,7 @@ export default function ClientPage({ lang }: { lang: string }) {
   const searchParams = useSearchParams();
 
   const couponCodeFromURL = searchParams.get('cc');
-  // const couponStatus = searchParams.get('status');  // Used for QR Code.
+  const checkInStatus = searchParams.get('status');
 
   const [confirmationData, setConfirmationData] = useState<ConfirmationDetails | null>(null);
   const [confirmationWalkInData, setConfirmationWalkInData] = useState<ConfirmationWalkInDetails | null>(null);
@@ -113,8 +113,8 @@ export default function ClientPage({ lang }: { lang: string }) {
       <>
         <section className="w-full p-8 text-center">
           <Heading level={1} content={l10n('rsvp', 'error-001', lang)} className="text-2xl pb-8 text-red-600" />
-          <p className="text-lg text-gray-700 mb-8">{error}</p>
-          <p className="text-lg text-gray-700"><Link href="/">{l10n('rsvp', 'error-002', lang)}</Link></p>
+          <p className="text-lg text-neutral-000 mb-8">{error}</p>
+          <p className="text-lg text-neutral-000"><Link href="/">{l10n('rsvp', 'error-002', lang)}</Link></p>
         </section>
       </>
     );
@@ -162,6 +162,11 @@ export default function ClientPage({ lang }: { lang: string }) {
         <section className="w-full pb-8 px-8">
           <div className="px-8">
             {(() => {
+              if (checkInStatus && checkInStatus === 'rsvp') {
+                return (
+                  <Heading level={2} content={l10n('rsvp', 'content-confirmation-009', lang)} className="text-2xl text-primary-900 text-center" />
+                );
+              }
               if (!isCheckedIn) {
                 return (
                   <QRCode

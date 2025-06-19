@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
             const response = NextResponse.redirect(new URL(siteURL + '/rsvp/time?message=E0010'));
             return response;
           } else {
-            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + session.coupon.couponCode));
+            const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + session.coupon.couponCode + '&status=rsvp'));
             return response;
           }
         } else {

@@ -161,6 +161,11 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '如有任何查询，可致电查询:xxxx-xxxx',
         'zh-HK': '如有任何查詢，可致電查詢：xxxx-xxxx',
       },
+      'content-confirmation-009': {
+        'en-US': 'Thank you',
+        'zh-CN': '感謝你的參加!',
+        'zh-HK': '感謝你的參加!',
+      },
       'content-checked-in-001': {
         'en-US': 'Checked in completed.  This coupon is marked as used.',
         'zh-CN': '已完成报到手续。此优惠券已使用。',
