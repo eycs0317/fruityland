@@ -24,7 +24,6 @@ import {l10n} from '@/utils/l10n';
 // import { resetStartUTC } from '@/utils/v2Function/resetStartUTC';
 
 
-
 interface PageProps {
   searchParams?: Promise<{
     message?: string;
