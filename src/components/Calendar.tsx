@@ -99,10 +99,10 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
             const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']; // Custom array of single letters
             return weekdays[date.getDay()]; // date.getDay() returns 0 for Sunday, 1 for Monday, etc.
           }}
-          nextLabel={null}
-          prevLabel={null}
-          next2Label={null} // Hides the "next year" arrow
-          prev2Label={null}
+          // nextLabel={null}
+          // prevLabel={null}
+          // next2Label={null} // Hides the "next year" arrow
+          // prev2Label={null}
         />
       )}
       <input
