@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // react
 import React from 'react';
-import {format, parseISO} from 'date-fns';
+import {format, parseISO, addMinutes} from 'date-fns';
 
 // nextjs
 import type {Metadata} from 'next';
@@ -78,6 +78,7 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
       <AdminHeader />
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
+        <p className="text-neutral-000 pb-4 text-center">{l10n('rsvp', 'content-006', lang)}</p>
         <dl className="flex flex-row pb-4 text-neutral-000">
           <dt className="font-bold flex-1">{l10n('rsvp', 'content-001', lang)}</dt>
           <dd className="flex-5">{session.rsvpDate ? format(parseISO(session.rsvpDate), 'MMMM d, yyyy') : ''}</dd>
@@ -91,26 +92,16 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
                 groupClassName: 'flex flex-col',
                 radios: availableSessions.map(groupItem => {
                   const uid = groupItem.availableUids[0];
+                  const availabilities = groupItem.isFullyBooked ? `(${l10n('rsvp', 'content-005', lang)})` : `(${l10n('rsvp', 'content-003', lang)}: ${groupItem.availableCount})`;
                   return {
-                    label: formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong'),
+                    label: `${formatInUserTimezone(groupItem.utcSlotTime, session.timezone ?? 'Asia/Hong_Kong')} - ${formatInUserTimezone(addMinutes(groupItem.utcSlotTime, 30), session.timezone ?? 'Asia/Hong_Kong')} ${availabilities}`,
                     value: uid ?? 'unavailable_uid',
                     id: `slot_group_${uid ?? 'unavailable_uid'}`,
-                    isDisabled: groupItem.isFullyBooked || !uid
+                    isDisabled: groupItem.isFullyBooked || !uid,
+                    wrapperClassName: 'text-sm',
                   };
                 })
               }} />
-            </div>
-            <div className="flex flex-col pt-8 flex-1 text-right">
-              {availableSessions.length > 0 ? (
-                availableSessions.map(groupItem => (
-                  <div key={`count_${groupItem.availableUids[0]}`}
-                       className={`flex flex-col ${groupItem.isFullyBooked ? 'text-neutral-500 pt-[7px] text-base' : 'text-primary-500 pt-[7px] text-base'}`}>
-                    {groupItem.isFullyBooked ? `${l10n('rsvp', 'content-005', lang)}` : `(${l10n('rsvp', 'content-003', lang)}: ${groupItem.availableCount})`}
-                  </div>
-                ))
-              ) : (
-                <div className="flex flex-col">N/A</div>
-              )}
             </div>
           </div>
           <div className="flex flex-col gap-4">

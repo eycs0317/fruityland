@@ -85,7 +85,7 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
   }, [allowedMinDate, allowedMaxDate]);
 
   return (
-    <div ref={calendarRef} className="w-full max-w-md mx-auto p-2">
+    <div ref={calendarRef} className="w-full max-w-md mx-auto">
       {isClient && (
         <ReactCalendar
           onChange={onChange}

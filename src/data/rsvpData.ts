@@ -86,6 +86,11 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-CN': '已满',
         'zh-HK': '已滿',
       },
+      'content-006': {
+        'en-US': 'Please complete the reservation within 2 minutes, thank you!',
+        'zh-CN': '请于2分钟内完成预约，谢谢！',
+        'zh-HK': '請於2分鐘內完成預約，謝謝！',
+      },
       'content-review-002': {
         'en-US': 'Booking Details',
         'zh-CN': '预约详情',

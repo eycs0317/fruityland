@@ -92,12 +92,13 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <section className="w-full p-8">
+      <section className="w-full pt-4">
         <Message messageCode={message ?? ''} />
+        <p className="text-neutral-000 pb-4 text-center">{l10n('rsvp', 'content-006', lang)}</p>
         <form className="flex flex-col gap-8 w-full" action="/api/rsvp/date" method="post">
           <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate?.toISOString()} allowedMaxDate={startEndUTC?.endDate?.toISOString()}/>
           <Timezone />
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 px-8">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'primary', value:l10n('rsvp', 'button-002', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>
