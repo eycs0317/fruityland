@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation'; // For redirection
 
-const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000; // 5 minutes
+const INACTIVITY_TIMEOUT_MS = 2 * 60 * 1000; // 2 minutes
 //const INACTIVITY_TIMEOUT_MS = .05 * 60 * 1000; // Set to 3 seconds for testing
 export default function InactivityDetector() {
   const router = useRouter();
