@@ -159,14 +159,14 @@ export default function ClientPage({ lang }: { lang: string }) {
   if (confirmationData) {
     return (
       <div className="m-4 bg-neutral-000 border border-primary-300 mb-4 text-neutral-000 border-4 rounded-2xl">
-        <section className="w-full p-8 text-center">
+        <section className="w-full p-8 pb-4 text-center">
           <Heading level={1} content={(isCheckedIn) ? l10n('rsvp', 'title-checked-in', lang) : l10n('rsvp', 'title-confirmation', lang)} className="text-4xl text-primary-700" />
         </section>
 
         {(() => {
           if (checkInStatus && checkInStatus === 'rsvp') {
             return (
-              <section className="w-full pb-8 px-4">
+              <section className="w-full pb-4 px-4">
                 <div className="flex flex-col justify-items-center px-8">
                   <Heading level={2} content={l10n('rsvp', 'content-confirmation-009', lang)} className="text-2xl text-primary-900 text-center" />
                 </div>
@@ -175,7 +175,7 @@ export default function ClientPage({ lang }: { lang: string }) {
           }
         })()}
 
-        <section className="w-full pb-8 px-8">
+        <section className="w-full pb-4 px-8">
           <div className="flex justify-center px-8">
             {(() => {
               if (!isCheckedIn) {

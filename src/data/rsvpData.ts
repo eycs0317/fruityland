@@ -44,7 +44,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'button-004': {
         'en-US': 'Modify',
         'zh-CN': '更改',
-        'zh-HK': '更改',
+        'zh-HK': '如要更改日子或時間',
       },
       'button-005': {
         'en-US': 'Cancel Reservation',
