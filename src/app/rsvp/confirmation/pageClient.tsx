@@ -166,7 +166,7 @@ export default function ClientPage({ lang }: { lang: string }) {
         {(() => {
           if (checkInStatus && checkInStatus === 'rsvp') {
             return (
-              <section className="w-full pb-8 px-8">
+              <section className="w-full pb-8 px-4">
                 <div className="flex flex-col justify-items-center px-8">
                   <Heading level={2} content={l10n('rsvp', 'content-confirmation-009', lang)} className="text-2xl text-primary-900 text-center" />
                 </div>
@@ -192,7 +192,7 @@ export default function ClientPage({ lang }: { lang: string }) {
           </div>
         </section>
 
-        <section className="w-full p-8 pt-0 bg-white shadow-md rounded-lg">
+        <section className="w-full p-4 pt-0 bg-white shadow-md rounded-lg">
           {/*<Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />*/}
           <dl className="space-y-2 text-gray-700">
             <div className="flex justify-between pb-2 text-primary-700 px-5">
@@ -201,15 +201,15 @@ export default function ClientPage({ lang }: { lang: string }) {
             </div>
              <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
               <dt className="font-bold pl-4"><Image src="/assets/i/icons/participants-dark.svg" alt={l10n('rsvp', 'content-confirmation-006', lang)} width="30" height="30" /></dt>
-              <dd className="font-bold pl-8">{l10n('rsvp', 'content-confirmation-007', lang)}</dd>
+              <dd className="font-bold pl-4">{l10n('rsvp', 'content-confirmation-007', lang)}</dd>
             </div>
             <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
               <dt className="font-bold pl-4"><Image src="/assets/i/icons/date-dark.svg" alt={l10n('rsvp', 'content-confirmation-004', lang)} width="30" height="30" /></dt>
-              <dd className="font-bold pl-8">{confirmationData?.date}</dd>
+              <dd className="font-bold pl-4">{confirmationData?.date}</dd>
             </div>
             <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
               <dt className="font-bold pl-4"><Image src="/assets/i/icons/time-dark.svg" alt={l10n('rsvp', 'content-confirmation-005', lang)} width="30" height="30" /></dt>
-              <dd className="font-bold pl-8">{confirmationData?.time} - {confirmationData?.timeFinal}</dd>
+              <dd className="font-bold pl-4">{confirmationData?.time} - {confirmationData?.timeFinal}</dd>
             </div>
           </dl>
           {(() => {

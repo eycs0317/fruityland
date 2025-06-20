@@ -54,10 +54,11 @@
   .react-calendar__navigation__label {
     background-color: white;
     border-radius: 9999px;
-    width: 80%;
+    width: 50%;
   }
   .react-calendar__navigation__label__labelText {
-    text-transform: uppercase;;
+    text-transform: uppercase;
+    font-size:1.5rem;
   }
   ..react-calendar__navigation button {
 

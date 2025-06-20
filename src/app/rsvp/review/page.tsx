@@ -69,12 +69,12 @@ export default async function MainPage({searchParams}: PageProps) {
           <section className="w-full p-8 text-center">
             <Heading level={1} content={l10n('rsvp', 'title-review', lang)} className="text-4xl text-neutral-000" />
           </section>
-          <section className="w-full p-8 pt-0">
+          <section className="w-full p-4 pt-0">
             <Message messageCode={message ?? ''} />
             <dl className="space-y-2 text-gray-700">
               <div className="rsvpDetails flex pb-2 items-center">
                 <dt className="font-bold pl-4"><Image src="/assets/i/icons/participants-light.svg" alt={l10n('rsvp', 'content-review-006', lang)} width="30" height="30" /></dt>
-                <dd className="pl-8 font-bold">{l10n('rsvp', 'content-review-007', lang)}</dd>
+                <dd className="pl-4 font-bold">{l10n('rsvp', 'content-review-007', lang)}</dd>
               </div>
               {/*<div className="flex justify-between border-b pb-2">
                 <dt className="font-bold">{l10n('rsvp', 'content-review-003', lang)}:</dt>
@@ -82,11 +82,11 @@ export default async function MainPage({searchParams}: PageProps) {
               </div>*/}
               <div className="rsvpDetails flex pb-2 items-center">
                 <dt className="font-bold pl-4"><Image src="/assets/i/icons/date-light.svg" alt={l10n('rsvp', 'content-review-004', lang)} width="30" height="30" /></dt>
-                <dd className="pl-8 font-bold">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong', 'MMMM d, yyyy') : ''}</dd>
+                <dd className="pl-4 font-bold">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong', 'MMMM d, yyyy') : ''}</dd>
               </div>
               <div className="rsvpDetails flex pb-2 items-center">
                 <dt className="font-bold pl-4"><Image src="/assets/i/icons/time-light.svg" alt={l10n('rsvp', 'content-review-005', lang)} width="30" height="30" /></dt>
-                <dd className="pl-8 font-bold">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''} - {session.schedule?.sessionDateTime ? formatInUserTimezone(addMinutes(session.schedule.sessionDateTime, 20), session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
+                <dd className="pl-4 font-bold">{session.schedule?.sessionDateTime ? formatInUserTimezone(session.schedule.sessionDateTime, session.timezone ?? 'Asia/Hong_Kong') : ''} - {session.schedule?.sessionDateTime ? formatInUserTimezone(addMinutes(session.schedule.sessionDateTime, 20), session.timezone ?? 'Asia/Hong_Kong') : ''}</dd>
               </div>
             </dl>
           </section>
