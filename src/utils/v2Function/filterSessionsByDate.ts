@@ -74,9 +74,6 @@ export function filterSessionsByDate(
   );
   const endFilteringUtc = fromZonedTime(endOfDayInUserTimeZone, userTimeZone);
 
-  console.log(`filterSessionsByDate: Filtering for ${selectedDateString} in ${userTimeZone}:`);
-  console.log(`  UTC Range Start (inclusive): ${startFilteringUtc.toISOString()}`);
-  console.log(`  UTC Range End (exclusive):   ${endFilteringUtc.toISOString()}`);
 
 
   // 2. Filter the input appointments array by the calculated UTC range

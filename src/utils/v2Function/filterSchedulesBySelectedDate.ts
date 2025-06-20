@@ -33,9 +33,9 @@ export function filterSchedulesBySelectedDate(
 
   // Format the selectedDate to YYYY-MM-DD string using the local timezone.
   // This is the target calendar day we are looking for.
-  console.log('selectedDate', selectedDate);
-  const targetDayString = format(selectedDate, 'yyyy-MM-dd'); // Removed timeZone option
-  console.log(`Filtering for date (in local timezone): ${targetDayString}`);
+
+
+
 
   const filteredSchedules = schedules.filter(schedule => {
     // For each schedule's sessionDateTime (which is a UTC Date object),
@@ -46,6 +46,6 @@ export function filterSchedulesBySelectedDate(
     return scheduleDayString === selectedDate;
   });
 
-  console.log(`Found ${filteredSchedules.length} schedules matching ${targetDayString}.`);
+
   return filteredSchedules;
 }

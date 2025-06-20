@@ -17,7 +17,7 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
     if (existingCouponRSVP) {
       await cancelReservation(couponCode);
     }
-  console.log('AAAAAAAAAA rsvpTime >>>>>>>>>>>>>>',rsvpTime)
+
     // 1. Find the selected schedule (appointment)
     const schedule = await prisma.schedule.findUnique({
       where: { uid: rsvpTime },
@@ -25,7 +25,7 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
       select: { group: true, isBooked: true },
     });
 
-    console.log('<<?????????????schedule from db>>>>>>>>>>>>>>>',schedule)
+
 
     if (!schedule) {
       return { success: false, message: 'Selected time slot not found.' };
@@ -48,8 +48,7 @@ export async function createReservation(details: { couponCode: string; rsvpTime:
     if (coupon.isRSVP) {
       return { success: false, message: 'This coupon has already been used.' };
     }
-  // console.log('<<<<coupon.group>>>>>>>>>>>>>>>>',coupon.group)
-  // console.log('<<<<schedule.group>>>>>>>>>>>>>>>>',schedule.group)
+
     // 3. Ensure they have the same group number
     if (coupon.group !== schedule.group) {
       return { success: false, message: 'Coupon and selected time slot do not match groups.' };

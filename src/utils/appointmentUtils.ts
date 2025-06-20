@@ -37,22 +37,22 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
 
 
   const groupedAppointmentsMap = new Map<string, { count: number, availableCount: number, isFullyBooked: boolean, uids: string[], utcSlotTime: Date, sessionDateTimetoISO: string, localTime: string }>();
-// console.log('groupedAppointmentsMap:', groupedAppointmentsMap)
+
   appointments.forEach(appt => {
     // 1. Parse the UTC slot string into a Date object
 
     const utcSlotDate = new Date(appt.sessionDateTime);
 
-    // console.log('utcSlotDate------->', utcSlotDate)
+
     if (isNaN(utcSlotDate.getTime())) {
       console.error('APPT_UTILS: Invalid UTC Date parsed from sessionDateTime, skipping:', appt.sessionDateTime);
       return; // Skip this appointment if the date is invalid
   }
-  // console.log('------utcSlotDate toisostring', utcSlotDate.toISOString())
+
     // 2. Convert the UTC Date object to the local display timezone (HKT)
     const localZonedDate = convertUTCToLocal(utcSlotDate, APP_DISPLAY_TIMEZONE);
 //     const localZonedDate = utcSlotDate
-// console.log('localZonedDate:', localZonedDate)
+
     if (isNaN(localZonedDate.getTime())) {
       console.error('APPT_UTILS: Invalid Zoned Date after conversion for sessionDateTime:', appt.sessionDateTime, 'Zoned Date:', localZonedDate);
       return; // Skip if conversion resulted in an invalid date
@@ -60,7 +60,7 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
 
     // 3. Format this local zoned date to the desired display time string (e.g., "11:00 AM", "1:00 PM")
     // Use 'h:mm a' for 12-hour format with AM/PM (e.g., 11:00 AM, 1:00 PM)
-    // console.log('localZonedDate before formatting:', localZonedDate)
+
     const timeString = format(new Date(localZonedDate), 'h:mm a');
     // 4. Format the original UTC date to the desired display time string for the 'localTime' field
     // This explicitly formats the UTC date as a time string without timezone conversion
@@ -77,7 +77,7 @@ export function groupAndSortAppointments(appointments: Appointment[]): GroupedAp
         localTime: localTimeStringUtc
       });
     }
-  // console.log('groupedAppointmentsMap--->', groupedAppointmentsMap)
+
     const group = groupedAppointmentsMap.get(timeString)!;
     group.count++;
     group.uids.push(appt.uid);

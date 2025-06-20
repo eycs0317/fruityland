@@ -5,21 +5,21 @@
 export function getHKTomorrowUTC(): Date {
   const today = new Date();
   const nowUTC = new Date(today.getTime());
-  // console.log(nowUTC);
+
 
   const nowHKT = new Date(nowUTC.getTime() + 8 * 60 * 60 * 1000);
-  // console.log(nowHKT);
+
 
   const y = nowHKT.getUTCFullYear();
   const m = nowHKT.getUTCMonth();
   const d = nowHKT.getUTCDate() + 1;
   const HKTomorrowUTC = new Date(Date.UTC(y, m, d, 0, 0, 0) - 8 * 60 * 60 * 1000);
-  // console.log(HKTomorrowUTC);
+
 
   return HKTomorrowUTC;
 
 
-  
+
   // //currently
   //   const currentUtcDate = new Date();
   //   console.log('----currentUtcDate---->', currentUtcDate);

@@ -17,7 +17,7 @@ export async function getEventSessionsBySelectedDate(dateString: string | undefi
   const session = await getSession();
   const sessionGroup = session.coupon?.group ?? 0;
 
-  console.log(`Session------>: ${JSON.stringify(session)}`);
+
   if (!dateString) {
     console.error("No dateString provided to getSessionsInPeriod.");
     return [];
@@ -38,9 +38,7 @@ export async function getEventSessionsBySelectedDate(dateString: string | undefi
   // This defines the exclusive upper bound of our time window.
   const endDateUtc = addDays(startDateUtc, durationDays);
 
-  console.log(`Querying sessions for UTC range based on input "${dateString}" and duration ${durationDays} days:`);
-  console.log(`  Start (inclusive): ${startDateUtc.toISOString()}`);
-  console.log(`  End (exclusive):   ${endDateUtc.toISOString()}`);
+
 
   try {
     const rawSessions = await prisma.schedule.findMany({
@@ -61,11 +59,11 @@ export async function getEventSessionsBySelectedDate(dateString: string | undefi
         sessionDateTime: 'asc', // Order chronologically
       },
     });
-console.log('rawSessions--->', rawSessions);
+
 // const newRawSessions = rawSessions.map(s => {
 //   return {...s, sessionDateTimetoISO: s.sessionDateTime.toISOString()}
 // })
-// console.log('new newRawSessions--->', newRawSessions);
+
 
     // Extract just the Date objects from the Prisma results
     const sessions: SessionDetail[] = rawSessions.map(s => ({
@@ -78,9 +76,7 @@ console.log('rawSessions--->', rawSessions);
     }));
     // add filter by group
 const sessionsByGroup = sessions.filter(session => session.group === sessionGroup);
-// console.log('sessionsByGroup--->', sessionsByGroup);
 
-    // console.log(`Found ${sessionDateTimes.length} sessions in the ${durationDays}-day period starting from ${dateString} UTC.`);
     return sessionsByGroup;
 
   } catch (error) {

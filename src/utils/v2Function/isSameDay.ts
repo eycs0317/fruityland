@@ -21,7 +21,7 @@ export function isSameDay(selectedDateString: string, localTimeDate: Date): bool
   // *internal local representation* (i.e., according to the system's timezone).
   const formattedLocalTime = format(localTimeDate, 'yyyy-MM-dd');
 
-  console.log(`isSameDay: Comparing '${selectedDateString}' (input) with '${formattedLocalTime}' (from Date object's local time).`);
+
 
   // Compare the two YYYY-MM-DD strings directly
   return selectedDateString === formattedLocalTime;

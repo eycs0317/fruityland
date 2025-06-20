@@ -25,7 +25,7 @@ export async function getSchedulesByGroup(groupNumber: number | undefined): Prom
       },
     });
 
-    // console.log(`Found ${schedules.length} schedules for group ${groupNumber}. ${schedules[0]?.sessionDateTime.toISOString()}`);
+
     const schedules = rawSchedules.map(s => ({
       ...s,
       sessionDateTime: s.sessionDateTime.toISOString(), // Convert Date object to ISO string

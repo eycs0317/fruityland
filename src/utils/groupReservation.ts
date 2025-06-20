@@ -32,7 +32,7 @@ export function groupReservationsByTime(reservations: ReservationData[]): Groupe
 
     // Increment total reserved number
     currentCounts.reservedNumber++;
-  console.log(' infunction status type--->', typeof reservation.status) //string
+
     // Check if the status indicates 'checked-in'
     if (reservation.status === 2) {
       currentCounts.checkIn++;
