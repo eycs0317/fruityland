@@ -59,20 +59,14 @@ export async function POST(req: NextRequest) {
             };
             await session.save()
 
-            if (couponResult.scheduleUID) {
-              // coupon found and got scheduleUID,
+            // coupon found but not RSVP
+            if (session.auth && session.authType == 'onsiteAdmin') {
               const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
               return response;
             } else {
-              // coupon found but not RSVP
-              if (session.auth && session.authType == 'onsiteAdmin') {
-                const response = NextResponse.redirect(new URL(siteURL + '/rsvp/confirmation?cc=' + data.get('couponCode')));
-                return response;
-              } else {
-                // need to check if coupon expired
-                const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
-                return response;
-              }
+              // need to check if coupon expired
+              const response = NextResponse.redirect(new URL(siteURL + '/rsvp/date'));
+              return response;
             }
           } else {
             const session = await getSession();
