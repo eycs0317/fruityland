@@ -36,11 +36,6 @@ export default async function MainPage({searchParams}: PageProps) {
 
   const session = await getSession();
   const lang = session?.lang ?? 'zh-HK';
-  // const lang = 'zh-HK';
-  // if (session.lang != lang) {
-  //   session.lang = lang;
-  //   await session.save();
-  // };
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
@@ -55,7 +50,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Image src="/assets/i/icons/avo.png" alt={l10n('home', 'title', lang)} width="75" height="75" />
         <Image src="/assets/i/icons/pineapple.png" alt={l10n('home', 'title', lang)} width="75" height="75" />
       </section>
-      <section className="relative w-full px-6">
+      <section className="grid justify-items-center relative w-full px-6">
         <Image src="/assets/i/home.png" alt={l10n('home', 'title', lang)} width="300" height="300" />
       </section>
       <section className="w-full p-8">

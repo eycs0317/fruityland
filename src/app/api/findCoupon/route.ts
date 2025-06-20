@@ -49,6 +49,12 @@ export async function POST(req: NextRequest) {
           delete session.rsvpDate;
           delete session.schedule;
           delete session.legal;
+
+          const lang = 'zh-HK';
+          if (session.lang != lang) {
+            session.lang = lang;
+            await session.save();
+          };
           await session.save()
 
           if (couponResult.scheduleUID) {
