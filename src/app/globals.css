@@ -192,3 +192,10 @@ img.avatar {border:1px solid transparent; border-radius:50%;}
 
 #reviewPage .messageErrorIcon {background-color:var(--color-neutral-000); color:var(--color-alert-600); border:2px solid var(--color-alert-600);}
 .formLegal label a {text-decoration:underline;}
+
+
+
+a.headerLink:link { color:var(--color-neutral-000); text-decoration:underline; };
+a.headerLink:visited { color:var(--color-neutral-000); text-decoration:underline; };
+a.headerLink:hover { color:var(--color-primary-900); text-decoration:none; };
+a.headerLink:active { color:var(--color-primary-900); text-decoration:none; };

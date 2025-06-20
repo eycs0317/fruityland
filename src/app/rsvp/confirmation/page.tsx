@@ -55,7 +55,7 @@ export default async function MainPage({searchParams}: PageProps) {
     return (
       <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
         <AdminHeader />
-        <section className="w-full p-8">
+        <section className="w-full px-8 pt-8">
           <Message messageCode={message ?? ''} />
         </section>
         <Suspense fallback={<div>Loading...</div>}>

@@ -215,7 +215,7 @@ export default function ClientPage({ lang }: { lang: string }) {
           {(() => {
             if (isCheckedIn) {
               return (
-                <p className="text-success-800">{l10n('rsvp', 'content-checked-in-001', lang)}</p>
+                <p className="text-success-800 pt-4">{l10n('rsvp', 'content-checked-in-001', lang)}</p>
               );
             } else {
               return (

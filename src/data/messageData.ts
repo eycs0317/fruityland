@@ -98,8 +98,8 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
       },
       's0005': {
         'en-US': 'Checked in successful.',
-        'zh-CN': '预约成功。',
-        'zh-HK': '預約成功。',
+        'zh-CN': '報到成功。',
+        'zh-HK': '報到成功。',
       },
     },
   };

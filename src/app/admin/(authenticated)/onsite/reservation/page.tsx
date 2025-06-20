@@ -45,13 +45,13 @@ export default async function MainPage() {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
       <section className="w-full p-8">
-        <Heading level={1} content="Event Date Search" className="text-4xl" />
+        <Heading level={1} content="活動日期搜尋" className="text-4xl text-neutral-000" />
       </section>
       <section className="w-full px-8 pb-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate?.toISOString()} allowedMaxDate={startEndUTC?.endDate?.toISOString()}/>
           <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'Search'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'搜尋'}} />
           </div>
         </form>
       </section>

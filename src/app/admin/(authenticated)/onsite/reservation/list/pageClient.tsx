@@ -47,26 +47,26 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
     <>
       <section className="w-full p-8">
         {/* Display the selected date in the heading */}
-        <Heading level={1} content={`Reservations`} className="text-4xl" />
-        <Heading level={2} content={format(selectedDate, 'MMMM d, yyyy')} className="text-2xl pb-8" />
+        <Heading level={1} content={`Reservations`} className="text-4xl text-neutral-000" />
+        <Heading level={2} content={format(selectedDate, 'MMMM d, yyyy')} className="text-2xl text-neutral-000" />
       </section>
 
-      <section className="w-full p-8">
+      <section className="w-full p-8 pt-0">
         {hasReservations ? (
           <div className="overflow-x-auto"> {/* Add overflow for smaller screens */}
             <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
               <thead className="bg-gray-100 text-gray-700">
                 <tr>
-                  <th className="py-3 px-4 text-left">Time</th>
-                  <th className="py-3 px-4 text-left">Reserved</th>
-                  <th className="py-3 px-4 text-left">Checked in</th>
+                  <th className="py-3 px-4 text-left">時段</th>
+                  <th className="py-3 px-4 text-left">預訂</th>
+                  <th className="py-3 px-4 text-left">已報到</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {groupedData.map((timeSlot) => {
                   const sessionDateTime = parseISO(timeSlot.sessionDateTime);
                   // Format to user's browser local time for display
-                  const displayTime = format(sessionDateTime, 'p'); // e.g., 1:30 PM, 2:00 AM
+                  const displayTime = format(sessionDateTime, 'HH:mm'); // e.g., 1:30 PM, 2:00 AM
 
                   return (
                     <tr key={timeSlot.sessionDateTime}>

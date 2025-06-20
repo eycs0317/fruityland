@@ -47,14 +47,14 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
       <section className="w-full p-8">
-        <Heading level={1} content="Support Dashboard" className="text-4xl pb-8" />
+        <Heading level={1} content="Onsite Dashboard" className="text-4xl text-neutral-000" />
       </section>
-      <section className="w-full p-8">
+      <section className="w-full p-8 pt-0">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'secondary', value:'Coupon Code Search'}} />
-            <FormField type='button' fieldData={{type: 'submit', id: 'btList', className: 'secondary', value:'List Reservations'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'tertiary', value:'客戶報到'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btList', className: 'tertiary', value:'查看預訂資料'}} />
           </div>
         </form>
       </section>

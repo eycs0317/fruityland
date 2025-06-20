@@ -78,7 +78,7 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <InactivityDetector />
       <AdminHeader />
-      <section className="w-full p-8 pb-0">
+      <section className="w-full p-4 pb-0">
         <Message messageCode={message ?? ''} />
         <p className="text-neutral-000 pb-4 text-center">{l10n('rsvp', 'content-006', lang)}</p>
         {/*<dl className="flex flex-row pb-4 text-neutral-000">
@@ -106,7 +106,7 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
               }} />
             </div>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 px-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'primary', value:l10n('rsvp', 'button-002', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
           </div>

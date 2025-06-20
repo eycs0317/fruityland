@@ -41,7 +41,7 @@ export default function ClientPage({ lang }: { lang: string }) {
   return (
     <>
       {!isCheckedIn ? 
-        <section className="w-full p-8 pb-0">
+        <section className="w-full p-8 pt-0 pb-0">
           <form className="flex flex-col gap-8 w-full" action="/api/rsvp/checkIn" method="post">
             <FormField type='hidden' fieldData={{id: 'couponCode', value: couponCodeFromURL || ''}} />
             <div className="flex flex-col gap-4">
