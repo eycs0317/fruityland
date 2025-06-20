@@ -48,7 +48,7 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
       <section className="w-full p-8">
         {/* Display the selected date in the heading */}
         <Heading level={1} content={`預訂資料`} className="text-4xl text-neutral-000" />
-        <Heading level={2} content={format(selectedDate, 'MMMM d, yyyy')} className="text-2xl text-neutral-000" />
+        <Heading level={2} content={format(parseISO(selectedDate), 'MMMM d, yyyy')} className="text-2xl text-neutral-000" />
       </section>
 
       <section className="w-full p-8 pt-0">
@@ -82,9 +82,9 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
         ) : (
           // Display message if no reservations are found
           <div className="text-center p-8 bg-white shadow-md rounded-lg">
-            <p className="text-lg text-gray-700 mb-4">No reservations found for {selectedDate}.</p>
+            <p className="text-lg text-gray-700 mb-4">{format(parseISO(selectedDate), 'MMMM d, yyyy')} 沒有任何預訂。</p>
             <p className="text-lg text-gray-700">
-              <Link href="/admin/onsite/reservation">Go back to search for another date.</Link>
+              <Link href="/admin/onsite/reservation">返回搜尋其他日期。</Link>
             </p>
             {/* You could optionally add an Image here if desired, e.g., a "no results" icon */}
             {/* <Image src="/assets/i/icons/no-results.svg" alt="No Results" width="100" height="100" className="mx-auto mt-4" /> */}
