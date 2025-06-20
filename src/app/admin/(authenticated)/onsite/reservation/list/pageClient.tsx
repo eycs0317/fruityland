@@ -47,7 +47,7 @@ export default function PageClient({ reservations, selectedDate }: PageClientPro
     <>
       <section className="w-full p-8">
         {/* Display the selected date in the heading */}
-        <Heading level={1} content={`Reservations`} className="text-4xl text-neutral-000" />
+        <Heading level={1} content={`預訂資料`} className="text-4xl text-neutral-000" />
         <Heading level={2} content={format(selectedDate, 'MMMM d, yyyy')} className="text-2xl text-neutral-000" />
       </section>
 
