@@ -2,7 +2,7 @@
 
 // react
 import {useEffect, useState} from 'react';
-import {parseISO, format} from 'date-fns';
+import {parseISO, format, addMinutes} from 'date-fns';
 import QRCode from 'react-qr-code';
 
 // nextjs
@@ -21,6 +21,7 @@ type ConfirmationDetails = {
   couponCode: string;
   date: string;
   time: string;
+  timeFinal: string;
   group: string;
   uid: string;
 };
@@ -65,8 +66,11 @@ export default function ClientPage({ lang }: { lang: string }) {
           const formattedDate = format(parseISODate, 'MMMM d, yyyy');
 
           const parseISOTime = parseISO(result.data?.time || '');
-          const formattedTime = format(parseISOTime, 'p');
-          setConfirmationData({...result.data, date: formattedDate,time: formattedTime});
+          const formattedTime = format(parseISOTime, 'HH:mm');
+
+          const finalTime = addMinutes(parseISOTime, 20);
+          const formattedFinalTime = format(finalTime, 'HH:mm');
+          setConfirmationData({...result.data, date: formattedDate, time: formattedTime, timeFinal: formattedFinalTime});
         } else {
           setConfirmationWalkInData({couponCode:couponCodeFromURL});
         }
@@ -205,7 +209,7 @@ export default function ClientPage({ lang }: { lang: string }) {
             </div>
             <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
               <dt className="font-bold pl-4"><Image src="/assets/i/icons/time-dark.svg" alt={l10n('rsvp', 'content-confirmation-005', lang)} width="30" height="30" /></dt>
-              <dd className="font-bold pl-8">{confirmationData?.time}</dd>
+              <dd className="font-bold pl-8">{confirmationData?.time} - {confirmationData?.timeFinal}</dd>
             </div>
           </dl>
           {(() => {

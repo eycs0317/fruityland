@@ -35,12 +35,12 @@ export default async function MainPage({searchParams}: PageProps) {
   const message = resolvedSearchParams?.message;
 
   const session = await getSession();
-  // const lang = session?.lang ?? 'zh-HK';
-  const lang = 'zh-HK';
-  if (session.lang != lang) {
-    session.lang = lang;
-    await session.save();
-  };
+  const lang = session?.lang ?? 'zh-HK';
+  // const lang = 'zh-HK';
+  // if (session.lang != lang) {
+  //   session.lang = lang;
+  //   await session.save();
+  // };
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
