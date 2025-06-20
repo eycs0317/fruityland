@@ -60,7 +60,7 @@
     text-transform: uppercase;
     font-size:1.5rem;
   }
-  ..react-calendar__navigation button {
+  .react-calendar__navigation button {
 
   }
   .react-calendar__navigation__arrow {
@@ -81,7 +81,7 @@
 }
 
 .react-calendar__tile abbr {
-  background:none; width:30px; height:30px; display:inline-block; padding-top:5px;
+  background:none; width:30px; height:30px; display:inline-block; padding-top:3px;
 }
 
 .react-calendar__tile--active {
@@ -92,11 +92,11 @@
 .react-calendar__tile:enabled:hover, .react-calendar__tile:enabled:focus {background:none;}
 .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {background:none;}
 .react-calendar__tile--active abbr {
-  background-color:rgb(224, 13, 13);
+  background-color:var(--color-accent-200);
   border-radius:9999px;
   width:30px;
  height:30px;
   display:inline-block;
-  padding-top:5px;
+  padding-top:3px;
   color: black;
 }
