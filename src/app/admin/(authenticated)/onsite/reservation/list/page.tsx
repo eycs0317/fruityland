@@ -31,6 +31,7 @@ interface ReservationData {
 interface PageProps {
   searchParams?: Promise<{
     date?: string; // Expecting YYYY-MM-DD format (representing APP_DISPLAY_TIMEZONE)
+    timezone?: string;
   }>;
 }
 
@@ -41,7 +42,8 @@ export default async function MainPage({searchParams}: PageProps) {
   }
 
   const resolvedSearchParams = await searchParams;
-  const userSelectedDate = resolvedSearchParams?.date; // This is the YYYY-MM-DD from the Calendar
+  const userSelectedDate = resolvedSearchParams?.date;
+  const userSelectedTimezone = resolvedSearchParams?.timezone; // This is the YYYY-MM-DD from the Calendar
 console.log('<<<<<<<userSelectedDate>>>>>>>', userSelectedDate);
   // let dateToFetch: string; // This will hold the YYYY-MM-DD string for the API call
   let reservations: ReservationData[] = []; // Initialize to an empty array
@@ -54,7 +56,7 @@ console.log('<<<<<<<userSelectedDate>>>>>>>', userSelectedDate);
     // Construct API URL for fetching reservations for the determined date
     // This API route (e.g., /api/admin/reservations/list) needs to be created
     // and should filter reservations by the `date` parameter.
-    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/admin/reservations/list?date=${userSelectedDate}`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_URL}/api/admin/reservations/list?date=${userSelectedDate}&timezone=${userSelectedTimezone}`;
 
     const response = await fetch(apiUrl, {
       method: 'GET',

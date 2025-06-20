@@ -13,6 +13,7 @@ import {redirect} from 'next/navigation';
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 import AdminHeader from '@/ui/patterns/adminHeader';
+import Timezone from '@/ui/patterns/userTimezone';
 
 // Calendar
 import Calendar from '@/components/Calendar';
@@ -37,7 +38,7 @@ export default async function MainPage() {
     const data = Object.fromEntries(formData.entries());
     // console.log('---------data===>', data.selectedDate);
     if(data.btSearch) {
-      redirect('/admin/onsite/reservation/list?date=' + data.selectedDate);
+      redirect('/admin/onsite/reservation/list?date=' + data.selectedDate + '&timezone=' + data.timezone);
     }
 
   }
@@ -50,6 +51,7 @@ export default async function MainPage() {
       <section className="w-full px-8 pb-8">
         <form className="flex flex-col gap-8 w-full" action={handleSubmit}>
           <Calendar initialDate="2025-01-01" allowedMinDate={startEndUTC?.startDate?.toISOString()} allowedMaxDate={startEndUTC?.endDate?.toISOString()}/>
+          <Timezone />
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'搜尋'}} />
           </div>

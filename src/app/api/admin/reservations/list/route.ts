@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import {prisma} from '@/lib/prisma';
 // Import date-fns-tz for timezone-aware parsing and conversion
-// import {  fromZonedTime } from 'date-fns-tz';
+import {  fromZonedTime } from 'date-fns-tz';
 import {parseISO} from 'date-fns';
 // import { APP_DISPLAY_TIMEZONE } from '@/utils/timezoneUtils'; // Import your timezone constant
 
@@ -11,12 +11,14 @@ import {parseISO} from 'date-fns';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const dateParam = searchParams.get('date'); // 'YYYY-MM-DD' in APP_DISPLAY_TIMEZONE
+  const timezoneParam = searchParams.get('timezone'); // 'YYYY-MM-DD' in APP_DISPLAY_TIMEZONE
 
   if (!dateParam) {
     return NextResponse.json({ message: 'Date parameter is required.' }, { status: 400 });
   }
-
-  console.log('dateParam: ', dateParam);
+  if (!timezoneParam) {
+    return NextResponse.json({ message: 'Timezone parameter is required.' }, { status: 400 });
+  }
 
   // --- UTC Date Range Calculation based on APP_DISPLAY_TIMEZONE ---
   const dateInAppDisplayTimezone = parseISO(dateParam);
@@ -24,15 +26,13 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: 'Invalid date format provided.' }, { status: 400 });
   }
 
-  // const startOfDayInAppDisplayTimezone = new Date(
-  //   dateInAppDisplayTimezone.getFullYear(),
-  //   dateInAppDisplayTimezone.getMonth(),
-  //   dateInAppDisplayTimezone.getDate(),
-  //   0, 0, 0, 0
-  // );
-  // const startOfDayUtc = fromZonedTime(startOfDayInAppDisplayTimezone, APP_DISPLAY_TIMEZONE);
-  const startOfDayUtc = dateInAppDisplayTimezone;
-  console.log('dateInAppDisplayTimezone: ', startOfDayUtc);
+  const startOfDayInAppDisplayTimezone = new Date(
+    dateInAppDisplayTimezone.getFullYear(),
+    dateInAppDisplayTimezone.getMonth(),
+    dateInAppDisplayTimezone.getDate(),
+    0, 0, 0, 0
+  );
+  const startOfDayUtc = fromZonedTime(startOfDayInAppDisplayTimezone, timezoneParam);
 
   const endOfDayInAppDisplayTimezone = new Date(
     dateInAppDisplayTimezone.getFullYear(),
@@ -40,9 +40,7 @@ export async function GET(request: Request) {
     dateInAppDisplayTimezone.getDate(),
     23, 59, 59, 999
   );
-  // const endOfDayUtc = fromZonedTime(endOfDayInAppDisplayTimezone, APP_DISPLAY_TIMEZONE);
-  const endOfDayUtc = endOfDayInAppDisplayTimezone;
-  console.log('endOfDayUtc: ', endOfDayUtc);
+  const endOfDayUtc = fromZonedTime(endOfDayInAppDisplayTimezone, timezoneParam);
 
   console.log(`API: Received date for filtering: ${dateParam}`);
   console.log(`API: Calculated UTC range for query: GTE ${startOfDayUtc.toISOString()} LTE ${endOfDayUtc.toISOString()}`);
