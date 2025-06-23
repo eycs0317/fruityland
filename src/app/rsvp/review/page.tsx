@@ -111,9 +111,9 @@ export default async function MainPage({searchParams}: PageProps) {
                     {l10n('rsvp', 'content-legal-2b', lang)}
                   </strong>
                   {l10n('rsvp', 'content-legal-2c', lang)}
-                  <Link href="/legal/terms" target="_blank">{l10n('rsvp', 'content-terms', lang)}</Link>
+                  <Link href="/legal/rules" target="_blank">{l10n('rsvp', 'content-terms', lang)}</Link>
                   {l10n('rsvp', 'content-legal-3', lang)}
-                  <Link href="/legal/waiver" target="_blank">{l10n('rsvp', 'content-waiver', lang)}</Link>
+                  <Link href="/legal/precaution" target="_blank">{l10n('rsvp', 'content-waiver', lang)}</Link>
                   {l10n('rsvp', 'content-legal-4', lang)}
                 </>
               ),

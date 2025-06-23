@@ -212,14 +212,14 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '你已成功預約上述日子及時間，請於該時段10分鐘前到場登記。',
       },
       'content-terms': {
-        'en-US': 'Terms and Conditions',
+        'en-US': 'House Rules',
         'zh-CN': '规则及指引',
         'zh-HK': '樂園守則',
       },
       'content-waiver': {
-        'en-US': 'Waiver',
+        'en-US': 'Precaution',
         'zh-CN': '免责声明',
-        'zh-HK': '安全指引',
+        'zh-HK': '注意事項',
       },
       'error-001': {
         'en-US': 'Error Loading Reservation',
