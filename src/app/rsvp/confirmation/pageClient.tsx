@@ -194,11 +194,12 @@ export default function ClientPage({ lang }: { lang: string }) {
 
         <section className="w-full p-4 pt-0 bg-white shadow-md rounded-lg">
           {/*<Heading level={1} content={l10n('rsvp', 'content-confirmation-002', lang)} className="text-xl pb-8" />*/}
+          <p className="text-neutral-900 text-center pb-4">{confirmationData?.couponCode ? confirmationData.couponCode.toUpperCase() : 'N/A'}</p>
           <dl className="space-y-2 text-gray-700">
-            <div className="flex justify-between pb-2 text-primary-700 px-5">
+            {/*<div className="flex justify-between pb-2 text-primary-700 px-5">
               <dt className="font-bold">{l10n('rsvp', 'content-confirmation-003', lang)}</dt>
               <dd className="text-right">{confirmationData?.couponCode ? confirmationData.couponCode.toUpperCase() : 'N/A'}</dd>
-            </div>
+            </div>*/}
              <div className="rsvpDetailsConfirmed flex border-b pb-2 items-center">
               <dt className="font-bold pl-4"><Image src="/assets/i/icons/participants-dark.svg" alt={l10n('rsvp', 'content-confirmation-006', lang)} width="30" height="30" /></dt>
               <dd className="font-bold pl-4">{l10n('rsvp', 'content-confirmation-007', lang)}</dd>
