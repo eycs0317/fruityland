@@ -26,19 +26,19 @@ export default async function Message({ messageCode }: { messageCode: string }) 
         );
       case 'E':
         return (
-          <section className="messageError bg-primary-300 px-5 py-7 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
+          <section className="messageError bg-primary-300 px-5 py-7 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl text-lg text-center">
             <p>{message}</p>
           </section>
         );
       case 'I':
         return (
-          <section className="messageInfo bg-primary-300 px-5 py-7 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
+          <section className="messageInfo bg-primary-300 px-5 py-7 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl text-lg text-center">
             <p>{message}</p>
           </section>
         );
       case 'S':
         return (
-          <section className="messageSuccess bg-primary-300 px-5 py-7 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl">
+          <section className="messageSuccess bg-primary-300 px-5 py-7 border border-neutral-000 mb-4 text-neutral-000 border-4 rounded-2xl text-lg text-center">
             <p>{message}</p>
           </section>
         );

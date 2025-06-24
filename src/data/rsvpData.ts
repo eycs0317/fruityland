@@ -24,7 +24,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'title-checked-in': {
         'en-US': 'Reservation is checked in.',
         'zh-CN': 'Placeholder',
-        'zh-HK': '已辦理預約。',
+        'zh-HK': '已辦理登記。',
       },
       'button-001': {
         'en-US': 'Back',
@@ -169,7 +169,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-checked-in-001': {
         'en-US': 'Checked in completed.  This coupon is marked as used.',
         'zh-CN': 'Placeholder',
-        'zh-HK': '已完成报到手續。此親子通行證已使用。',
+        'zh-HK': '已完成登記手續。此親子通行證已使用。',
       },
       'content-loading': {
         'en-US': 'Loading Your Reservation Details...',
@@ -220,6 +220,16 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'en-US': 'Precaution',
         'zh-CN': 'Placeholder',
         'zh-HK': '注意事項',
+      },
+      'content-cleaning-001': {
+        'en-US': 'Precaution',
+        'zh-CN': 'Placeholder',
+        'zh-HK': '* 以下時段為行常清潔時段，不作開放.',
+      },
+      'content-cleaning-002': {
+        'en-US': 'Precaution',
+        'zh-CN': 'Placeholder',
+        'zh-HK': '(15:30-16:00 & 18:00-18:30)',
       },
       'error-001': {
         'en-US': 'Error Loading Reservation',

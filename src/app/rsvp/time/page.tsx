@@ -85,7 +85,7 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
           <dt className="font-bold flex-1">{l10n('rsvp', 'content-001', lang)}</dt>
           <dd className="flex-5">{session.rsvpDate ? format(parseISO(session.rsvpDate), 'MMMM d, yyyy') : ''}</dd>
         </dl>*/}
-        <form className="flex flex-col gap-8 w-full" action="/api/rsvp/time" method="post">
+        <form className="flex flex-col gap-4 w-full" action="/api/rsvp/time" method="post">
           <div className="flex flex-row gap-4 bg-neutral-000 border border-neutral-000 border-4 rounded-2xl p-4">
             <div className="flex flex-col flex-1 gap-4">
               <FormField type='radio' fieldData={{
@@ -106,6 +106,7 @@ console.log('RADIO DATA:', JSON.stringify(radioData, null, 2));
               }} />
             </div>
           </div>
+          <p className="text-neutral-000"><small>{l10n('rsvp', 'content-cleaning-001', lang)}</small><br /><small className="pl-2">{l10n('rsvp', 'content-cleaning-002', lang)}</small></p>
           <div className="flex flex-col gap-4 px-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btNext', className: 'primary', value:l10n('rsvp', 'button-002', lang)}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btBack', className: 'tertiary', value:l10n('rsvp', 'button-001', lang)}} />
