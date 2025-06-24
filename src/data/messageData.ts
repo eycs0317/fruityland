@@ -19,7 +19,7 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
       'e0004': {
         'en-US': 'Invalid coupon code.  Please check and try again.',
         'zh-CN': '优惠券代码无效。请检查并重试。',
-        'zh-HK': '優惠券代碼無效。請檢查並重試。',
+        'zh-HK': '親子通行證無效。請檢查並重試。',
       },
       'e0005': {
         'en-US': 'Error processing.  Please try again later.',
@@ -54,7 +54,7 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
       'e0011': {
         'en-US': 'Coupon expired.',
         'zh-CN': '优惠券已过期。',
-        'zh-HK': '優惠券已過期。',
+        'zh-HK': '親子通行證已過期。',
       },
       'm0001': {
         'en-US': 'You must agree to the Terms and Conditions to proceed.',
@@ -75,6 +75,16 @@ export function getMessage(): { message: Record<string, Record<string, string>> 
         'en-US': 'Language changed.',
         'zh-CN': '语言已更改。',
         'zh-HK': '語言已更改。',
+      },
+      'i0003': {
+        'en-US': 'Placeholder',
+        'zh-CN': 'Placeholder',
+        'zh-HK': '煩請細閱以下守則及指引後, 關閉此頁並返回登記頁面, 在方格中填上剔號表示同意。',
+      },
+      'i0004': {
+        'en-US': 'Placeholder',
+        'zh-CN': 'Placeholder',
+        'zh-HK': '煩請細閱以下守則及指引後, 關閉此頁並返回登記頁面, 在方格中填上剔號表示同意。',
       },
       's0001': {
         'en-US': 'Login successful.',

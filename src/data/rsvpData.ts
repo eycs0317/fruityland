@@ -99,7 +99,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-review-003': {
         'en-US': 'Coupon Code',
         'zh-CN': '门票编号',
-        'zh-HK': '門票編號',
+        'zh-HK': '親子通行證',
       },
       'content-review-004': {
         'en-US': 'Date',
@@ -122,9 +122,9 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '1成人 + 1小童',
       },
       'content-confirmation-001': {
-        'en-US': 'Please present this confirmation notice to enter the event.',
-        'zh-CN': '入场时，请出示此确认通知进入活动。',
-        'zh-HK': '入場時，請出示此QR Code確認通知參加活動。',
+        'en-US': 'Placeholder',
+        'zh-CN': 'Placeholder',
+        'zh-HK': '入場前，請出示MTR Mobile「MTR分」內的「我的收藏」頁，選取已換領的親子通行證並展示二維碼，以供職員核實，方可入場。（MTR Mobile主頁右上角「優惠」 > 「青衣城【夏日Go Fresh 彈跳樂園】」活動頁面 > 已領取的二維碼）',
       },
       'content-confirmation-002': {
         'en-US': 'Booking Details',
@@ -134,7 +134,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-confirmation-003': {
         'en-US': 'Coupon Code',
         'zh-CN': '门票编号',
-        'zh-HK': '門票編號',
+        'zh-HK': '親子通行證',
       },
       'content-confirmation-004': {
         'en-US': 'Date',
@@ -159,7 +159,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-confirmation-008': {
         'en-US': 'If you have any enquiries, please call: xxxx-xxxx',
         'zh-CN': '如有任何查询，可致电查询:xxxx-xxxx',
-        'zh-HK': '如有任何查詢，可致電查詢：xxxx-xxxx',
+        'zh-HK': '如有任何查詢，可致電：3741 0909',
       },
       'content-confirmation-009': {
         'en-US': 'Thank you',
@@ -169,7 +169,7 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
       'content-checked-in-001': {
         'en-US': 'Checked in completed.  This coupon is marked as used.',
         'zh-CN': '已完成报到手续。此优惠券已使用。',
-        'zh-HK': '已完成报到手續。此優惠券已使用。',
+        'zh-HK': '已完成报到手續。此親子通行證已使用。',
       },
       'content-loading': {
         'en-US': 'Loading Your Reservation Details...',

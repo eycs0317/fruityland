@@ -8,6 +8,7 @@ import React, {Suspense} from 'react';
 
 // nextjs
 import {redirect} from 'next/navigation';
+import Image from 'next/image';
 
 // ui
 import AdminHeader from '@/ui/patterns/adminHeader';
@@ -95,6 +96,9 @@ console.log('<<<<<<<userSelectedDate>>>>>>>', userSelectedDate);
         {/* Pass the fetched data and the selected date to the client component */}
         <PageClient reservations={reservations} selectedDate={userSelectedDate??''} />
       </Suspense>
+      <footer className="grid justify-items-center relative w-full pt-4">
+        <Image src="/assets/i/brand/logo-cy-bw.png" alt="青衣城" width="100" height="100" />
+      </footer>
     </main>
   );
 }

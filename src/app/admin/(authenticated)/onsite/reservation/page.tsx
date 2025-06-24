@@ -8,6 +8,7 @@ import React from 'react';
 
 // nextjs
 import {redirect} from 'next/navigation';
+import Image from 'next/image';
 
 // ui
 import FormField from '@/ui/foundations/formField';
@@ -57,6 +58,9 @@ export default async function MainPage() {
           </div>
         </form>
       </section>
+      <footer className="grid justify-items-center relative w-full pt-4">
+        <Image src="/assets/i/brand/logo-cy-bw.png" alt="青衣城" width="100" height="100" />
+      </footer>
     </main>
   );
 }

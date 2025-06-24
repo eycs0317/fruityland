@@ -9,7 +9,12 @@ export function getHome(): { home: Record<string, Record<string, string>> } {
       'input-001': {
         'en-US': 'Coupon ID',
         'zh-CN': '门票编号',
-        'zh-HK': 'COUPON ID',
+        'zh-HK': '親子通行證',
+      },
+      'helper-001': {
+        'en-US': 'Placeholder',
+        'zh-CN': 'Placeholder',
+        'zh-HK': '** 親子通行證號碼是MTR Mobile App Reward 的親子通行證二維碼下的8位數字',
       },
       'button-001': {
         'en-US': 'Enter',

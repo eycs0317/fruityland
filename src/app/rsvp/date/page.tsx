@@ -106,7 +106,7 @@ export default async function MainPage({searchParams}: PageProps) {
         </form>
       </section>
       <footer className="grid justify-items-center relative w-full pt-4">
-        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+        <Image src="/assets/i/brand/logo-cy-bw.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
       </footer>
     </main>
   );

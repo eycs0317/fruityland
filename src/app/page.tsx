@@ -44,7 +44,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Heading level={1} content={l10n('home', 'title', lang)} className="text-4xl pb-8" />
       </section>*/}
       <section className="grid justify-items-center relative w-full px-6">
-        <Image src="/assets/i/brand/logo-cy.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+        <Image src="/assets/i/brand/logo-cy-bw.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
       </section>
       <section className="grid grid-flow-col justify-items-center relative w-full px-6">
         <Image src="/assets/i/icons/avo.png" alt={l10n('home', 'title', lang)} width="75" height="75" />
@@ -56,8 +56,9 @@ export default async function MainPage({searchParams}: PageProps) {
       <section className="w-full p-8">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/findCoupon" method="post">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: l10n('home', 'input-001', lang), wrapperClassName: 'w-full', isRequired:true, placeholder: '1234-1234'}} />
+            <p className="text-neutral-000"><small>{l10n('home', 'helper-001', lang)}</small></p>
           </div>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:l10n('home', 'button-001', lang)}} />

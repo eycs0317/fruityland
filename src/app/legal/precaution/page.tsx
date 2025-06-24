@@ -6,14 +6,22 @@ export const metadata = {
 // react
 import React from 'react';
 
+// next
+import Image from 'next/image';
+
 // ui
 import Heading from '@/ui/foundations/heading';
+import Message from '@/ui/patterns/message';
+
+// utils
+import {l10n} from '@/utils/l10n';
 
 // lib
 import {getSession} from '@/lib/session';
 
 export default async function MainPage() {
   const session = await getSession();
+  const lang = session?.lang ?? 'zh-HK';
 
   switch (session.lang) {
     case 'en-US':
@@ -48,7 +56,8 @@ export default async function MainPage() {
       return (
         <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
           <div className="m-4 bg-neutral-000 border border-neutral-000 mb-4 text-neutral-999 border-4 rounded-2xl">
-            <section className="w-full p-8 text-center">
+            <Message messageCode="I0004" />
+            <section className="w-full p-8 pt-0 text-center">
               <Heading level={1} content="注意事項" className="text-4xl pt-8 pb-4" />
             </section>
             <section className="w-full p-8 pt-0">
@@ -77,6 +86,9 @@ export default async function MainPage() {
               </ol>
             </section>
           </div>
+          <footer className="grid justify-items-center relative w-full pt-4">
+            <Image src="/assets/i/brand/logo-cy-bw.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+          </footer>
         </main>
       );
   }

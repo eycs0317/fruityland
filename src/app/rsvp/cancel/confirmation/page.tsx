@@ -8,12 +8,22 @@ import React from 'react';
 
 // nextjs
 import {redirect} from 'next/navigation';
+import Image from 'next/image';
 
 // ui
 import FormField from '@/ui/foundations/formField';
 import Heading from '@/ui/foundations/heading';
 
+// utils
+import {l10n} from '@/utils/l10n';
+
+// session
+import {getSession} from '@/lib/session';
+
 export default async function MainPage() {
+  const session = await getSession();
+  const lang = session?.lang ?? 'zh-HK';
+
   async function handleSubmit(formData: FormData) {
     'use server'
     const data = Object.fromEntries(formData.entries());
@@ -34,6 +44,9 @@ export default async function MainPage() {
           </div>
         </form>
       </section>
+      <footer className="grid justify-items-center relative w-full pt-4">
+        <Image src="/assets/i/brand/logo-cy-bw.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+      </footer>
     </main>
   );
 }
