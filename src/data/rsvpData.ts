@@ -222,12 +222,12 @@ export function getRSVP(): { rsvp: Record<string, Record<string, string>> } {
         'zh-HK': '注意事項',
       },
       'content-cleaning-001': {
-        'en-US': 'Precaution',
+        'en-US': '* The following time are for routine cleaning and will be closed.',
         'zh-CN': 'Placeholder',
         'zh-HK': '* 以下時段為行常清潔時段，不作開放.',
       },
       'content-cleaning-002': {
-        'en-US': 'Precaution',
+        'en-US': '(15:30-16:00 & 18:00-18:30)',
         'zh-CN': 'Placeholder',
         'zh-HK': '(15:30-16:00 & 18:00-18:30)',
       },
