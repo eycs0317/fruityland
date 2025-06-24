@@ -3,22 +3,22 @@ export function getHome(): { home: Record<string, Record<string, string>> } {
     home: {
       'title': {
         'en-US': 'Summer Go Fresh!',
-        'zh-CN': '夏日 Go Fresh 弹跳乐园',
+        'zh-CN': 'Placeholder',
         'zh-HK': '夏日 Go Fresh 彈跳樂園',
       },
       'input-001': {
-        'en-US': 'Coupon ID',
-        'zh-CN': '门票编号',
+        'en-US': 'Family Ticket',
+        'zh-CN': 'Placeholder',
         'zh-HK': '親子通行證',
       },
       'helper-001': {
-        'en-US': 'Placeholder',
+        'en-US': '** Family Ticket ID is the 8-digits code under the Family Pass QR Code in the MTR Mobile App Reward.',
         'zh-CN': 'Placeholder',
-        'zh-HK': '** 親子通行證號碼是MTR Mobile App Reward 的親子通行證二維碼下的8位數字',
+        'zh-HK': '** 親子通行證號碼是MTR Mobile App Reward的親子通行證二維碼下的8位數字',
       },
       'button-001': {
-        'en-US': 'Enter',
-        'zh-CN': '登录',
+        'en-US': 'Log In',
+        'zh-CN': 'Placeholder',
         'zh-HK': '登入',
       },
     },

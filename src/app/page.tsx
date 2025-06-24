@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 
 // nextjs
 import Image from 'next/image';
@@ -15,7 +15,7 @@ import {getSession} from '@/lib/session';
 import {l10n} from '@/utils/l10n';
 
 // client
-// import PageClient from './pageClient';
+import PageClient from './pageClient';
 
 // v2 function to test
 // import {getHKTomorrowUTC} from '@/utils/v2Function/getHKTomorrowUTC';
@@ -65,9 +65,9 @@ export default async function MainPage({searchParams}: PageProps) {
           </div>
         </form>
       </section>
-      {/*<Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <PageClient />
-      </Suspense>*/}
+      </Suspense>
     </main>
   );
 }

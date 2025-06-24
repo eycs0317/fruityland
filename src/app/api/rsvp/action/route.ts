@@ -52,8 +52,8 @@ export async function POST(req: NextRequest) {
             delete session.schedule;
             delete session.legal;
 
-            const lang = 'zh-HK';
-            if (session.lang != lang) {
+            if (!session.lang) {
+              const lang = 'zh-HK';
               session.lang = lang;
               await session.save();
             };

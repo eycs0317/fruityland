@@ -28,7 +28,8 @@ export default async function MainPage() {
       return (
         <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
           <div className="m-4 bg-neutral-000 border border-neutral-000 mb-4 text-neutral-999 border-4 rounded-2xl">
-            <section className="w-full p-8 text-center">
+            <Message messageCode="I0004" />
+            <section className="w-full p-8 pt-0 text-center">
               <Heading level={1} content="House Rules" className="text-4xl pt-8 pb-4" />
             </section>
             <section className="w-full p-8 pt-0">
@@ -143,6 +144,9 @@ export default async function MainPage() {
               </ol>
             </section>
           </div>
+          <footer className="grid justify-items-center relative w-full pt-4">
+            <Image src="/assets/i/brand/logo-cy-bw.png" alt={l10n('layout', 'mall', lang)} width="100" height="100" />
+          </footer>
         </main>
       );
     case 'zh-CN':
@@ -268,122 +272,6 @@ export default async function MainPage() {
                 <li>請勿在滑梯上搖擺，跑動或作出跳躍等危險動作。</li>
                 <li>請所有參加者遵循現場工作人員的指示，如多次勸喻無效，現場工作人員保留權利拒絕或驅逐參加者進入吹氣樂園。</li>
                 <li>您承認並接受主辦單位有權隨時對活動的規則及相關條款做出任何變更或調整，而不需要事先通知。如因此次活動而產生任何爭議，主辦單位擁有對此活動有關事宜的最终決定權利。如條款及細則的英文版本與中文版本有任何不一致，均以中文版本為準。</li>
-              </ol>
-            </section>
-          </div>
-          <div className="m-4 bg-neutral-000 border border-neutral-000 mb-4 text-neutral-999 border-4 rounded-2xl">
-            <section className="w-full p-8 text-center">
-              <Heading level={1} content="House Rules" className="text-4xl pt-8 pb-4" />
-            </section>
-            <section className="w-full p-8 pt-0">
-              <Heading level={2} content="Admission Instructions" className="text-2xl pb-8" />
-              <ol className="list-decimal ml-4 text-sm">
-                <li>Participation will be available through online reservations and a walk-in pass. Participants must redeem various entry tickets using MTR Mall points to enter the venue. Inflatable Paradises will be allocated on a first-come, first-served basis, with a limited quota per session.</li>
-                <li>For safety reasons, participants must be aged between 3 and 12 years, and children must be taller than 80 cm. Measuring tools will be provided on-site, and the staff will make the final decision.</li>
-                <li>A child must be accompanied by an adult (18 years old or above). The operator only provides venue facilities services and does not take care of children.</li>
-                <li>For hygiene and safety reasons, all participants must wear socks and comfortable clothing when entering and playing in the inflatable playground. We strongly recommend that children wear non-slip socks to prevent tripping and ensure a safer play experience. Participants may bring their own non-slip socks. A limited quantity of non-slip socks is available on-site and can be redeemed for 100 MTR points. (While supplies last.) Parents/Guardians should ensure that their children avoid wearing clothing that may easily come off or become too revealing while playing on the Inflatable Paradise, as well as clothing that may pose a choking hazard.</li>
-                <li>Parents/Guardians must be responsible for the safety of their children or the children they bring with them to the Inflatable Paradise and bear full responsibility for taking care of accompanying children.</li>
-                <li>Parents/Guardians need to guide and supervise their accompanying children and do not run, push, fight, bully, litter or defecate in the field and shall ensure that their children follow the instructions of staff, otherwise, they may be asked to refrain from playing on the Inflatable Paradise.</li>
-                <li>The venue has a pram parking area. Strollers, pushchairs, shopping carts, storage bins with wheels, luggage, or any bulky items are not allowed inside the Inflatable Paradise.</li>
-                <li>Before entering the venue, all shoes, badges, and jewelry (such as large earrings and necklaces) any sharp objects must be removed from all participating children to prevent damaging the venue and any related equipment as well as to avoid the risk of injuring the child to whom such items belong and of other participating children.</li>
-              </ol>
-              <Heading level={2} content="Health and Safety" className="text-2xl pt-8 pb-4" />
-              <ol className="list-decimal ml-4 text-sm">
-                <li>The venue must be kept clean, eating and drinking is strictly prohibited, and no food (including chewing gum) or drinks are allowed into the venue.</li>
-                <li>Littering, spitting, or any other unhygienic behavior is strictly prohibited.</li>
-                <li>For hygiene and safety reasons, all participants must wear socks and comfortable clothing when entering and playing in the inflatable playground. We strongly recommend that children wear non-slip socks to prevent tripping and ensure a safer play experience. Participants may bring their own non-slip socks. A limited quantity of non-slip socks is available on-site and can be redeemed for 100 MTR points. (While supplies last.) The use of obscene language or conduct deemed indecent, offensive, disturbing, or inappropriate is prohibited on the premises.</li>
-                <li>The organizer reserves the right to refuse entry or expel any person who may transmit diseases, exhibit aggression, or engage in violent behavior towards others.</li>
-                <li>Please do not obstruct or interfere with the staff while they are performing their duties or enforcing venue rules.</li>
-                <li>If participants are feeling unwell, please notify venue staff immediately.</li>
-                <li>The organizer does not assume any responsibility for injuries caused by improper use of facilities by participants.</li>
-                <li>A first aid kit is available on-site for emergencies. If necessary, please contact the staff.</li>
-                <li>To ensure the safety of all participants, please follow the instructions of the on-site staff. The venue is equipped with a closed-circuit television surveillance system for 24-hour monitoring.</li>
-                <li>To maintain the cleanliness of the venue, staff will clean and disinfect the premises periodically throughout the day.</li>
-              </ol>
-              <Heading level={2} content="Personal belongings" className="text-2xl pt-8 pb-4" />
-              <ol className="list-decimal ml-4 text-sm">
-                <li>When entering the venue to play, participants should take care of their personal belongings and avoid bringing any valuables into the venue. The organizer is not responsible for any loss or damage.</li>
-                <li>The organizer reserves the right to dispose of any unclaimed property without prior notice.</li>
-              </ol>
-              <Heading level={2} content="Facilities" className="text-2xl pt-8 pb-4" />
-              <ol className="list-decimal ml-4 text-sm">
-                <li>Quotas apply to all Inflatable Paradises in the venue. Inflatable Paradises will be allocated on a first-come, first-served basis, with a limited quota per session.</li>
-                <li>Each play session at the inflatable playground lasts 20 minutes. Participants with online reservations must arrive 10 minutes before their scheduled session to complete check-in procedures.<br/>
-                    Participants with on-site tickets must arrive 5 minutes before the time stated on their ticket to allow sufficient time for registration. Late arrivals will not be granted extra playtime or refunded.</li>
-                <li>The organizer will regularly assign personnel to inspect and maintain the facilities. If participants notice any damage to any facilities in the venue, please notify the venue staff immediately.</li>
-                <li>If a participant damages the facilities in the Inflatable Paradise during their admission to the amusement facilities, the organizer reserves the right to seek reasonable compensation from the participant. The amount of compensation will be determined by the organizer.</li>
-              </ol>
-              <Heading level={2} content="Arrangements under Bad Weather Conditions" className="text-2xl pt-8 pb-4" />
-              <p className="text-sm">The activities will be cancelled in the situation where Black Rainstorm Signal or T8 and above typhoon signal. Related MTR Points will return to the participants’ account within 10 working days. Please refer to the table below for information on arrangements under bad weather conditions.</p>
-              <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-                <thead className="bg-gray-100 text-gray-700">
-                  <tr>
-                    <th className="py-3 px-4 text-left">Weather Conditions</th>
-                    <th className="py-3 px-4 text-left">Arrangements</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr>
-                    <td className="py-3 px-4 text-left align-top">
-                      <ul className="list-disc ml-4">
-                        <li>Amber or Red Rainstorm Signals, or</li>
-                        <li>Tropical Cyclone Warning Signal 1 or 3</li>
-                      </ul>
-                    </td>
-                    <td className="py-3 px-4 text-left align-top">Activities will be held as scheduled</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left italic align-top" colSpan={2}>Black Rainstorm Signal, or Tropical Cyclone Warning Signal 8 or above</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left align-top">
-                      <ul className="list-disc ml-4">
-                        <li>Issued before 8AM</li>
-                      </ul>
-                    </td>
-                    <td className="py-3 px-4 text-left align-top">All activities of the day will be cancelled</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left align-top">
-                      <ul className="list-disc ml-4">
-                        <li>Issued between 8AM and 3PM and remained valid past 3PM</li>
-                      </ul>
-                    </td>
-                    <td className="py-3 px-4 text-left align-top">All activities of the day will be cancelled</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left align-top">
-                      <ul className="list-disc ml-4">
-                        <li>Between 8AP and 3PM, the signal is changed to Amber or Red Rainstorm Signals, or Tropical Cyclone Warning Signal 1 or 3</li>
-                      </ul>
-                    </td>
-                    <td className="py-3 px-4 text-left align-top">Activities will be held as scheduled after 5PM</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left italic align-top" colSpan={2}>Issued during the activities (i.e. at 12NN or after)</td>
-                  </tr>
-                  <tr>
-                    <td className="py-3 px-4 text-left align-top">
-                      <ul className="list-disc ml-4">
-                        <li>Black Rainstorm Signal</li>
-                        <li>Tropical Cyclone Warning Signal 8 or above, or</li>
-                        <li>If an upcoming Tropical Cyclone Warning Signal 8 or above is announced during the activities</li>
-                      </ul>
-                    </td>
-                    <td className="py-3 px-4 text-left font-bold align-top">Activities will be held as scheduled<br/>
-                      All activities of the day will be cancelled, participants must follow the instructions of on-site staff to exit the venue safety.</td>
-                  </tr>
-                </tbody>
-              </table>
-              <Heading level={2} content="Precautions" className="text-2xl pt-8 pb-4" />
-              <ol className="list-decimal ml-4 text-sm">
-                <li>Young children should not play alone, especially when climbing and landing, as they may require adult supervision.</li>
-                <li>Parents/Guardians with children who are suffering from any injuries, skin diseases, illness, fever, heart condition, neck or spinal problems MUST refrain from letting their children play on the event and shall be solely responsible for the safety and well-being of their children if they fail to heed to this warning. Organizer reserves the right to refuse the entry of any children to play in/on the event on the grounds of safety for the child concerned and/or for the safety of other participating children if the organizer becomes aware of any of the aforesaid conditions affecting any of the participating children.</li>
-                <li>Before using the slide, make sure to remove items from your pockets that may easily be dropped.</li>
-                <li>Do not slide down the edge of the slide or attempt to climb up the slide in the wrong direction.</li>
-                <li>Do not swing, run, or make dangerous movements such as jumping on the slide.</li>
-                <li>All participants are requested to follow the instructions of the on-site staff. If there are repeated failures to comply, the staff reserves the right to refuse entry or expel participants from the inflatable playground.</li>
-                <li>You acknowledge and accept that the organizer is at liberty to make any changes or adjustments to the rules and format of this event from time to time without giving prior notice. In the event of any disputes arising out of this event. The organizer shall have the full and final say on all matters concerning this Event. In case of any discrepancy between the English and Chinese versions of these terms and conditions, the Chinese version shall prevail.</li>
               </ol>
             </section>
           </div>
