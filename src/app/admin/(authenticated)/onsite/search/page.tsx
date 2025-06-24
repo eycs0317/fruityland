@@ -43,7 +43,7 @@ export default async function MainPage({searchParams}: PageProps) {
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/findCoupon" method="post">
           <div className="flex flex-col gap-4">
-            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: '親子通行證', wrapperClassName: 'w-full', isRequired:true, placeholder: '1234-1234'}} />
+            <FormField type="input" fieldData={{type: 'text', id: 'couponCode', label: '親子通行證', wrapperClassName: 'w-full', isRequired:true, placeholder: '12345678'}} />
           </div>
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btSearch', className: 'primary', value:'搜尋'}} />
