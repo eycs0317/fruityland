@@ -28,7 +28,7 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <nav className="flex flex-row w-full px-8">
         <div className="flex-1">
-          <Link href="/">FruityLand Website</Link>
+          <Link href="/" className="headerLink">夏日 Go Fresh 彈跳樂園</Link>
         </div>
       </nav>
       <section className="w-full p-8 pb-0 text-center">
