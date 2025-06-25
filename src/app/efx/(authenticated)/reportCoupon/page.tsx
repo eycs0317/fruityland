@@ -1,6 +1,6 @@
 // metadata
 export const metadata = {
-  title: 'EFX Portal [Reporting]',
+  title: 'EFX Portal [Coupon Code Report]',
 };
 
 // react
@@ -39,9 +39,9 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
       <section className="w-full p-8 pb-0">
-        <Heading level={1} content="EFX Reporting" className="text-4xl pb-0 text-neutral-000" />
+        <Heading level={1} content="Coupon Code Report" className="text-4xl pb-0 text-neutral-000" />
       </section>
-      <section className="grid justify-self-center justify-items-center w-full p-8">
+      <section className="grid justify-self-center justify-items-center w-full p-1">
         <Message messageCode={message ?? ''} />
         <Suspense fallback={<div>Loading...</div>}>
           <PageClient />

@@ -45,7 +45,8 @@ export default async function MainPage({searchParams}: PageProps) {
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCalendar', className: 'secondary', value:'Generate Calendar'}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCouponCode', className: 'secondary', value:'Generate Coupon Code'}} />
-            <FormField type='button' fieldData={{type: 'submit', id: 'btRunReport', className: 'secondary', value:'Run Report'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btRunReportCoupon', className: 'secondary', value:'Coupon Code Report'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btRunReportSchedule', className: 'secondary', value:'Schedule Report'}} />
           </div>
         </form>
       </section>

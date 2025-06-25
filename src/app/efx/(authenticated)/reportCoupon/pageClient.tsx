@@ -14,6 +14,7 @@ import Heading from '@/ui/foundations/heading';
 type ReportDetails = {
   couponCode: string;
   group: string;
+  isRSVP: boolean;
   status: string;
 };
 
@@ -31,7 +32,7 @@ export default function ClientPage() {
   useEffect(() => {
     const fetchReportData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/efx/reporting`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/efx/reportCoupon`);
         const result: APIResponse = await response.json();
 
         if (result.success && result.data) {
@@ -79,22 +80,26 @@ export default function ClientPage() {
     return (
       <div className="w-full m-0 bg-neutral-000 border border-primary-300 mb-4 text-neutral-000 border-4 rounded-2xl">
         <section className="w-full p-8 pb-4 text-center">
-          <Heading level={1} content="Report" className="text-4xl text-primary-700 text-neutral-000" />
+          <Heading level={1} content="Coupon Code List" className="text-4xl text-primary-700 text-neutral-000" />
         </section>
 
         <section className="w-full p-4 pt-0 bg-white shadow-md rounded-lg">
           <table>
             <thead className="text-neutral-900">
               <tr>
-                <th className="pr-16">Coupon Code</th>
-                <th className="pr-16">Group</th>
+                <th className="pr-6 text-left">Coupon Code</th>
+                <th className="pr-6 text-left">Group</th>
+                <th className="pr-6 text-left">RSVP</th>
+                <th className="pr-6 text-left">Status</th>
               </tr>
             </thead>
             <tbody className="text-neutral-900">
               {reportData.map((reportData, index) => (
                 <tr key={index}>
-                  <td className="pr-16">{reportData.couponCode}</td>
-                  <td className="pr-16">{reportData.group}</td>
+                  <td className="pr-6">{reportData.couponCode}</td>
+                  <td className="pr-6">{reportData.group}</td>
+                  <td className="pr-6">{(reportData.isRSVP) ? 'Yes' : 'No'}</td>
+                  <td className="pr-6">{(reportData.status == '0') ? 'New' : (reportData.status == '1') ? 'RSVP' : 'Checked In'}</td>
                 </tr>
               ))}
             </tbody>

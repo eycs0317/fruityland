@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
       const data = await req.formData();
       const btGenerateCalendar = data.get('btGenerateCalendar') as string;
       const btGenerateCouponCode = data.get('btGenerateCouponCode') as string;
-      const btRunReport = data.get('btRunReport') as string;
+      const btRunReportCoupon = data.get('btRunReportCoupon') as string;
+      const btRunReportSchedule = data.get('btRunReportSchedule') as string;
       const dataObj = Object.fromEntries(data.entries());
 
       if (btGenerateCalendar) {
@@ -47,8 +48,11 @@ export async function POST(req: NextRequest) {
           const response = NextResponse.redirect(new URL(siteURL + '/efx/dashboard?message=E0005'));
           return response;
         }
-      } else if (btRunReport) {
-        const response = NextResponse.redirect(new URL(siteURL + '/efx/reporting'));
+      } else if (btRunReportCoupon) {
+        const response = NextResponse.redirect(new URL(siteURL + '/efx/reportCoupon'));
+        return response;
+      } else if (btRunReportSchedule) {
+        const response = NextResponse.redirect(new URL(siteURL + '/efx/reportSchedule'));
         return response;
       }
     } catch {

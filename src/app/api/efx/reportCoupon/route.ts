@@ -11,6 +11,8 @@ export async function GET(req: NextRequest) {
         select: {
           couponCode: true,
           group: true,
+          isRSVP: true,
+          status: true,
         },
         orderBy: {
           group: 'asc',
