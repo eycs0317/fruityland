@@ -14,6 +14,7 @@ export async function logoutDistroyAuth() {
   }
 
   switch (session.authType) {
+    case 'efxUser':
     case 'efxAdmin':
       await session.destroy();
       session.lang = lang;

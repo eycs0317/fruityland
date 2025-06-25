@@ -6,6 +6,7 @@ export async function protectPage(authType: string) {
 
   if (!session.auth || session.authType != authType) {
     switch(authType) {
+      case 'efxUser':
       case 'efxAdmin':
         return '/efx';
       case 'customerAdmin':

@@ -16,6 +16,13 @@ export async function loginSetAuth(userId: string, password: string, btLogin: st
     
     await session.save();
     return '/admin/onsite';
+  } else if (userId === 'efxuser' && password === process.env.EFX_USER_PASSWORD && btLogin) {
+    const session = await getSession();
+    session.auth = true;
+    session.authType = 'efxUser';
+    
+    await session.save();
+    return '/efx/dashboard';
   } else if (userId === 'efxadmin' && password === process.env.EFX_ADMIN_PASSWORD && btLogin) {
     const session = await getSession();
     session.auth = true;

@@ -95,6 +95,7 @@ export default function Calendar({ initialDate, allowedMinDate, allowedMaxDate }
           maxDate={localMaxDate}
           defaultActiveStartDate={localMinDate || (value instanceof Date ? value : nowUTC)}
           calendarType="gregory"
+          // locale="en-US"
           formatShortWeekday={(locale, date) => {
             const weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']; // Custom array of single letters
             return weekdays[date.getDay()]; // date.getDay() returns 0 for Sunday, 1 for Monday, etc.

@@ -30,9 +30,12 @@ export default async function MainPage({searchParams}: PageProps) {
   const resolvedSearchParams = await searchParams;
   const message = resolvedSearchParams?.message;
 
-  const auth = await protectPage('efxAdmin');
-  if (auth != null) {
-    redirect(auth);
+  const authUser = await protectPage('efxUser');
+  if (authUser != null) {
+    const auth = await protectPage('efxAdmin');
+    if (auth != null) {
+      redirect(auth);
+    }
   }
 
   return (

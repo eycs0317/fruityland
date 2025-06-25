@@ -30,10 +30,15 @@ export default async function MainPage({searchParams}: PageProps) {
   const resolvedSearchParams = await searchParams;
   const message = resolvedSearchParams?.message;
 
-  const auth = await protectPage('efxAdmin');
-  if (auth != null) {
-    redirect(auth);
+  const authUser = await protectPage('efxUser');
+  if (authUser != null) {
+    const auth = await protectPage('efxAdmin');
+    if (auth != null) {
+      redirect(auth);
+    }
   }
+
+
 
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">

@@ -28,9 +28,14 @@ export default async function MainPage({searchParams}: PageProps) {
   const resolvedSearchParams = await searchParams;
   const message = resolvedSearchParams?.message;
 
-  const auth = await protectPage('efxAdmin');
-  if (auth != null) {
-    redirect(auth);
+  let auth: string | null = null;
+
+  const authUser = await protectPage('efxUser');
+  if (authUser != null) {
+    auth = await protectPage('efxAdmin');
+    if (auth != null) {
+      redirect(auth);
+    }
   }
 
   return (
@@ -43,8 +48,12 @@ export default async function MainPage({searchParams}: PageProps) {
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/efx/dashboard" method="post">
           <div className="flex flex-col gap-4">
-            <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCalendar', className: 'secondary', value:'Generate Calendar'}} />
-            <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCouponCode', className: 'secondary', value:'Generate Coupon Code'}} />
+            {auth == null && authUser != null && (
+              <>
+                <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCalendar', className: 'secondary', value:'Generate Calendar'}} />
+                <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCouponCode', className: 'secondary', value:'Generate Coupon Code'}} />
+              </>
+            )}
             <FormField type='button' fieldData={{type: 'submit', id: 'btRunReportCoupon', className: 'secondary', value:'Coupon Code Report'}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btRunReportSchedule', className: 'secondary', value:'Schedule Report'}} />
           </div>
