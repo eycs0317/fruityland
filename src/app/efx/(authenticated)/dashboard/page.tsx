@@ -37,14 +37,15 @@ export default async function MainPage({searchParams}: PageProps) {
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
       <section className="w-full p-8">
-        <Heading level={1} content="EFX Dashboard" className="text-4xl pb-8" />
+        <Heading level={1} content="EFX Dashboard" className="text-4xl pb-0 text-neutral-000" />
       </section>
-      <section className="w-full p-8">
+      <section className="w-full p-8 pt-0">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/efx/dashboard" method="post">
           <div className="flex flex-col gap-4">
             <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCalendar', className: 'secondary', value:'Generate Calendar'}} />
             <FormField type='button' fieldData={{type: 'submit', id: 'btGenerateCouponCode', className: 'secondary', value:'Generate Coupon Code'}} />
+            <FormField type='button' fieldData={{type: 'submit', id: 'btRunReport', className: 'secondary', value:'Run Report'}} />
           </div>
         </form>
       </section>

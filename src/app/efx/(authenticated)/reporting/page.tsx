@@ -1,19 +1,17 @@
 // metadata
 export const metadata = {
-  title: 'EFX Portal [Confirmation]',
+  title: 'EFX Portal [Reporting]',
 };
 
 // react
 import React, {Suspense} from 'react';
-
-// ui
-import AdminHeader from '@/ui/patterns/adminHeader';
 
 // nextjs
 import {redirect} from 'next/navigation';
 
 // ui
 import Heading from '@/ui/foundations/heading';
+import AdminHeader from '@/ui/patterns/adminHeader';
 import Message from '@/ui/patterns/message';
 
 // utils
@@ -40,15 +38,15 @@ export default async function MainPage({searchParams}: PageProps) {
   return (
     <main role="main" className="grid justify-self-center justify-items-center w-full md:w-120 p-4">
       <AdminHeader />
-      <section className="w-full p-8">
-        <Heading level={1} content="Confirmation" className="text-4xl text-neutral-000" />
+      <section className="w-full p-8 pb-0">
+        <Heading level={1} content="EFX Reporting" className="text-4xl pb-0 text-neutral-000" />
       </section>
-      <section className="w-full px-8 pt-0">
+      <section className="grid justify-self-center justify-items-center w-full p-8">
         <Message messageCode={message ?? ''} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <PageClient />
+        </Suspense>
       </section>
-      <Suspense fallback={<div>Loading...</div>}>
-        <PageClient />
-      </Suspense>
     </main>
   );
 }

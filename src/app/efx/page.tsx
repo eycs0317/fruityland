@@ -31,10 +31,10 @@ export default async function MainPage({searchParams}: PageProps) {
           <Link href="/">FruityLand Website</Link>
         </div>
       </nav>
-      <section className="w-full p-8 text-center">
-        <Heading level={1} content="EFX Portal Login" className="text-4xl pb-8" />
+      <section className="w-full p-8 pb-0 text-center">
+        <Heading level={1} content="EFX Portal Login" className="text-4xl pb-8 text-neutral-000" />
       </section>
-      <section className="w-full p-8">
+      <section className="w-full p-8 pt-0">
         <Message messageCode={message ?? ''} />
         <form className="flex flex-col gap-8 w-full" action="/api/efx/auth" method="post">
           <div className="flex flex-col gap-4">
